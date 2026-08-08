@@ -106,6 +106,8 @@ export const en = {
     ],
     thinking: 'NEURO AI is thinking...',
     welcome: 'Hello! I\'m NEURO AI, your medical sciences study assistant. How can I help you today?',
+    copied: 'Copied!',
+    copy: 'Copy',
   },
   // GPA Calculator
   gpa: {
