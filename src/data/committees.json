@@ -1,0 +1,65 @@
+[
+  {
+    "id": "academic",
+    "name": "Academic Committee",
+    "icon": "GraduationCap",
+    "color": "from-blue-500 to-blue-700",
+    "description": "Focused on enhancing academic performance through tutoring sessions, study groups, and educational resources for medical sciences students.",
+    "responsibilities": ["Organize study sessions", "Create educational materials", "Peer tutoring programs", "Exam preparation workshops"],
+    "members": 15
+  },
+  {
+    "id": "media",
+    "name": "Media Committee",
+    "icon": "Camera",
+    "color": "from-purple-500 to-purple-700",
+    "description": "Creating compelling visual content, managing social media presence, and documenting NEURO events and achievements.",
+    "responsibilities": ["Social media management", "Photography & videography", "Graphic design", "Content creation"],
+    "members": 12
+  },
+  {
+    "id": "ai",
+    "name": "AI Committee",
+    "icon": "Brain",
+    "color": "from-cyan-500 to-cyan-700",
+    "description": "Developing and maintaining AI-powered tools and chatbots to assist students with their medical sciences studies.",
+    "responsibilities": ["AI chatbot development", "Machine learning research", "Tool development", "Technical support"],
+    "members": 10
+  },
+  {
+    "id": "research",
+    "name": "Research Committee",
+    "icon": "Microscope",
+    "color": "from-green-500 to-green-700",
+    "description": "Promoting scientific research culture among students and supporting research projects in applied medical sciences.",
+    "responsibilities": ["Research mentorship", "Journal clubs", "Conference organization", "Publication support"],
+    "members": 8
+  },
+  {
+    "id": "events",
+    "name": "Events Committee",
+    "icon": "Calendar",
+    "color": "from-orange-500 to-orange-700",
+    "description": "Planning and executing workshops, seminars, competitions, and social events that bring the student community together.",
+    "responsibilities": ["Event planning", "Workshop coordination", "Competition management", "Speaker invitations"],
+    "members": 14
+  },
+  {
+    "id": "volunteer",
+    "name": "Volunteer Committee",
+    "icon": "Heart",
+    "color": "from-red-500 to-red-700",
+    "description": "Coordinating volunteer activities and community service projects that make a positive impact on campus and beyond.",
+    "responsibilities": ["Community service", "Health awareness campaigns", "Blood donation drives", "Campus clean-up"],
+    "members": 20
+  },
+  {
+    "id": "pr",
+    "name": "Public Relations",
+    "icon": "Users",
+    "color": "from-pink-500 to-pink-700",
+    "description": "Building and maintaining relationships with university administration, other student organizations, and external partners.",
+    "responsibilities": ["External communications", "Partnership development", "Brand management", "Networking events"],
+    "members": 11
+  }
+]

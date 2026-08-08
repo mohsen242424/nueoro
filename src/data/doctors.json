@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Dr. Mohammad Al-Khateeb",
+    "department": "Anatomy",
+    "office": "Building A, Room 201",
+    "officeHours": "Sun-Tue 10:00 AM - 12:00 PM",
+    "email": "m.alkhateeb@hu.edu.jo",
+    "photo": "/images/doctors/placeholder.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Dr. Sarah Al-Masri",
+    "department": "Physiology",
+    "office": "Building B, Room 105",
+    "officeHours": "Mon-Wed 9:00 AM - 11:00 AM",
+    "email": "s.almasri@hu.edu.jo",
+    "photo": "/images/doctors/placeholder.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Dr. Ahmad Nasser",
+    "department": "Pharmacology",
+    "office": "Building C, Room 302",
+    "officeHours": "Sun-Tue 1:00 PM - 3:00 PM",
+    "email": "a.nasser@hu.edu.jo",
+    "photo": "/images/doctors/placeholder.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Dr. Layla Mansour",
+    "department": "Nursing",
+    "office": "Building D, Room 110",
+    "officeHours": "Mon-Wed 11:00 AM - 1:00 PM",
+    "email": "l.mansour@hu.edu.jo",
+    "photo": "/images/doctors/placeholder.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Dr. Omar Haddad",
+    "department": "Medical Lab Sciences",
+    "office": "Building A, Room 315",
+    "officeHours": "Tue-Thu 10:00 AM - 12:00 PM",
+    "email": "o.haddad@hu.edu.jo",
+    "photo": "/images/doctors/placeholder.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Dr. Rania Qasem",
+    "department": "Radiology",
+    "office": "Building B, Room 220",
+    "officeHours": "Sun-Tue 9:00 AM - 11:00 AM",
+    "email": "r.qasem@hu.edu.jo",
+    "photo": "/images/doctors/placeholder.jpg"
+  }
+]

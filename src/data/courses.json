@@ -1,0 +1,90 @@
+[
+  {
+    "id": "anatomy-101",
+    "slug": "anatomy-fundamentals",
+    "title": "Anatomy Fundamentals",
+    "instructor": "Dr. Ahmad Nasser",
+    "category": "Anatomy",
+    "description": "A comprehensive course covering the fundamentals of human anatomy, including body systems, anatomical terminology, and basic structures.",
+    "thumbnail": "/images/courses/anatomy.jpg",
+    "lessonsCount": 12,
+    "duration": "6 hours",
+    "lessons": [
+      { "id": 1, "title": "Introduction to Anatomy", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
+      { "id": 2, "title": "Anatomical Terminology", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
+      { "id": 3, "title": "Skeletal System Overview", "videoId": "dQw4w9WgXcQ", "duration": "35 min" },
+      { "id": 4, "title": "Muscular System Basics", "videoId": "dQw4w9WgXcQ", "duration": "32 min" },
+      { "id": 5, "title": "Nervous System Introduction", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
+      { "id": 6, "title": "Cardiovascular System", "videoId": "dQw4w9WgXcQ", "duration": "28 min" }
+    ]
+  },
+  {
+    "id": "nursing-care",
+    "slug": "nursing-care-essentials",
+    "title": "Nursing Care Essentials",
+    "instructor": "Nurse Sara Khalil",
+    "category": "Nursing",
+    "description": "Essential nursing care principles and techniques for medical sciences students, covering patient assessment and clinical procedures.",
+    "thumbnail": "/images/courses/nursing.jpg",
+    "lessonsCount": 8,
+    "duration": "4 hours",
+    "lessons": [
+      { "id": 1, "title": "Patient Assessment Fundamentals", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
+      { "id": 2, "title": "Vital Signs Monitoring", "videoId": "dQw4w9WgXcQ", "duration": "25 min" },
+      { "id": 3, "title": "Wound Care Basics", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
+      { "id": 4, "title": "Medication Administration", "videoId": "dQw4w9WgXcQ", "duration": "32 min" }
+    ]
+  },
+  {
+    "id": "physiology-intro",
+    "slug": "physiology-introduction",
+    "title": "Introduction to Physiology",
+    "instructor": "Dr. Layla Mansour",
+    "category": "Physiology",
+    "description": "Explore the fundamental principles of human physiology, understanding how body systems function and maintain homeostasis.",
+    "thumbnail": "/images/courses/physiology.jpg",
+    "lessonsCount": 10,
+    "duration": "5 hours",
+    "lessons": [
+      { "id": 1, "title": "Cell Physiology", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
+      { "id": 2, "title": "Membrane Transport", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
+      { "id": 3, "title": "Nerve Physiology", "videoId": "dQw4w9WgXcQ", "duration": "35 min" },
+      { "id": 4, "title": "Muscle Physiology", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
+      { "id": 5, "title": "Cardiac Physiology", "videoId": "dQw4w9WgXcQ", "duration": "32 min" }
+    ]
+  },
+  {
+    "id": "pharmacology-basics",
+    "slug": "pharmacology-basics",
+    "title": "Pharmacology Basics",
+    "instructor": "Dr. Omar Haddad",
+    "category": "Pharmacology",
+    "description": "Introduction to pharmacology covering drug classifications, mechanisms of action, and clinical applications in medical practice.",
+    "thumbnail": "/images/courses/pharmacology.jpg",
+    "lessonsCount": 10,
+    "duration": "5 hours",
+    "lessons": [
+      { "id": 1, "title": "Drug Classification", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
+      { "id": 2, "title": "Pharmacokinetics", "videoId": "dQw4w9WgXcQ", "duration": "35 min" },
+      { "id": 3, "title": "Pharmacodynamics", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
+      { "id": 4, "title": "Drug Interactions", "videoId": "dQw4w9WgXcQ", "duration": "30 min" }
+    ]
+  },
+  {
+    "id": "study-skills",
+    "slug": "effective-study-skills",
+    "title": "Effective Study Skills",
+    "instructor": "NEURO Team",
+    "category": "Study Skills",
+    "description": "Master proven study techniques and strategies specifically designed for medical sciences students to improve academic performance.",
+    "thumbnail": "/images/courses/study.jpg",
+    "lessonsCount": 6,
+    "duration": "3 hours",
+    "lessons": [
+      { "id": 1, "title": "Active Recall Techniques", "videoId": "dQw4w9WgXcQ", "duration": "25 min" },
+      { "id": 2, "title": "Spaced Repetition", "videoId": "dQw4w9WgXcQ", "duration": "22 min" },
+      { "id": 3, "title": "Mind Mapping for Medical Students", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
+      { "id": 4, "title": "Exam Preparation Strategies", "videoId": "dQw4w9WgXcQ", "duration": "30 min" }
+    ]
+  }
+]
