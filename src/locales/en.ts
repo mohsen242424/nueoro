@@ -230,6 +230,7 @@ export const en = {
     valuesTitle: 'Our Values',
     innovation: 'Innovation',
     innovationDesc: 'We embrace cutting-edge technology to create tools that make learning more effective and engaging.',
+    community: 'Community',
     communityValue: 'Community',
     communityDesc: 'We believe in the power of collaboration and mutual support among students.',
     excellence: 'Excellence',

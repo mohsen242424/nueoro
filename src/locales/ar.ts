@@ -215,6 +215,7 @@ export const ar = {
     valuesTitle: 'قيمنا',
     innovation: 'الابتكار',
     innovationDesc: 'نتبنى أحدث التقنيات لإنشاء أدوات تجعل التعلم أكثر فعالية وتفاعلاً.',
+    community: 'المجتمع',
     communityValue: 'المجتمع',
     communityDesc: 'نؤمن بقوة التعاون والدعم المتبادل بين الطلاب.',
     excellence: 'التميّز',
