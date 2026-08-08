@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calculator, Plus, Trash2, RotateCcw } from 'lucide-react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 type Grade = 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'D-' | 'F';
 
@@ -19,6 +20,7 @@ const gradeValues: Record<Grade, number> = {
 };
 
 export default function GPACalculator() {
+  const { t, isRTL } = useLanguage();
   const [tab, setTab] = useState<'semester' | 'cumulative'>('semester');
   const [courses, setCourses] = useState<CourseEntry[]>([
     { id: '1', name: '', credits: 3, grade: 'A' }
@@ -95,7 +97,7 @@ export default function GPACalculator() {
               <Calculator className="w-8 h-8 text-brand-cyan" />
             </div>
             <h1 className="font-poppins text-4xl md:text-5xl font-bold text-white tracking-tight">
-              GPA Calculator
+              {t.gpa.title}
             </h1>
           </motion.div>
           <motion.p
@@ -104,7 +106,7 @@ export default function GPACalculator() {
             transition={{ delay: 0.1 }}
             className="text-gray-400 text-lg max-w-2xl mx-auto"
           >
-            Calculate your semester or cumulative Grade Point Average accurately and easily.
+            {t.gpa.subtitle}
           </motion.p>
         </div>
 
@@ -118,7 +120,7 @@ export default function GPACalculator() {
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
               }`}
             >
-              Semester GPA
+              {t.gpa.semesterGPA}
             </button>
             <button
               onClick={() => setTab('cumulative')}
@@ -128,7 +130,7 @@ export default function GPACalculator() {
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
               }`}
             >
-              Cumulative GPA
+              {t.gpa.cumulativeGPA}
             </button>
           </div>
         </div>
@@ -147,7 +149,7 @@ export default function GPACalculator() {
                   className="grid grid-cols-2 gap-4 mb-8 pb-8 border-b border-white/10"
                 >
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Previous GPA</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t.gpa.previousGPA}</label>
                     <input
                       type="number"
                       min="0"
@@ -160,7 +162,7 @@ export default function GPACalculator() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Previous Credits</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">{t.gpa.previousCredits}</label>
                     <input
                       type="number"
                       min="0"
@@ -175,9 +177,9 @@ export default function GPACalculator() {
 
               <div className="space-y-4">
                 <div className="grid grid-cols-12 gap-4 text-sm font-medium text-gray-400 px-2">
-                  <div className="col-span-5 md:col-span-6">Course Name</div>
-                  <div className="col-span-3 md:col-span-2 text-center">Credits</div>
-                  <div className="col-span-3 md:col-span-3">Grade</div>
+                  <div className="col-span-5 md:col-span-6">{t.gpa.courseName}</div>
+                  <div className="col-span-3 md:col-span-2 text-center">{t.gpa.creditHours}</div>
+                  <div className="col-span-3 md:col-span-3">{t.gpa.grade}</div>
                   <div className="col-span-1"></div>
                 </div>
 
@@ -238,13 +240,13 @@ export default function GPACalculator() {
                   onClick={addCourse}
                   className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white transition-all text-sm font-medium"
                 >
-                  <Plus className="w-4 h-4" /> Add Course
+                  <Plus className="w-4 h-4" /> {t.gpa.addCourse}
                 </button>
                 <button
                   onClick={reset}
                   className="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white transition-colors text-sm font-medium"
                 >
-                  <RotateCcw className="w-4 h-4" /> Reset
+                  <RotateCcw className="w-4 h-4" /> {t.gpa.reset}
                 </button>
               </div>
             </motion.div>
@@ -288,12 +290,12 @@ export default function GPACalculator() {
                   >
                     {gpa.toFixed(2)}
                   </motion.span>
-                  <span className="text-sm text-gray-400 mt-1">GPA</span>
+                  <span className="text-sm text-gray-400 mt-1">{t.gpa.yourGPA}</span>
                 </div>
               </div>
 
               <div className="text-center space-y-2">
-                <p className="text-gray-400">Total Credits</p>
+                <p className="text-gray-400">{t.gpa.totalCredits}</p>
                 <p className="text-2xl font-semibold text-white">{totalCredits}</p>
               </div>
             </motion.div>

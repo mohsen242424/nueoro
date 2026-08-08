@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Search, Navigation, Info, Clock, Building2, X } from 'lucide-react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 // Simplified Map Data
 const buildings = [
@@ -25,6 +26,7 @@ const typeColors = {
 };
 
 export default function MapPage() {
+  const { t, isRTL } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBuilding, setSelectedBuilding] = useState<typeof buildings[0] | null>(null);
   const [zoom, setZoom] = useState(1);
@@ -47,16 +49,16 @@ export default function MapPage() {
           <div>
             <h1 className="text-3xl font-bold font-poppins text-slate-900 dark:text-white flex items-center">
               <MapPin className="w-8 h-8 mr-3 text-blue-600 dark:text-blue-400" />
-              Campus Map
+              {t.map.title}
             </h1>
-            <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Navigate The Hashemite University campus</p>
+            <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{t.map.subtitle}</p>
           </div>
           
           <div className="relative w-full md:w-72">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input 
               type="text" 
-              placeholder="Search buildings, departments..."
+              placeholder={t.map.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-white shadow-sm"
@@ -71,11 +73,9 @@ export default function MapPage() {
           <div className="hidden md:block w-64 bg-slate-50/80 dark:bg-[#11162a]/80 border-r border-slate-200 dark:border-white/10 p-6 overflow-y-auto z-10">
             <h3 className="font-bold text-slate-900 dark:text-white mb-4">Categories</h3>
             <ul className="space-y-3 mb-8">
-              <li className="flex items-center text-sm text-slate-700 dark:text-slate-300"><div className="w-3 h-3 rounded-full bg-blue-500 mr-3"></div> Academic</li>
-              <li className="flex items-center text-sm text-slate-700 dark:text-slate-300"><div className="w-3 h-3 rounded-full bg-slate-700 dark:bg-slate-300 mr-3"></div> Administration</li>
-              <li className="flex items-center text-sm text-slate-700 dark:text-slate-300"><div className="w-3 h-3 rounded-full bg-purple-500 mr-3"></div> Facilities</li>
-              <li className="flex items-center text-sm text-slate-700 dark:text-slate-300"><div className="w-3 h-3 rounded-full bg-orange-500 mr-3"></div> Sports</li>
-              <li className="flex items-center text-sm text-slate-700 dark:text-slate-300"><div className="w-3 h-3 rounded-full bg-slate-400 mr-3"></div> Parking</li>
+              <li className="flex items-center text-sm text-slate-700 dark:text-slate-300"><div className="w-3 h-3 rounded-full bg-blue-500 mr-3"></div> {t.map.buildings}</li>
+              <li className="flex items-center text-sm text-slate-700 dark:text-slate-300"><div className="w-3 h-3 rounded-full bg-slate-700 dark:bg-slate-300 mr-3"></div> {t.map.labs}</li>
+              <li className="flex items-center text-sm text-slate-700 dark:text-slate-300"><div className="w-3 h-3 rounded-full bg-purple-500 mr-3"></div> {t.map.services}</li>
             </ul>
 
             {searchQuery && (

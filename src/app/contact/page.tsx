@@ -3,8 +3,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Instagram, Facebook, Linkedin, Send } from 'lucide-react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export default function ContactPage() {
+  const { t, isRTL } = useLanguage();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission logic
@@ -29,10 +31,10 @@ export default function ContactPage() {
             <Mail className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold font-poppins text-slate-900 dark:text-white mb-4">
-            Get in Touch
+            {t.contact.title}
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-inter">
-            Have questions about NEURO? Want to collaborate? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            {t.contact.subtitle}
           </p>
         </motion.div>
 
@@ -63,8 +65,8 @@ export default function ContactPage() {
                     <MapPin className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Location</p>
-                    <p className="text-lg font-semibold text-slate-900 dark:text-white">The Hashemite University<br/><span className="text-sm font-normal text-slate-600 dark:text-slate-400">Zarqa, Jordan</span></p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{t.contact.location}</p>
+                    <p className="text-lg font-semibold text-slate-900 dark:text-white">{t.contact.locationValue}</p>
                   </div>
                 </div>
               </div>
@@ -111,7 +113,7 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 font-manrope">
-                    Your Name
+                    {t.contact.name}
                   </label>
                   <input
                     type="text"
@@ -123,7 +125,7 @@ export default function ContactPage() {
                 
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 font-manrope">
-                    Email Address
+                    {t.contact.email}
                   </label>
                   <input
                     type="email"
@@ -135,7 +137,7 @@ export default function ContactPage() {
                 
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 font-manrope">
-                    Subject
+                    {t.contact.subject}
                   </label>
                   <input
                     type="text"
@@ -147,7 +149,7 @@ export default function ContactPage() {
                 
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 font-manrope">
-                    Message
+                    {t.contact.message}
                   </label>
                   <textarea
                     required
@@ -161,7 +163,7 @@ export default function ContactPage() {
                   type="submit"
                   className="w-full flex items-center justify-center px-8 py-3.5 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white rounded-xl font-medium transition-all shadow-lg shadow-blue-500/30 group"
                 >
-                  Send Message
+                  {t.contact.send}
                   <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </button>
               </form>

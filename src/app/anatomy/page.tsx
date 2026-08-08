@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import AnatomyCard from '@/components/anatomy/AnatomyCard';
 import SketchfabModal, { AnatomyModel } from '@/components/anatomy/SketchfabModal';
 import modelsData from '@/data/anatomy-models.json';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 const categories = [
   "All",
@@ -19,10 +20,17 @@ const categories = [
 ];
 
 export default function AnatomyLibraryPage() {
+  const { t, isRTL } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedModel, setSelectedModel] = useState<AnatomyModel | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const getCategoryTranslation = (cat: string) => {
+    if (cat === "All") return t.anatomy.all;
+    const key = cat.replace(/\s+/g, '').replace(/^[A-Z]/, l => l.toLowerCase());
+    return (t.anatomy.categories as any)[key] || cat;
+  };
 
   const models: AnatomyModel[] = modelsData;
 
@@ -81,11 +89,9 @@ export default function AnatomyLibraryPage() {
                 <circle cx="26.5" cy="7.5" r="1.5" />
               </svg>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-poppins text-gray-900 dark:text-white tracking-tight mb-4">
-              Explore the Human Body in <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#7C3AED]">3D</span>
-            </h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-poppins text-gray-900 dark:text-white tracking-tight mb-4" dangerouslySetInnerHTML={{ __html: t.anatomy.title }} />
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Dive into our interactive 3D anatomy library. Visualize structures, bones, and organs with unprecedented detail and precision.
+              {t.anatomy.subtitle}
             </p>
           </motion.div>
         </div>
@@ -105,7 +111,7 @@ export default function AnatomyLibraryPage() {
             <input
               type="text"
               className="block w-full pl-12 pr-4 py-4 bg-white/50 dark:bg-black/20 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition-all shadow-sm"
-              placeholder="Search for models, categories, or tags..."
+              placeholder={t.anatomy.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -123,7 +129,7 @@ export default function AnatomyLibraryPage() {
                     : 'bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10 hover:scale-105'
                 }`}
               >
-                {category}
+                {getCategoryTranslation(category)}
               </button>
             ))}
           </div>

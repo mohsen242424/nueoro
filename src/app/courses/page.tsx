@@ -5,12 +5,21 @@ import { motion } from 'framer-motion';
 import { Search, GraduationCap } from 'lucide-react';
 import CourseCard from '@/components/courses/CourseCard';
 import coursesData from '@/data/courses.json';
-
-const categories = ['All', 'Anatomy', 'Nursing', 'Physiology', 'Pharmacology', 'Study Skills'];
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export default function CoursesPage() {
+  const { t, isRTL } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+
+  const categories = [
+    { id: 'All', label: t.courses.all },
+    { id: 'Anatomy', label: t.courses.categories.anatomy },
+    { id: 'Nursing', label: t.courses.categories.nursing },
+    { id: 'Physiology', label: t.courses.categories.physiology },
+    { id: 'Pharmacology', label: t.courses.categories.pharmacology },
+    { id: 'Study Skills', label: t.courses.categories.studySkills }
+  ];
 
   const filteredCourses = coursesData.filter(course => {
     const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -38,7 +47,7 @@ export default function CoursesPage() {
               <GraduationCap className="w-8 h-8 text-brand-blue" />
             </div>
             <h1 className="font-poppins text-4xl md:text-5xl font-bold text-white tracking-tight">
-              NEURO Courses
+              {t.courses.title}
             </h1>
           </motion.div>
           <motion.p
@@ -47,7 +56,7 @@ export default function CoursesPage() {
             transition={{ delay: 0.1 }}
             className="text-gray-400 text-lg max-w-2xl mx-auto"
           >
-            Enhance your medical studies with our curated collection of free educational resources designed specifically for Hashemite University students.
+            {t.courses.subtitle}
           </motion.p>
         </div>
 
@@ -56,7 +65,7 @@ export default function CoursesPage() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
               type="text"
-              placeholder="Search courses..."
+              placeholder={t.courses.searchPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-full py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
@@ -66,15 +75,15 @@ export default function CoursesPage() {
           <div className="flex flex-wrap justify-center gap-2">
             {categories.map((cat) => (
               <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === cat
+                  activeCategory === cat.id
                     ? 'bg-gradient-to-r from-brand-blue to-brand-cyan text-white shadow-lg'
                     : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5'
                 }`}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>

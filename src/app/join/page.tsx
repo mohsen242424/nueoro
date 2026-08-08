@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Check, ChevronRight, ChevronLeft, Upload, File, CheckCircle2 } from 'lucide-react';
 import committeesData from '@/data/committees.json';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 type FormData = {
   fullName: string;
@@ -23,6 +24,7 @@ type FormData = {
 };
 
 export default function JoinPage() {
+  const { t, isRTL } = useLanguage();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -45,10 +47,10 @@ export default function JoinPage() {
   });
 
   const steps = [
-    { num: 1, title: 'Personal Info' },
-    { num: 2, title: 'Academic Info' },
-    { num: 3, title: 'Skills & Exp' },
-    { num: 4, title: 'Submit' }
+    { num: 1, title: t.join.step1 },
+    { num: 2, title: t.join.step2 },
+    { num: 3, title: t.join.step3 },
+    { num: 4, title: t.join.step4 }
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -126,10 +128,10 @@ export default function JoinPage() {
             <Sparkles className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold font-poppins text-slate-900 dark:text-white mb-4">
-            Join NEURO
+            {t.join.title}
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-inter">
-            Ready to make an impact? Apply to join our exceptional team of students pushing the boundaries of medical sciences.
+            {t.join.subtitle}
           </p>
         </motion.div>
 
@@ -176,11 +178,11 @@ export default function JoinPage() {
                     exit={{ opacity: 0, x: -20 }}
                     className="space-y-4"
                   >
-                    <h2 className="text-2xl font-bold font-poppins text-slate-900 dark:text-white mb-6">Personal Information</h2>
-                    <InputField label="Full Name" name="fullName" placeholder="John Doe" required />
-                    <InputField label="Student ID" name="studentId" placeholder="e.g. 2100000" required />
-                    <InputField label="Phone Number" name="phone" type="tel" placeholder="+962 7..." required />
-                    <InputField label="Email Address" name="email" type="email" placeholder="john@example.com" required />
+                    <h2 className="text-2xl font-bold font-poppins text-slate-900 dark:text-white mb-6">{t.join.step1}</h2>
+                    <InputField label={t.join.fullName} name="fullName" placeholder="John Doe" required />
+                    <InputField label={t.join.studentId} name="studentId" placeholder="e.g. 2100000" required />
+                    <InputField label={t.join.phone} name="phone" type="tel" placeholder="+962 7..." required />
+                    <InputField label={t.join.email || 'Email'} name="email" type="email" placeholder="john@example.com" required />
                   </motion.div>
                 )}
 
@@ -192,11 +194,11 @@ export default function JoinPage() {
                     exit={{ opacity: 0, x: -20 }}
                     className="space-y-4"
                   >
-                    <h2 className="text-2xl font-bold font-poppins text-slate-900 dark:text-white mb-6">Academic Information</h2>
+                    <h2 className="text-2xl font-bold font-poppins text-slate-900 dark:text-white mb-6">{t.join.step2}</h2>
                     
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 font-manrope">
-                        Major <span className="text-red-500">*</span>
+                        {t.join.major || 'Major'} <span className="text-red-500">*</span>
                       </label>
                       <select 
                         name="major" 
@@ -218,7 +220,7 @@ export default function JoinPage() {
 
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 font-manrope">
-                        Academic Year <span className="text-red-500">*</span>
+                        {t.join.year || 'Academic Year'} <span className="text-red-500">*</span>
                       </label>
                       <select 
                         name="year" 
@@ -227,7 +229,7 @@ export default function JoinPage() {
                         required
                         className="w-full px-4 py-3 bg-white/50 dark:bg-[#11162a] border border-slate-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all dark:text-white"
                       >
-                        <option value="">Select year</option>
+                        <option value="">{t.join.selectYear}</option>
                         <option value="1">First Year</option>
                         <option value="2">Second Year</option>
                         <option value="3">Third Year</option>
@@ -239,7 +241,7 @@ export default function JoinPage() {
 
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 font-manrope">
-                        Committee of Interest <span className="text-red-500">*</span>
+                        {t.join.committee || 'Committee of Interest'} <span className="text-red-500">*</span>
                       </label>
                       <select 
                         name="committee" 
@@ -248,7 +250,7 @@ export default function JoinPage() {
                         required
                         className="w-full px-4 py-3 bg-white/50 dark:bg-[#11162a] border border-slate-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all dark:text-white"
                       >
-                        <option value="">Select committee</option>
+                        <option value="">{t.join.selectCommittee}</option>
                         {committeesData.map(c => (
                           <option key={c.id} value={c.id}>{c.name}</option>
                         ))}
@@ -265,21 +267,21 @@ export default function JoinPage() {
                     exit={{ opacity: 0, x: -20 }}
                     className="space-y-4"
                   >
-                    <h2 className="text-2xl font-bold font-poppins text-slate-900 dark:text-white mb-6">Skills & Experience</h2>
+                    <h2 className="text-2xl font-bold font-poppins text-slate-900 dark:text-white mb-6">{t.join.step3}</h2>
                     
-                    <TextAreaField label="Key Skills" name="skills" placeholder="List your relevant skills..." />
-                    <TextAreaField label="Previous Experience" name="experience" placeholder="Any relevant past experience..." />
+                    <TextAreaField label={t.join.skills || 'Skills'} name="skills" placeholder="List your relevant skills..." />
+                    <TextAreaField label={t.join.experience || 'Experience'} name="experience" placeholder="Any relevant past experience..." />
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <InputField label="LinkedIn URL" name="linkedin" placeholder="https://linkedin.com/in/..." />
-                      <InputField label="Portfolio/GitHub URL" name="portfolio" placeholder="https://..." />
+                      <InputField label={t.join.linkedin || 'LinkedIn'} name="linkedin" placeholder="https://linkedin.com/in/..." />
+                      <InputField label={t.join.portfolio || 'Portfolio'} name="portfolio" placeholder="https://..." />
                     </div>
 
-                    <TextAreaField label="Why do you want to join NEURO?" name="motivation" placeholder="Tell us your motivation..." required />
+                    <TextAreaField label={t.join.motivation || 'Motivation'} name="motivation" placeholder="Tell us your motivation..." required />
                     
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 font-manrope">
-                        Availability <span className="text-red-500">*</span>
+                        {t.join.availability || 'Availability'} <span className="text-red-500">*</span>
                       </label>
                       <select 
                         name="availability" 
@@ -288,10 +290,10 @@ export default function JoinPage() {
                         required
                         className="w-full px-4 py-3 bg-white/50 dark:bg-[#11162a] border border-slate-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all dark:text-white"
                       >
-                        <option value="">Select availability</option>
-                        <option value="full">Full-time (10+ hrs/week)</option>
-                        <option value="part">Part-time (5-10 hrs/week)</option>
-                        <option value="weekends">Weekends only</option>
+                        <option value="">{t.join.selectAvailability}</option>
+                        <option value="full">{t.join.fullTime}</option>
+                        <option value="part">{t.join.partTime}</option>
+                        <option value="weekends">{t.join.weekends}</option>
                       </select>
                     </div>
                   </motion.div>
@@ -305,20 +307,19 @@ export default function JoinPage() {
                     exit={{ opacity: 0, x: -20 }}
                     className="space-y-6"
                   >
-                    <h2 className="text-2xl font-bold font-poppins text-slate-900 dark:text-white mb-2">Review & Submit</h2>
-                    <p className="text-slate-500 dark:text-slate-400 mb-6">Please review your information before submitting.</p>
+                    <h2 className="text-2xl font-bold font-poppins text-slate-900 dark:text-white mb-2">{t.join.step4}</h2>
                     
                     <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-xl space-y-3 text-sm">
                       <div className="grid grid-cols-3 gap-2">
-                        <span className="text-slate-500 font-medium">Name:</span>
+                        <span className="text-slate-500 font-medium">{t.join.fullName || 'Name'}:</span>
                         <span className="col-span-2 text-slate-900 dark:text-white font-medium">{formData.fullName || '-'}</span>
                       </div>
                       <div className="grid grid-cols-3 gap-2">
-                        <span className="text-slate-500 font-medium">Student ID:</span>
+                        <span className="text-slate-500 font-medium">{t.join.studentId || 'Student ID'}:</span>
                         <span className="col-span-2 text-slate-900 dark:text-white font-medium">{formData.studentId || '-'}</span>
                       </div>
                       <div className="grid grid-cols-3 gap-2">
-                        <span className="text-slate-500 font-medium">Committee:</span>
+                        <span className="text-slate-500 font-medium">{t.join.committee || 'Committee'}:</span>
                         <span className="col-span-2 text-slate-900 dark:text-white font-medium">{formData.committee ? committeesData.find(c => c.id === formData.committee)?.name : '-'}</span>
                       </div>
                     </div>
@@ -349,7 +350,7 @@ export default function JoinPage() {
                       : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10'
                   }`}
                 >
-                  <ChevronLeft className="w-4 h-4 mr-1" /> Back
+                  <ChevronLeft className="w-4 h-4 mr-1" /> {t.join.previous}
                 </button>
                 
                 {step < 4 ? (
@@ -358,7 +359,7 @@ export default function JoinPage() {
                     onClick={nextStep}
                     className="flex items-center px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium transition-all shadow-lg shadow-blue-500/30"
                   >
-                    Next Step <ChevronRight className="w-4 h-4 ml-1" />
+                    {t.join.next} <ChevronRight className="w-4 h-4 ml-1" />
                   </button>
                 ) : (
                   <button
@@ -376,7 +377,7 @@ export default function JoinPage() {
                       </span>
                     ) : (
                       <span className="flex items-center">
-                        Submit Application <CheckCircle2 className="w-4 h-4 ml-2" />
+                        {t.join.submit} <CheckCircle2 className="w-4 h-4 ml-2" />
                       </span>
                     )}
                   </button>
@@ -393,9 +394,9 @@ export default function JoinPage() {
             <div className="w-24 h-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="w-12 h-12 text-green-600 dark:text-green-400" />
             </div>
-            <h2 className="text-3xl font-bold font-poppins text-slate-900 dark:text-white mb-4">Application Submitted!</h2>
+            <h2 className="text-3xl font-bold font-poppins text-slate-900 dark:text-white mb-4">{t.join.successTitle}</h2>
             <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-md mx-auto">
-              Thank you for applying to NEURO, {formData.fullName.split(' ')[0] || 'Student'}! We have received your application and will be in touch shortly via email.
+              {t.join.successMessage}
             </p>
             <button
               onClick={() => {

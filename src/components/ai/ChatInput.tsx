@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, Mic } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -10,6 +11,7 @@ interface ChatInputProps {
 }
 
 export default function ChatInput({ onSend, disabled }: ChatInputProps) {
+  const { t } = useLanguage();
   const [input, setInput] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -58,7 +60,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={disabled}
-          placeholder="Ask NEURO AI anything..."
+          placeholder={t.ai.inputPlaceholder}
           className="flex-grow max-h-[120px] bg-transparent border-none focus:ring-0 resize-none py-3 px-2 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400 font-inter focus:outline-none"
           rows={1}
         />
@@ -72,6 +74,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
               : 'bg-gray-100 dark:bg-white/5 text-gray-400 cursor-not-allowed'
           }`}
         >
+          <span className="sr-only">{t.ai.send}</span>
           <Send className="w-5 h-5 ml-0.5" />
         </button>
       </motion.div>

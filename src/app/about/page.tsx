@@ -4,8 +4,10 @@ import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Target, Lightbulb, Zap, Users, Shield, Trophy } from 'lucide-react';
 import Image from 'next/image';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export default function AboutPage() {
+  const { t, isRTL } = useLanguage();
   const { scrollYProgress } = useScroll();
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -200]);
@@ -32,10 +34,10 @@ export default function AboutPage() {
               Empowering Students
             </div>
             <h1 className="text-5xl md:text-7xl font-bold font-poppins text-slate-900 dark:text-white mb-6 leading-tight">
-              About <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">NEURO</span>
+              {t.about.title}
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-300 font-inter leading-relaxed">
-              We are a premier student initiative at The Hashemite University, dedicated to fostering excellence, innovation, and community among medical sciences students.
+              {t.about.subtitle}
             </p>
           </motion.div>
         </div>
@@ -54,9 +56,9 @@ export default function AboutPage() {
             >
               <div className="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-500" />
               <Target className="w-12 h-12 text-blue-600 dark:text-blue-400 mb-6" />
-              <h2 className="text-3xl font-bold font-poppins text-slate-900 dark:text-white mb-4">Our Mission</h2>
+              <h2 className="text-3xl font-bold font-poppins text-slate-900 dark:text-white mb-4">{t.about.missionTitle}</h2>
               <p className="text-lg text-slate-600 dark:text-slate-300 font-inter leading-relaxed">
-                To elevate the academic experience of medical sciences students by providing comprehensive resources, peer support, and opportunities for practical skill development, while fostering a vibrant and inclusive community.
+                {t.about.mission}
               </p>
             </motion.div>
 
@@ -69,9 +71,9 @@ export default function AboutPage() {
             >
               <div className="absolute -right-10 -top-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all duration-500" />
               <Lightbulb className="w-12 h-12 text-cyan-600 dark:text-cyan-400 mb-6" />
-              <h2 className="text-3xl font-bold font-poppins text-slate-900 dark:text-white mb-4">Our Vision</h2>
+              <h2 className="text-3xl font-bold font-poppins text-slate-900 dark:text-white mb-4">{t.about.visionTitle}</h2>
               <p className="text-lg text-slate-600 dark:text-slate-300 font-inter leading-relaxed">
-                To be the leading student organization that shapes the future healthcare professionals of Jordan, recognized for our commitment to excellence, innovation, and positive societal impact.
+                {t.about.vision}
               </p>
             </motion.div>
           </div>
@@ -82,17 +84,14 @@ export default function AboutPage() {
       <section className="py-20 px-4 bg-slate-100/50 dark:bg-white/[0.02]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-poppins text-slate-900 dark:text-white mb-4">Core Values</h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              The principles that guide everything we do.
-            </p>
+            <h2 className="text-4xl font-bold font-poppins text-slate-900 dark:text-white mb-4">{t.about.valuesTitle}</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: Lightbulb, title: "Innovation", desc: "We constantly seek new and better ways to support our students and enhance their learning experience.", color: "text-amber-500" },
-              { icon: Users, title: "Community", desc: "We build strong, supportive networks that help students thrive both academically and personally.", color: "text-blue-500" },
-              { icon: Trophy, title: "Excellence", desc: "We strive for the highest standards in all our initiatives, events, and resources.", color: "text-purple-500" }
+              { icon: Lightbulb, title: t.about.innovation, desc: t.about.innovationDesc || "We constantly seek new and better ways to support our students and enhance their learning experience.", color: "text-amber-500" },
+              { icon: Users, title: t.about.community, desc: t.about.communityDesc || "We build strong, supportive networks that help students thrive both academically and personally.", color: "text-blue-500" },
+              { icon: Trophy, title: t.about.excellence, desc: t.about.excellenceDesc || "We strive for the highest standards in all our initiatives, events, and resources.", color: "text-purple-500" }
             ].map((value, i) => (
               <motion.div
                 key={i}
@@ -117,7 +116,10 @@ export default function AboutPage() {
       <section className="py-24 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold font-poppins text-slate-900 dark:text-white mb-4">Our Journey</h2>
+            <h2 className="text-4xl font-bold font-poppins text-slate-900 dark:text-white mb-4">{t.about.storyTitle}</h2>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+              {t.about.story}
+            </p>
           </div>
 
           <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 dark:before:via-slate-700 before:to-transparent">

@@ -3,27 +3,29 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { BookOpen, Brain, HeartHandshake } from 'lucide-react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export default function WhatIsNeuro() {
+  const { t, isRTL } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const highlights = [
     {
-      title: 'Education First',
-      description: 'We believe in accessible, high-quality resources tailored specifically for applied medical sciences students.',
+      title: t.whatIsNeuro.educationFirst,
+      description: t.whatIsNeuro.educationFirstDesc,
       icon: <BookOpen className="w-6 h-6 text-primary" />,
       delay: 0.2
     },
     {
-      title: 'AI-Powered Learning',
-      description: 'Leveraging cutting-edge artificial intelligence to provide instant answers, summarize complex topics, and guide your studies.',
+      title: t.whatIsNeuro.aiPowered,
+      description: t.whatIsNeuro.aiPoweredDesc,
       icon: <Brain className="w-6 h-6 text-secondary" />,
       delay: 0.4
     },
     {
-      title: 'Community Driven',
-      description: 'Built by students, for students. A collaborative environment where knowledge is shared and everyone grows together.',
+      title: t.whatIsNeuro.community,
+      description: t.whatIsNeuro.communityDesc,
       icon: <HeartHandshake className="w-6 h-6 text-accent" />,
       delay: 0.6
     }
@@ -52,13 +54,9 @@ export default function WhatIsNeuro() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl font-poppins font-bold mb-6 text-slate-900 dark:text-white">
-              What is <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">NEURO?</span>
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-poppins font-bold mb-6 text-slate-900 dark:text-white" dangerouslySetInnerHTML={{ __html: t.whatIsNeuro.title }} />
             <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-              NEURO is the official student team for the Faculty of Applied Medical Sciences at The Hashemite University. 
-              We are a dedicated group of innovators aiming to revolutionize the medical educational experience by blending 
-              traditional study methods with advanced technology, interactive 3D anatomy, and AI assistance.
+              {t.whatIsNeuro.description}
             </p>
             
             <div className="space-y-6 mt-12">

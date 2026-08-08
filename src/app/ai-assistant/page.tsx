@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ChatMessage, { MessageProps } from '@/components/ai/ChatMessage';
 import ChatInput from '@/components/ai/ChatInput';
 import SuggestedQuestions from '@/components/ai/SuggestedQuestions';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 // Mock AI Logic
 const getMockResponse = (input: string): string => {
@@ -27,10 +28,11 @@ const getMockResponse = (input: string): string => {
 };
 
 export default function AiAssistantPage() {
+  const { t, isRTL } = useLanguage();
   const [messages, setMessages] = useState<MessageProps[]>([
     {
       role: 'ai',
-      content: "Hello! I am NEURO, your AI medical and anatomy assistant. How can I help you study today?",
+      content: t.ai.welcome,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -80,9 +82,9 @@ export default function AiAssistantPage() {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold font-poppins text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#7C3AED]">
-              NEURO AI Assistant
+              {t.ai.title}
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Your personal study companion</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{t.ai.subtitle}</p>
           </div>
         </div>
       </header>

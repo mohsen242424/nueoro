@@ -3,8 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useLanguage } from "../providers/LanguageProvider";
 
 export default function Footer() {
+  const { t, isRTL } = useLanguage();
+
   return (
     <footer className="relative overflow-hidden bg-white/30 dark:bg-[#050816]/50 backdrop-blur-md border-t border-gray-200/20 dark:border-white/10">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2563EB] dark:via-[#7C3AED] to-transparent opacity-50" />
@@ -18,9 +21,9 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-gray-600 dark:text-gray-400 font-inter text-sm max-w-xs leading-relaxed">
-              Empowering medical students at The Hashemite University through innovation, AI, and collaborative learning.
+              {t.footer.description}
             </p>
-            <div className="flex space-x-4 pt-2">
+            <div className={`flex space-x-4 pt-2 ${isRTL ? "space-x-reverse" : ""}`}>
               <motion.a whileHover={{ scale: 1.1, y: -2 }} href="https://instagram.com/neuro_hu" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800/50 text-gray-600 dark:text-gray-300 hover:text-[#2563EB] dark:hover:text-[#06B6D4] transition-colors">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
               </motion.a>
@@ -37,12 +40,12 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-poppins font-semibold text-gray-900 dark:text-white mb-6">Quick Links</h3>
+            <h3 className="font-poppins font-semibold text-gray-900 dark:text-white mb-6">{t.footer.quickLinks}</h3>
             <ul className="space-y-3">
-              {[{name: 'Home', path: '/'}, {name: 'About', path: '/about'}, {name: 'Committees', path: '/committees'}, {name: 'Join Neuro', path: '/join'}].map((item) => (
+              {[{name: t.nav.home, path: '/'}, {name: t.nav.about, path: '/about'}, {name: t.nav.committees, path: '/committees'}, {name: t.nav.join, path: '/join'}].map((item) => (
                 <li key={item.name}>
                   <Link href={item.path} className="text-gray-600 dark:text-gray-400 hover:text-[#2563EB] dark:hover:text-[#06B6D4] transition-colors font-inter text-sm group flex items-center">
-                    <span className="w-0 group-hover:w-2 h-[1px] bg-[#2563EB] dark:bg-[#06B6D4] mr-0 group-hover:mr-2 transition-all duration-300"></span>
+                    <span className={`w-0 group-hover:w-2 h-[1px] bg-[#2563EB] dark:bg-[#06B6D4] ${isRTL ? "ml-0 group-hover:ml-2" : "mr-0 group-hover:mr-2"} transition-all duration-300`}></span>
                     {item.name}
                   </Link>
                 </li>
@@ -51,12 +54,12 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-poppins font-semibold text-gray-900 dark:text-white mb-6">Features</h3>
+            <h3 className="font-poppins font-semibold text-gray-900 dark:text-white mb-6">{t.footer.features}</h3>
             <ul className="space-y-3">
-              {[{name: '3D Anatomy', path: '/anatomy'}, {name: 'AI Assistant', path: '/ai-assistant'}, {name: 'GPA Calculator', path: '/gpa'}, {name: 'University Map', path: '/map'}].map((item) => (
+              {[{name: t.nav.anatomy, path: '/anatomy'}, {name: t.nav.aiAssistant, path: '/ai-assistant'}, {name: t.nav.gpa, path: '/gpa'}, {name: t.nav.map, path: '/map'}].map((item) => (
                 <li key={item.name}>
                   <Link href={item.path} className="text-gray-600 dark:text-gray-400 hover:text-[#2563EB] dark:hover:text-[#06B6D4] transition-colors font-inter text-sm group flex items-center">
-                    <span className="w-0 group-hover:w-2 h-[1px] bg-[#2563EB] dark:bg-[#06B6D4] mr-0 group-hover:mr-2 transition-all duration-300"></span>
+                    <span className={`w-0 group-hover:w-2 h-[1px] bg-[#2563EB] dark:bg-[#06B6D4] ${isRTL ? "ml-0 group-hover:ml-2" : "mr-0 group-hover:mr-2"} transition-all duration-300`}></span>
                     {item.name}
                   </Link>
                 </li>
@@ -65,21 +68,21 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-poppins font-semibold text-gray-900 dark:text-white mb-6">Stay Connected</h3>
+            <h3 className="font-poppins font-semibold text-gray-900 dark:text-white mb-6">{t.footer.stayConnected}</h3>
             <p className="text-gray-600 dark:text-gray-400 font-inter text-sm mb-4">
-              Join our newsletter for updates on events and new features.
+              {t.footer.newsletterDesc}
             </p>
             <form className="relative mt-4">
               <input 
                 type="email" 
-                placeholder="Your email address" 
+                placeholder={t.footer.emailPlaceholder}
                 className="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563EB] dark:focus:ring-[#7C3AED] transition-all dark:text-white"
               />
               <button 
                 type="submit" 
-                className="absolute right-1 top-1 bottom-1 px-4 bg-gradient-to-r from-[#2563EB] to-[#7C3AED] text-white rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+                className={`absolute ${isRTL ? "left-1" : "right-1"} top-1 bottom-1 px-4 bg-gradient-to-r from-[#2563EB] to-[#7C3AED] text-white rounded-md text-sm font-medium hover:opacity-90 transition-opacity`}
               >
-                Subscribe
+                {t.footer.subscribe}
               </button>
             </form>
           </div>
@@ -87,11 +90,11 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-gray-500 dark:text-gray-400 font-inter text-sm">
-            © {new Date().getFullYear()} NEURO. All rights reserved. The Hashemite University.
+            {t.footer.copyright.replace('{year}', new Date().getFullYear().toString())}
           </p>
-          <div className="flex space-x-6">
-            <Link href="/privacy" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">Terms of Service</Link>
+          <div className={`flex space-x-6 ${isRTL ? "space-x-reverse" : ""}`}>
+            <Link href="/privacy" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">{t.footer.privacy}</Link>
+            <Link href="/terms" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors">{t.footer.terms}</Link>
           </div>
         </div>
       </div>

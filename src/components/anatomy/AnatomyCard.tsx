@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Heart, Share2, Copy, Play, Check } from 'lucide-react';
 import { useState } from 'react';
 import { AnatomyModel } from './SketchfabModal';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 interface AnatomyCardProps {
   model: AnatomyModel;
@@ -11,6 +12,7 @@ interface AnatomyCardProps {
 }
 
 export default function AnatomyCard({ model, onOpenModal }: AnatomyCardProps) {
+  const { t } = useLanguage();
   const [isFavorite, setIsFavorite] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -92,7 +94,7 @@ export default function AnatomyCard({ model, onOpenModal }: AnatomyCardProps) {
               onClick={() => onOpenModal(model)}
               className="flex-grow flex items-center justify-center py-2 px-4 bg-gradient-to-r from-[#2563EB] to-[#7C3AED] hover:from-[#1d4ed8] hover:to-[#6d28d9] text-white rounded-lg text-sm font-semibold transition-colors"
             >
-              View 3D
+              {t.anatomy.view3D}
             </button>
             <button
               onClick={handleFavorite}
@@ -115,7 +117,7 @@ export default function AnatomyCard({ model, onOpenModal }: AnatomyCardProps) {
               </button>
               {/* Tooltip */}
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover/tooltip:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                {copied ? 'Copied!' : 'Copy Embed Link'}
+                {copied ? t.anatomy.copied : t.anatomy.copyLink}
               </div>
             </div>
           </div>

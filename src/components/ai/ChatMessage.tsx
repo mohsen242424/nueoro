@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Copy, Check, User, Bot } from 'lucide-react';
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export interface MessageProps {
   role: 'user' | 'ai';
@@ -12,6 +13,7 @@ export interface MessageProps {
 }
 
 export default function ChatMessage({ message }: { message: MessageProps }) {
+  const { t } = useLanguage();
   const isAi = message.role === 'ai';
   const [copied, setCopied] = useState(false);
 
@@ -63,7 +65,7 @@ export default function ChatMessage({ message }: { message: MessageProps }) {
                 aria-label="Copy message"
               >
                 {copied ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
-                {copied ? 'Copied' : 'Copy'}
+                {copied ? (t.ai?.copied || t.anatomy?.copied || 'Copied') : (t.ai?.copy || 'Copy')}
               </button>
             )}
           </div>

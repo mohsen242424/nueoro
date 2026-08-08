@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, Mail, MessageSquare, Copy, Check } from 'lucide-react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 interface Doctor {
   id: number;
@@ -14,6 +15,7 @@ interface Doctor {
 }
 
 export default function DoctorCard({ doctor }: { doctor: Doctor }) {
+  const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
@@ -46,16 +48,16 @@ export default function DoctorCard({ doctor }: { doctor: Doctor }) {
       <div className="flex-grow space-y-3 px-6 text-sm text-gray-300">
         <div className="flex items-start">
           <MapPin className="mr-3 h-5 w-5 shrink-0 text-brand-blue" />
-          <span>{doctor.office}</span>
+          <span><span className="font-semibold">{t.doctors.office}:</span> {doctor.office}</span>
         </div>
         <div className="flex items-start">
           <Clock className="mr-3 h-5 w-5 shrink-0 text-brand-purple" />
-          <span>{doctor.officeHours}</span>
+          <span><span className="font-semibold">{t.doctors.officeHours}:</span> {doctor.officeHours}</span>
         </div>
         <div className="flex items-center">
           <Mail className="mr-3 h-5 w-5 shrink-0 text-brand-red" />
           <a href={`mailto:${doctor.email}`} className="hover:text-white transition-colors truncate">
-            {doctor.email}
+            <span className="font-semibold">{t.doctors.email}:</span> {doctor.email}
           </a>
         </div>
       </div>
@@ -68,14 +70,14 @@ export default function DoctorCard({ doctor }: { doctor: Doctor }) {
           className="flex flex-1 items-center justify-center gap-2 border-r border-white/10 py-4 font-medium text-white transition-colors hover:bg-white/5"
         >
           <MessageSquare className="h-4 w-4" />
-          Teams
+          {t.doctors.openTeams}
         </a>
         <button 
           onClick={handleCopyEmail}
           className="flex flex-1 items-center justify-center gap-2 py-4 font-medium text-white transition-colors hover:bg-white/5"
         >
           {copied ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
-          {copied ? 'Copied!' : 'Copy Email'}
+          {copied ? t.doctors.emailCopied : t.doctors.copyEmail}
         </button>
       </div>
     </motion.div>

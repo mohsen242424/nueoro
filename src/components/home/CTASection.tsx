@@ -3,8 +3,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export default function CTASection() {
+  const { t, isRTL } = useLanguage();
   return (
     <section className="relative py-32 overflow-hidden">
       {/* Dynamic Background */}
@@ -54,7 +56,7 @@ export default function CTASection() {
           viewport={{ once: true }}
           className="text-4xl md:text-6xl font-poppins font-bold text-white mb-6"
         >
-          Ready to Join NEURO?
+          {t.cta.title}
         </motion.h2>
         
         <motion.p 
@@ -64,7 +66,7 @@ export default function CTASection() {
           transition={{ delay: 0.2 }}
           className="text-xl text-white/80 mb-10 max-w-2xl mx-auto font-light"
         >
-          Become part of a thriving community of medical students. Access exclusive resources, collaborate with peers, and elevate your learning experience.
+          {t.cta.subtitle}
         </motion.p>
         
         <motion.div 
@@ -75,10 +77,10 @@ export default function CTASection() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Link href="/join" className="px-8 py-4 bg-white text-primary hover:bg-slate-100 rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:-translate-y-1 text-lg">
-            Join Now
+            {t.cta.joinNow}
           </Link>
           <Link href="/about" className="px-8 py-4 bg-transparent border-2 border-white/30 text-white hover:bg-white/10 rounded-full font-semibold transition-all hover:-translate-y-1 text-lg">
-            Learn More
+            {t.cta.learnMore}
           </Link>
         </motion.div>
       </div>

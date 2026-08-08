@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Play, Clock, BookOpen, User } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 interface Course {
   id: string;
@@ -17,6 +18,7 @@ interface Course {
 }
 
 export default function CourseCard({ course }: { course: Course }) {
+  const { t } = useLanguage();
   const getCategoryColor = (category: string) => {
     switch (category.toLowerCase()) {
       case 'anatomy': return 'from-red-500 to-rose-600';
@@ -59,7 +61,7 @@ export default function CourseCard({ course }: { course: Course }) {
         <div className="mb-6 flex items-center justify-between text-sm text-gray-300">
           <div className="flex items-center">
             <BookOpen className="mr-2 h-4 w-4 text-brand-cyan" />
-            {course.lessonsCount} Lessons
+            {course.lessonsCount} {t.courses.lessons}
           </div>
           <div className="flex items-center">
             <Clock className="mr-2 h-4 w-4 text-brand-purple" />
@@ -69,7 +71,7 @@ export default function CourseCard({ course }: { course: Course }) {
 
         <Link href={`/courses/${course.slug}`} className="w-full">
           <button className="w-full rounded-xl bg-gradient-to-r from-brand-blue to-brand-purple py-3 font-semibold text-white transition-all hover:opacity-90 hover:shadow-lg active:scale-[0.98]">
-            Watch Course
+            {t.courses.watchCourse}
           </button>
         </Link>
       </div>

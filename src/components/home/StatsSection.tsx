@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Users, MessageSquareText, Cuboid, Landmark } from 'lucide-react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 interface StatProps {
   label: string;
@@ -76,9 +77,10 @@ const StatCard = ({ label, value, suffix = '', icon, gradientClass, delay }: Sta
 };
 
 export default function StatsSection() {
+  const { t, isRTL } = useLanguage();
   const stats = [
     {
-      label: 'Students Helped',
+      label: t.stats.studentsHelped,
       value: 500,
       suffix: '+',
       icon: <Users className="w-6 h-6" />,
@@ -86,7 +88,7 @@ export default function StatsSection() {
       delay: 0.1
     },
     {
-      label: 'AI Answers',
+      label: t.stats.aiAnswers,
       value: 10000,
       suffix: '+',
       icon: <MessageSquareText className="w-6 h-6" />,
@@ -94,7 +96,7 @@ export default function StatsSection() {
       delay: 0.2
     },
     {
-      label: '3D Models',
+      label: t.stats.models3D,
       value: 50,
       suffix: '+',
       icon: <Cuboid className="w-6 h-6" />,
@@ -102,7 +104,7 @@ export default function StatsSection() {
       delay: 0.3
     },
     {
-      label: 'Departments',
+      label: t.stats.departments,
       value: 8,
       suffix: '',
       icon: <Landmark className="w-6 h-6" />,

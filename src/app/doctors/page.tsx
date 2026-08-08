@@ -5,12 +5,22 @@ import { motion } from 'framer-motion';
 import { Search, Stethoscope } from 'lucide-react';
 import DoctorCard from '@/components/doctors/DoctorCard';
 import doctorsData from '@/data/doctors.json';
-
-const departments = ['All', 'Anatomy', 'Physiology', 'Pharmacology', 'Nursing', 'Medical Lab Sciences', 'Radiology'];
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export default function DoctorsPage() {
+  const { t, isRTL } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeDept, setActiveDept] = useState('All');
+
+  const departments = [
+    { id: 'All', label: t.doctors.all },
+    { id: 'Anatomy', label: 'Anatomy' },
+    { id: 'Physiology', label: 'Physiology' },
+    { id: 'Pharmacology', label: 'Pharmacology' },
+    { id: 'Nursing', label: 'Nursing' },
+    { id: 'Medical Lab Sciences', label: 'Medical Lab Sciences' },
+    { id: 'Radiology', label: 'Radiology' }
+  ];
 
   const filteredDoctors = doctorsData.filter(doctor => {
     const matchesSearch = doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -38,7 +48,7 @@ export default function DoctorsPage() {
               <Stethoscope className="w-8 h-8 text-brand-red" />
             </div>
             <h1 className="font-poppins text-4xl md:text-5xl font-bold text-white tracking-tight">
-              Doctors Directory
+              {t.doctors.title}
             </h1>
           </motion.div>
           <motion.p
@@ -47,7 +57,7 @@ export default function DoctorsPage() {
             transition={{ delay: 0.1 }}
             className="text-gray-400 text-lg max-w-2xl mx-auto"
           >
-            Find and connect with your professors and department staff. Access office hours, locations, and contact information.
+            {t.doctors.subtitle}
           </motion.p>
         </div>
 
@@ -56,7 +66,7 @@ export default function DoctorsPage() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
               type="text"
-              placeholder="Search by name or department..."
+              placeholder={t.doctors.searchPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-full py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-purple transition-all"
@@ -66,15 +76,15 @@ export default function DoctorsPage() {
           <div className="flex flex-wrap justify-center gap-2">
             {departments.map((dept) => (
               <button
-                key={dept}
-                onClick={() => setActiveDept(dept)}
+                key={dept.id}
+                onClick={() => setActiveDept(dept.id)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeDept === dept
+                  activeDept === dept.id
                     ? 'bg-gradient-to-r from-brand-blue to-brand-purple text-white shadow-lg'
                     : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5'
                 }`}
               >
-                {dept}
+                {dept.label}
               </button>
             ))}
           </div>

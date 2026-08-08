@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Users, GraduationCap, Camera, Brain, Microscope, Calendar, Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import committeesData from '@/data/committees.json';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 const iconMap: Record<string, React.ElementType> = {
   GraduationCap,
@@ -17,6 +18,7 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 export default function CommitteesPage() {
+  const { t, isRTL } = useLanguage();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -55,10 +57,10 @@ export default function CommitteesPage() {
             <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold font-poppins text-slate-900 dark:text-white mb-4">
-            Our Committees
+            {t.committees.title}
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-inter">
-            Each committee plays a vital role in making NEURO the best student initiative. Discover where your passion aligns with our mission.
+            {t.committees.subtitle}
           </p>
         </motion.div>
 
@@ -83,7 +85,7 @@ export default function CommitteesPage() {
                   <div className="flex justify-between items-end">
                     <h3 className="text-xl font-bold font-poppins text-white">{committee.name}</h3>
                     <div className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-white">
-                      {committee.members} Members
+                      {committee.members} {t.committees.members}
                     </div>
                   </div>
                 </div>
@@ -94,7 +96,7 @@ export default function CommitteesPage() {
                   </p>
                   
                   <div className="mb-8">
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 uppercase tracking-wider font-manrope">Responsibilities</h4>
+                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 uppercase tracking-wider font-manrope">{t.committees.responsibilities}</h4>
                     <ul className="space-y-2">
                       {committee.responsibilities.map((resp, i) => (
                         <li key={i} className="text-sm text-slate-600 dark:text-slate-400 flex items-start">
@@ -107,7 +109,7 @@ export default function CommitteesPage() {
                   
                   <Link href={`/join?committee=${committee.id}`} className="mt-auto block w-full">
                     <button className="w-full py-3 px-4 bg-slate-100 dark:bg-white/5 hover:bg-blue-600 dark:hover:bg-blue-600 hover:text-white text-slate-800 dark:text-white font-medium rounded-xl transition-all duration-300 flex items-center justify-center group/btn">
-                      Join Committee
+                      {t.committees.joinCommittee}
                       <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </Link>

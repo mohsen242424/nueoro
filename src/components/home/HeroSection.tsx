@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { ChevronDown, Zap, BrainCircuit, Box, Users } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export default function HeroSection() {
+  const { t, isRTL } = useLanguage();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function HeroSection() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
   };
 
-  const subtitleWords = "Learn Smarter. Visualize Better. Grow Together.".split(' ');
+  const subtitleWords = t.hero.subtitle.split(' ');
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20">
@@ -140,7 +142,7 @@ export default function HeroSection() {
           className="text-7xl md:text-9xl font-poppins font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent animate-gradient-x py-4"
           variants={itemVariants}
         >
-          NEURO
+          {t.hero.title}
         </motion.h1>
 
         <motion.div 
@@ -158,7 +160,7 @@ export default function HeroSection() {
           className="text-sm md:text-lg text-slate-500 dark:text-slate-400 mb-12 max-w-2xl font-light tracking-wide"
           variants={itemVariants}
         >
-          The Hashemite University | Faculty of Applied Medical Sciences
+          {t.hero.university}
         </motion.p>
 
         <motion.div 
@@ -166,16 +168,16 @@ export default function HeroSection() {
           variants={itemVariants}
         >
           <Link href="/courses" className="flex items-center justify-center gap-2 px-8 py-3.5 bg-primary hover:bg-blue-700 text-white rounded-full font-medium transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:-translate-y-1 w-full sm:w-auto">
-            Explore <Zap className="w-4 h-4" />
+            {t.hero.explore} <Zap className="w-4 h-4" />
           </Link>
           <Link href="/ai-assistant" className="flex items-center justify-center gap-2 px-8 py-3.5 bg-secondary hover:bg-violet-700 text-white rounded-full font-medium transition-all shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:shadow-[0_0_30px_rgba(124,58,237,0.6)] hover:-translate-y-1 w-full sm:w-auto">
-            Use AI <BrainCircuit className="w-4 h-4" />
+            {t.hero.useAI} <BrainCircuit className="w-4 h-4" />
           </Link>
           <Link href="/anatomy" className="flex items-center justify-center gap-2 px-8 py-3.5 border border-slate-300 dark:border-slate-700 hover:border-accent hover:bg-accent/10 dark:hover:bg-accent/20 rounded-full font-medium transition-all hover:-translate-y-1 w-full sm:w-auto bg-white/50 dark:bg-black/50 backdrop-blur-sm">
-            3D Anatomy <Box className="w-4 h-4" />
+            {t.hero.anatomy3D} <Box className="w-4 h-4" />
           </Link>
           <Link href="/join" className="flex items-center justify-center gap-2 px-8 py-3.5 border border-slate-300 dark:border-slate-700 hover:border-brand-red hover:bg-brand-red/10 dark:hover:bg-brand-red/20 rounded-full font-medium transition-all hover:-translate-y-1 w-full sm:w-auto bg-white/50 dark:bg-black/50 backdrop-blur-sm">
-            Join Neuro <Users className="w-4 h-4" />
+            {t.hero.joinNeuro} <Users className="w-4 h-4" />
           </Link>
         </motion.div>
       </motion.div>

@@ -1,15 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-
-const SUGGESTIONS = [
-  "Explain the nervous system",
-  "What are cranial nerves?",
-  "Summarize pharmacology basics",
-  "Generate a quiz on anatomy",
-  "Explain heart physiology",
-  "Medical terminology help"
-];
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 interface SuggestedQuestionsProps {
   onSelect: (question: string) => void;
@@ -17,10 +9,12 @@ interface SuggestedQuestionsProps {
 }
 
 export default function SuggestedQuestions({ onSelect, disabled }: SuggestedQuestionsProps) {
+  const { t } = useLanguage();
+  
   return (
     <div className="w-full max-w-4xl mx-auto px-4 pb-2 pt-4">
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x">
-        {SUGGESTIONS.map((suggestion, idx) => (
+        {(t.ai.suggestedQuestions as string[] || []).map((suggestion, idx) => (
           <motion.button
             key={idx}
             initial={{ opacity: 0, x: 20 }}

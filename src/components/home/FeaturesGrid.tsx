@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
 import { Bone, Bot, BookOpenCheck, Calculator, Map, Stethoscope, ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 interface FeatureCardProps {
   title: string;
@@ -41,57 +42,58 @@ const FeatureCard = ({ title, description, icon, gradient, link, delay }: Featur
       </p>
 
       <Link href={link} className={`inline-flex items-center gap-2 font-medium text-transparent bg-clip-text bg-gradient-to-r ${gradient} hover:gap-3 transition-all`}>
-        Explore <ArrowRight className="w-4 h-4 text-slate-900 dark:text-white group-hover:text-primary transition-colors" />
+        {title} &rarr;
       </Link>
     </motion.div>
   );
 };
 
 export default function FeaturesGrid() {
+  const { t, isRTL } = useLanguage();
   const features = [
     {
-      title: '3D Anatomy Library',
-      description: 'Interact with high-fidelity 3D models of human anatomy. Rotate, zoom, and explore structures in detail for better visualization.',
+      title: t.features.anatomyTitle,
+      description: t.features.anatomyDesc,
       icon: <Bone />,
       gradient: 'from-blue-500 to-cyan-500',
       link: '/anatomy',
       delay: 0.1
     },
     {
-      title: 'AI Assistant',
-      description: 'Get instant answers to your medical questions. Our specialized AI model is trained on medical literature to assist your studies.',
+      title: t.features.aiTitle,
+      description: t.features.aiDesc,
       icon: <Bot />,
       gradient: 'from-purple-500 to-pink-500',
       link: '/ai-assistant',
       delay: 0.2
     },
     {
-      title: 'NEURO Courses',
-      description: 'Access curated study materials, past papers, summaries, and video lectures organized by department and year.',
+      title: t.features.coursesTitle,
+      description: t.features.coursesDesc,
       icon: <BookOpenCheck />,
       gradient: 'from-cyan-500 to-teal-500',
       link: '/courses',
       delay: 0.3
     },
     {
-      title: 'GPA Calculator',
-      description: 'Easily track your academic progress with our custom GPA calculator tailored for the Hashemite University grading system.',
+      title: t.features.gpaTitle,
+      description: t.features.gpaDesc,
       icon: <Calculator />,
       gradient: 'from-emerald-500 to-green-500',
       link: '/tools/gpa',
       delay: 0.4
     },
     {
-      title: 'University Map',
-      description: 'Never get lost again. Navigate the campus with ease using our interactive map featuring key medical faculty locations.',
+      title: t.features.mapTitle,
+      description: t.features.mapDesc,
       icon: <Map />,
       gradient: 'from-orange-500 to-amber-500',
       link: '/map',
       delay: 0.5
     },
     {
-      title: 'Doctor Directory',
-      description: 'Find contact information, office hours, and academic profiles for professors and instructors in the medical faculty.',
+      title: t.features.directoryTitle,
+      description: t.features.directoryDesc,
       icon: <Stethoscope />,
       gradient: 'from-red-500 to-rose-500',
       link: '/directory',
@@ -109,7 +111,7 @@ export default function FeaturesGrid() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-poppins font-bold mb-4 text-slate-900 dark:text-white"
           >
-            Everything You Need
+            {t.features.title}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -118,7 +120,7 @@ export default function FeaturesGrid() {
             transition={{ delay: 0.2 }}
             className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
           >
-            A comprehensive suite of tools and resources designed specifically for applied medical sciences students.
+            {t.features.subtitle}
           </motion.p>
         </div>
 

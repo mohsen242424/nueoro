@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Maximize, Share2, Copy, Check, Info } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export interface AnatomyModel {
   id: string;
@@ -20,6 +21,7 @@ interface SketchfabModalProps {
 }
 
 export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModalProps) {
+  const { t } = useLanguage();
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -105,7 +107,7 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
                 <button
                   onClick={onClose}
                   className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-colors"
-                  aria-label="Close"
+                  aria-label={t.anatomy.close}
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -115,8 +117,9 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
             {/* Viewer Body */}
             <div className="relative flex-grow bg-black/50 overflow-hidden" style={{ minHeight: isFullscreen ? '0' : '400px', flexBasis: '100%' }}>
               {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
                   <div className="w-10 h-10 border-4 border-[#2563EB] border-t-transparent rounded-full animate-spin"></div>
+                  <span className="text-white text-sm font-medium">{t.anatomy.loading}</span>
                 </div>
               )}
               <iframe
@@ -157,14 +160,14 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
                     onClick={handleShare}
                     className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white text-sm font-medium transition-colors"
                   >
-                    <Share2 className="w-4 h-4" /> Share
+                    <Share2 className="w-4 h-4" /> {t.anatomy.share}
                   </button>
                   <button
                     onClick={handleCopyLink}
                     className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white text-sm font-medium transition-colors relative"
                   >
                     {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
-                    {copied ? 'Copied!' : 'Copy Link'}
+                    {copied ? t.anatomy.copied : t.anatomy.copyLink}
                   </button>
                 </div>
               </div>

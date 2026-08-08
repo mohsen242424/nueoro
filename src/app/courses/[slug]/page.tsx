@@ -6,8 +6,10 @@ import { PlayCircle, CheckCircle2, Circle, ArrowLeft, ArrowRight, BookOpen, Cloc
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import coursesData from '@/data/courses.json';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export default function CourseDetailPage({ params }: { params: { slug: string } }) {
+  const { t, isRTL } = useLanguage();
   const course = coursesData.find(c => c.slug === params.slug);
   
   if (!course) {
@@ -73,7 +75,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                   {course.category}
                 </span>
                 <span className="flex items-center text-sm text-gray-400">
-                  <User className="w-4 h-4 mr-1" /> {course.instructor}
+                  <User className="w-4 h-4 mr-1" /> {t.courses.instructor}: {course.instructor}
                 </span>
               </div>
               <h1 className="font-poppins text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-2">
@@ -88,7 +90,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
             {mounted && (
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 w-full md:w-64 backdrop-blur-sm">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-300">Your Progress</span>
+                  <span className="text-sm font-medium text-gray-300">{t.courses.progress}</span>
                   <span className="text-sm font-bold text-brand-blue">{progressPercentage}%</span>
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-2">
@@ -145,9 +147,9 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                     }`}
                   >
                     {completedLessons.includes(activeLesson.id) ? (
-                      <><CheckCircle2 className="w-5 h-5" /> Completed</>
+                      <><CheckCircle2 className="w-5 h-5" /> {t.courses.completed}</>
                     ) : (
-                      <><Circle className="w-5 h-5" /> Mark Complete</>
+                      <><Circle className="w-5 h-5" /> {t.courses.markComplete}</>
                     )}
                   </button>
                 </div>
@@ -160,14 +162,14 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                 disabled={currentIndex === 0}
                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
-                <ArrowLeft className="w-4 h-4" /> Previous Lesson
+                <ArrowLeft className="w-4 h-4" /> {t.courses.previousLesson}
               </button>
               <button
                 onClick={goToNext}
                 disabled={currentIndex === course.lessons.length - 1}
                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
-                Next Lesson <ArrowRight className="w-4 h-4" />
+                {t.courses.nextLesson} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>
