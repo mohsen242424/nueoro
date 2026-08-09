@@ -57,6 +57,8 @@ export const en = {
     mapDesc: 'Navigate the campus with our interactive university map.',
     doctorsTitle: 'Doctors Directory',
     doctorsDesc: 'Find and contact faculty doctors easily with our searchable directory.',
+    directoryTitle: 'Doctors Directory',
+    directoryDesc: 'Find and contact faculty doctors easily with our searchable directory.',
     explore: 'Explore',
   },
   // CTA Section

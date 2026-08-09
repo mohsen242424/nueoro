@@ -80,7 +80,7 @@ export default function FeaturesGrid() {
       description: t.features.gpaDesc,
       icon: <Calculator />,
       gradient: 'from-emerald-500 to-green-500',
-      link: '/tools/gpa',
+      link: '/gpa',
       delay: 0.4
     },
     {
@@ -92,11 +92,11 @@ export default function FeaturesGrid() {
       delay: 0.5
     },
     {
-      title: t.features.directoryTitle,
-      description: t.features.directoryDesc,
+      title: t.features.doctorsTitle || t.features.directoryTitle,
+      description: t.features.doctorsDesc || t.features.directoryDesc,
       icon: <Stethoscope />,
       gradient: 'from-red-500 to-rose-500',
-      link: '/directory',
+      link: '/doctors',
       delay: 0.6
     }
   ];
