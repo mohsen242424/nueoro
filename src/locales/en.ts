@@ -259,6 +259,7 @@ export const en = {
     features: 'Features',
     stayConnected: 'Stay Connected',
     newsletter: 'Join our newsletter for updates on events and new features.',
+    newsletterDesc: 'Join our newsletter for updates on events and new features.',
     emailPlaceholder: 'Your email address',
     subscribe: 'Subscribe',
     privacy: 'Privacy Policy',
