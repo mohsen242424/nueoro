@@ -158,22 +158,53 @@ export default function HeroSection() {
           {t.hero.university}
         </motion.p>
 
-        {/* 4 Interactive CTA Action Buttons */}
+        {/* 4 Premium Cohesive Action Buttons */}
         <motion.div 
-          className="flex flex-wrap justify-center gap-4 w-full px-4"
+          className="flex flex-wrap items-center justify-center gap-3.5 w-full max-w-4xl px-2"
           variants={itemVariants}
         >
-          <Link href="/courses" className="flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#9F1239] to-[#BE123C] hover:from-[#BE123C] hover:to-[#E11D48] text-white rounded-full font-semibold transition-all shadow-[0_0_25px_rgba(159,18,57,0.4)] hover:shadow-[0_0_35px_rgba(225,29,72,0.7)] hover:-translate-y-1 w-full sm:w-auto">
-            {t.hero.explore} <Zap className="w-4 h-4 text-amber-300" />
+          {/* Explore Courses */}
+          <Link 
+            href="/courses" 
+            className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] text-white font-bold text-sm shadow-[0_4px_20px_rgba(159,18,57,0.35)] hover:shadow-[0_6px_28px_rgba(225,29,72,0.55)] hover:-translate-y-1 transition-all duration-200 border border-rose-400/20 flex-1 sm:flex-initial min-w-[160px]"
+          >
+            <div className="w-6 h-6 rounded-lg bg-white/15 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+            </div>
+            <span>{t.hero.explore}</span>
           </Link>
-          <Link href="/ai-assistant" className="flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#881337] to-[#9F1239] hover:from-[#9F1239] hover:to-[#BE123C] text-white rounded-full font-semibold transition-all shadow-[0_0_25px_rgba(136,19,55,0.4)] hover:shadow-[0_0_35px_rgba(190,18,60,0.6)] hover:-translate-y-1 w-full sm:w-auto">
-            {t.hero.useAI} <BrainCircuit className="w-4 h-4 text-rose-300" />
+
+          {/* AI Assistant */}
+          <Link 
+            href="/ai-assistant" 
+            className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#E11D48] text-white font-bold text-sm shadow-[0_4px_20px_rgba(190,18,60,0.35)] hover:shadow-[0_6px_28px_rgba(225,29,72,0.55)] hover:-translate-y-1 transition-all duration-200 border border-rose-400/25 flex-1 sm:flex-initial min-w-[160px]"
+          >
+            <div className="w-6 h-6 rounded-lg bg-white/15 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <BrainCircuit className="w-3.5 h-3.5 text-rose-200" />
+            </div>
+            <span>{t.hero.useAI}</span>
           </Link>
-          <Link href="/anatomy" className="flex items-center justify-center gap-2 px-8 py-3.5 border border-rose-900/20 dark:border-rose-800/40 hover:border-rose-500 hover:bg-rose-500/10 dark:hover:bg-rose-950/40 text-slate-800 dark:text-rose-100 rounded-full font-semibold transition-all hover:-translate-y-1 w-full sm:w-auto bg-white/70 dark:bg-[#12070D]/70 backdrop-blur-md">
-            {t.hero.anatomy3D} <Box className="w-4 h-4 text-rose-400" />
+
+          {/* 3D Anatomy */}
+          <Link 
+            href="/anatomy" 
+            className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-white/80 dark:bg-[#150910]/80 backdrop-blur-xl border border-rose-900/15 dark:border-rose-900/35 text-slate-800 dark:text-rose-100 hover:text-[#9F1239] dark:hover:text-white hover:border-rose-600/50 hover:bg-rose-50/80 dark:hover:bg-[#220E1A] font-bold text-sm shadow-sm hover:shadow-lg hover:shadow-rose-950/20 hover:-translate-y-1 transition-all duration-200 flex-1 sm:flex-initial min-w-[160px]"
+          >
+            <div className="w-6 h-6 rounded-lg bg-rose-500/10 dark:bg-rose-950/50 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#9F1239] group-hover:text-white transition-all">
+              <Box className="w-3.5 h-3.5 text-[#9F1239] dark:text-rose-300 group-hover:text-white" />
+            </div>
+            <span>{t.hero.anatomy3D}</span>
           </Link>
-          <Link href="/join" className="flex items-center justify-center gap-2 px-8 py-3.5 border border-rose-600/30 hover:border-rose-600 hover:bg-[#9F1239] hover:text-white text-[#9F1239] dark:text-rose-300 rounded-full font-semibold transition-all hover:-translate-y-1 w-full sm:w-auto bg-white/70 dark:bg-[#12070D]/70 backdrop-blur-md">
-            {t.hero.joinNeuro} <Users className="w-4 h-4" />
+
+          {/* Join Neuro */}
+          <Link 
+            href="/join" 
+            className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-white/80 dark:bg-[#150910]/80 backdrop-blur-xl border border-rose-900/15 dark:border-rose-900/35 text-slate-800 dark:text-rose-100 hover:text-[#9F1239] dark:hover:text-white hover:border-rose-600/50 hover:bg-rose-50/80 dark:hover:bg-[#220E1A] font-bold text-sm shadow-sm hover:shadow-lg hover:shadow-rose-950/20 hover:-translate-y-1 transition-all duration-200 flex-1 sm:flex-initial min-w-[160px]"
+          >
+            <div className="w-6 h-6 rounded-lg bg-rose-500/10 dark:bg-rose-950/50 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#9F1239] group-hover:text-white transition-all">
+              <Users className="w-3.5 h-3.5 text-[#9F1239] dark:text-rose-300 group-hover:text-white" />
+            </div>
+            <span>{t.hero.joinNeuro}</span>
           </Link>
         </motion.div>
       </motion.div>
