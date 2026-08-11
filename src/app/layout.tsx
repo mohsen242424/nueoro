@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins, Manrope } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { LanguageProvider } from "@/components/providers/LanguageProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
@@ -29,9 +30,11 @@ export default function RootLayout({
       <body className={`font-inter antialiased bg-[#FAF7F5] dark:bg-[#080406] text-slate-900 dark:text-rose-100 transition-colors duration-300`}>
         <LanguageProvider>
           <ThemeProvider>
-            <Navbar />
-            <main className="min-h-screen pt-20">{children}</main>
-            <Footer />
+            <AuthProvider>
+              <Navbar />
+              <main className="min-h-screen pt-20">{children}</main>
+              <Footer />
+            </AuthProvider>
           </ThemeProvider>
         </LanguageProvider>
       </body>
