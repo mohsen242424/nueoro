@@ -11,6 +11,7 @@ interface LanguageContextType {
   language: Language;
   t: Translations;
   toggleLanguage: () => void;
+  setLanguage: (lang: Language) => void;
   isRTL: boolean;
 }
 
@@ -18,34 +19,39 @@ const LanguageContext = createContext<LanguageContextType>({
   language: 'en',
   t: en,
   toggleLanguage: () => {},
+  setLanguage: () => {},
   isRTL: false,
 });
 
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>('en');
 
   useEffect(() => {
     const saved = localStorage.getItem('neuro-lang') as Language | null;
     if (saved && (saved === 'en' || saved === 'ar')) {
-      setLanguage(saved);
+      setLanguageState(saved);
       document.documentElement.setAttribute('dir', saved === 'ar' ? 'rtl' : 'ltr');
       document.documentElement.setAttribute('lang', saved);
     }
   }, []);
 
-  const toggleLanguage = () => {
-    const newLang = language === 'en' ? 'ar' : 'en';
-    setLanguage(newLang);
+  const changeLanguage = (newLang: Language) => {
+    setLanguageState(newLang);
     localStorage.setItem('neuro-lang', newLang);
     document.documentElement.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
     document.documentElement.setAttribute('lang', newLang);
+  };
+
+  const toggleLanguage = () => {
+    const newLang = language === 'en' ? 'ar' : 'en';
+    changeLanguage(newLang);
   };
 
   const t = language === 'en' ? en : ar;
   const isRTL = language === 'ar';
 
   return (
-    <LanguageContext.Provider value={{ language, t, toggleLanguage, isRTL }}>
+    <LanguageContext.Provider value={{ language, t, toggleLanguage, setLanguage: changeLanguage, isRTL }}>
       {children}
     </LanguageContext.Provider>
   );

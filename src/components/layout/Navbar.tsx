@@ -6,13 +6,14 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../providers/ThemeProvider";
 import { useLanguage } from "../providers/LanguageProvider";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
-  const { t, language, toggleLanguage, isRTL } = useLanguage();
+  const { t, isRTL } = useLanguage();
 
   const navLinks = [
     { name: t.nav.home, path: "/" },
@@ -40,7 +41,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/70 dark:bg-[#050816]/70 backdrop-blur-xl shadow-lg border-b border-gray-200/20 dark:border-white/10"
+          ? "bg-white/80 dark:bg-[#050816]/80 backdrop-blur-xl shadow-lg border-b border-gray-200/20 dark:border-white/10"
           : "bg-transparent"
       }`}
     >
@@ -49,14 +50,14 @@ export default function Navbar() {
           <Link href="/" className="flex-shrink-0 flex items-center">
             <motion.span
               whileHover={{ scale: 1.05 }}
-              className="font-poppins font-bold text-2xl tracking-tighter bg-gradient-to-r from-[#2563EB] to-[#7C3AED] dark:from-[#06B6D4] dark:to-[#7C3AED] bg-clip-text text-transparent"
+              className="font-poppins font-bold text-2xl tracking-tighter bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#06B6D4] bg-clip-text text-transparent"
             >
               NEURO
             </motion.span>
           </Link>
 
-          <nav className="hidden lg:flex space-x-1 overflow-x-auto custom-scrollbar items-center max-w-[70%]">
-            <div className={`flex items-center space-x-1 ${isRTL ? "space-x-reverse" : ""}`}>
+          <nav className={`hidden lg:flex items-center ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div className="flex space-x-1 overflow-x-auto custom-scrollbar items-center max-w-[70%]">
               {navLinks.map((link) => (
                 <Link key={link.name} href={link.path} className="relative group px-3 py-2 whitespace-nowrap">
                   <span
@@ -78,17 +79,12 @@ export default function Navbar() {
               ))}
             </div>
             
-            <div className={`flex items-center space-x-4 ${isRTL ? "space-x-reverse ml-0 mr-4" : "ml-4 mr-0"}`}>
-              <button
-                onClick={toggleLanguage}
-                className="px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-sm font-medium text-gray-800 dark:text-gray-200 hover:bg-gradient-to-r hover:from-[#2563EB] hover:to-[#7C3AED] hover:text-white transition-all focus:outline-none flex items-center gap-1"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-                {t.common.language}
-              </button>
+            <div className={`flex items-center space-x-3 ${isRTL ? "space-x-reverse ml-0 mr-4" : "ml-4 mr-0"}`}>
+              <LanguageSwitcher variant="segmented" />
 
               <button
                 onClick={toggleTheme}
+                aria-label="Toggle theme"
                 className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none"
               >
                 <motion.div
@@ -96,23 +92,17 @@ export default function Navbar() {
                   transition={{ duration: 0.5 }}
                 >
                   {theme === "dark" ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
                   ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
                   )}
                 </motion.div>
               </button>
             </div>
           </nav>
 
-          <div className={`flex items-center lg:hidden space-x-4 ${isRTL ? "space-x-reverse" : ""}`}>
-            <button
-              onClick={toggleLanguage}
-              className="px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-800 dark:text-gray-200 hover:bg-gradient-to-r hover:from-[#2563EB] hover:to-[#7C3AED] hover:text-white transition-all focus:outline-none flex items-center gap-1"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-              {t.common.language}
-            </button>
+          <div className={`flex items-center lg:hidden space-x-3 ${isRTL ? "space-x-reverse" : ""}`}>
+            <LanguageSwitcher variant="segmented" />
 
             <button
               onClick={toggleTheme}
@@ -150,13 +140,17 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden bg-white/95 dark:bg-[#050816]/95 backdrop-blur-3xl border-b border-gray-200/20 dark:border-white/10 overflow-y-auto"
           >
-            <div className="px-4 pt-2 pb-6 space-y-1">
+            <div className="px-4 pt-4 pb-6 space-y-2">
+              <div className="flex items-center justify-between px-3 py-2 mb-2 bg-gray-100/50 dark:bg-white/5 rounded-2xl">
+                <span className="text-xs font-semibold text-gray-500 dark:text-gray-400">{t.common.filter || "Language / اللغة"}</span>
+                <LanguageSwitcher variant="segmented" />
+              </div>
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.path}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-3 py-4 border-b border-gray-100 dark:border-gray-800 text-lg font-medium font-manrope ${
+                  className={`block px-3 py-3.5 border-b border-gray-100 dark:border-gray-800/50 text-base font-medium font-manrope ${
                     pathname === link.path
                       ? "text-[#2563EB] dark:text-[#06B6D4]"
                       : "text-gray-700 hover:text-[#2563EB] dark:text-gray-300 dark:hover:text-[#06B6D4]"
