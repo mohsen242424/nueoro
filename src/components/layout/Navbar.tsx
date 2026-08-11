@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../providers/ThemeProvider";
 import { useLanguage } from "../providers/LanguageProvider";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+import { Menu, X, Sun, Moon, Sparkles } from "lucide-react";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,7 +25,6 @@ export default function Navbar() {
     { name: t.nav.map, path: "/map" },
     { name: t.nav.gpa, path: "/gpa" },
     { name: t.nav.committees, path: "/committees" },
-    { name: t.nav.join, path: "/join" },
     { name: t.nav.about, path: "/about" },
     { name: t.nav.contact, path: "/contact" },
   ];
@@ -37,128 +37,170 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu when pathname changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 inset-x-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 dark:bg-[#050816]/80 backdrop-blur-xl shadow-lg border-b border-gray-200/20 dark:border-white/10"
-          : "bg-transparent"
+          ? "bg-white/85 dark:bg-[#050816]/85 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] border-b border-slate-200/60 dark:border-white/10 py-3"
+          : "bg-transparent py-4 md:py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <Link href="/" className="flex-shrink-0 flex items-center">
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              className="font-poppins font-bold text-2xl tracking-tighter bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#06B6D4] bg-clip-text text-transparent"
-            >
+        <div className="flex items-center justify-between gap-4">
+          
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#2563EB] via-[#7C3AED] to-[#06B6D4] p-0.5 shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+              <div className="w-full h-full bg-white dark:bg-[#050816] rounded-[10px] flex items-center justify-center">
+                <Sparkles className="w-4 h-4 text-[#2563EB] dark:text-[#06B6D4]" />
+              </div>
+            </div>
+            <span className="font-poppins font-black text-2xl tracking-tighter bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#06B6D4] bg-clip-text text-transparent">
               NEURO
-            </motion.span>
+            </span>
           </Link>
 
-          <nav className={`hidden lg:flex items-center ${isRTL ? "flex-row-reverse" : ""}`}>
-            <div className="flex space-x-1 overflow-x-auto custom-scrollbar items-center max-w-[70%]">
-              {navLinks.map((link) => (
-                <Link key={link.name} href={link.path} className="relative group px-3 py-2 whitespace-nowrap">
-                  <span
-                    className={`font-manrope text-sm font-medium transition-colors ${
-                      pathname === link.path
-                        ? "text-[#2563EB] dark:text-[#06B6D4]"
-                        : "text-gray-600 hover:text-[#2563EB] dark:text-gray-300 dark:hover:text-[#06B6D4]"
+          {/* Centered Navigation Bar (Desktop) */}
+          <nav className="hidden xl:flex items-center justify-center flex-1 max-w-fit mx-auto">
+            <div className="flex items-center gap-1 p-1.5 rounded-full bg-slate-100/80 dark:bg-white/[0.06] backdrop-blur-md border border-slate-200/70 dark:border-white/10 shadow-inner">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    className={`relative px-3.5 py-1.5 rounded-full text-xs font-semibold font-manrope transition-all duration-200 whitespace-nowrap ${
+                      isActive
+                        ? "text-white shadow-sm"
+                        : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-white/10"
                     }`}
                   >
-                    {link.name}
-                  </span>
-                  {pathname === link.path && (
-                    <motion.div
-                      layoutId="navbar-indicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#2563EB] to-[#7C3AED] dark:from-[#06B6D4] dark:to-[#7C3AED]"
-                    />
-                  )}
-                </Link>
-              ))}
-            </div>
-            
-            <div className={`flex items-center space-x-3 ${isRTL ? "space-x-reverse ml-0 mr-4" : "ml-4 mr-0"}`}>
-              <LanguageSwitcher variant="segmented" />
-
-              <button
-                onClick={toggleTheme}
-                aria-label="Toggle theme"
-                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors focus:outline-none"
-              >
-                <motion.div
-                  animate={{ rotate: theme === "dark" ? 180 : 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {theme === "dark" ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                  ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-                  )}
-                </motion.div>
-              </button>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNavPill"
+                        className="absolute inset-0 bg-gradient-to-r from-[#2563EB] to-[#7C3AED] dark:from-[#06B6D4] dark:to-[#7C3AED] rounded-full z-[-1]"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10">{link.name}</span>
+                  </Link>
+                );
+              })}
             </div>
           </nav>
 
-          <div className={`flex items-center lg:hidden space-x-3 ${isRTL ? "space-x-reverse" : ""}`}>
+          {/* Right Controls (Language + Theme + Join CTA) */}
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
+            {/* Join CTA Button */}
+            <Link
+              href="/join"
+              className={`px-4 py-2 rounded-full text-xs font-bold font-manrope transition-all duration-200 border ${
+                pathname === "/join"
+                  ? "bg-gradient-to-r from-[#C41E3A] to-rose-600 text-white border-transparent shadow-md shadow-rose-500/25"
+                  : "bg-rose-500/10 dark:bg-rose-500/20 text-[#C41E3A] dark:text-rose-400 border-rose-500/30 hover:bg-[#C41E3A] hover:text-white hover:border-transparent"
+              }`}
+            >
+              {t.nav.join}
+            </Link>
+
+            {/* Language Switcher */}
+            <LanguageSwitcher variant="segmented" />
+
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="p-2 rounded-full bg-slate-100 dark:bg-white/[0.07] border border-slate-200/70 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/15 transition-all duration-200 focus:outline-none"
+            >
+              <motion.div
+                animate={{ rotate: theme === "dark" ? 180 : 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                {theme === "dark" ? (
+                  <Moon className="w-4 h-4 text-cyan-400" />
+                ) : (
+                  <Sun className="w-4 h-4 text-amber-500" />
+                )}
+              </motion.div>
+            </button>
+          </div>
+
+          {/* Mobile / Tablet Controls */}
+          <div className="flex items-center gap-2 xl:hidden">
             <LanguageSwitcher variant="segmented" />
 
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none"
+              aria-label="Toggle theme"
+              className="p-2 rounded-full bg-slate-100 dark:bg-white/[0.07] border border-slate-200/70 dark:border-white/10 text-slate-700 dark:text-slate-300 focus:outline-none"
             >
-              <motion.div animate={{ rotate: theme === "dark" ? 180 : 0 }}>
-                {theme === "dark" ? (
-                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                ) : (
-                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-                )}
-              </motion.div>
+              {theme === "dark" ? (
+                <Moon className="w-4 h-4 text-cyan-400" />
+              ) : (
+                <Sun className="w-4 h-4 text-amber-500" />
+              )}
             </button>
+
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-600 dark:text-gray-300 hover:text-[#2563EB] dark:hover:text-[#06B6D4] focus:outline-none"
+              aria-label="Toggle navigation menu"
+              className="p-2 rounded-full bg-slate-100 dark:bg-white/[0.07] border border-slate-200/70 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-[#2563EB] dark:hover:text-[#06B6D4] focus:outline-none"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
           </div>
+
         </div>
       </div>
 
+      {/* Mobile Drawer Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "100vh" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white/95 dark:bg-[#050816]/95 backdrop-blur-3xl border-b border-gray-200/20 dark:border-white/10 overflow-y-auto"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="xl:hidden bg-white/95 dark:bg-[#050816]/95 backdrop-blur-2xl border-b border-slate-200/70 dark:border-white/10 shadow-2xl mt-3 px-4 pt-3 pb-6 max-h-[85vh] overflow-y-auto"
           >
-            <div className="px-4 pt-4 pb-6 space-y-2">
-              <div className="flex items-center justify-between px-3 py-2 mb-2 bg-gray-100/50 dark:bg-white/5 rounded-2xl">
-                <span className="text-xs font-semibold text-gray-500 dark:text-gray-400">{t.common.filter || "Language / اللغة"}</span>
-                <LanguageSwitcher variant="segmented" />
-              </div>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-3 py-3.5 border-b border-gray-100 dark:border-gray-800/50 text-base font-medium font-manrope ${
-                    pathname === link.path
-                      ? "text-[#2563EB] dark:text-[#06B6D4]"
-                      : "text-gray-700 hover:text-[#2563EB] dark:text-gray-300 dark:hover:text-[#06B6D4]"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+            <div className="space-y-1 max-w-md mx-auto">
+              <Link
+                href="/join"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center justify-center w-full py-3 mb-3 rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#7C3AED] text-white font-bold text-sm shadow-md"
+              >
+                {t.nav.join}
+              </Link>
+
+              {navLinks.map((link) => {
+                const isActive = pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium font-manrope transition-all ${
+                      isActive
+                        ? "bg-blue-500/10 dark:bg-cyan-500/10 text-[#2563EB] dark:text-[#06B6D4] font-bold"
+                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/70 dark:hover:bg-white/5"
+                    }`}
+                  >
+                    <span>{link.name}</span>
+                    {isActive && (
+                      <span className="w-2 h-2 rounded-full bg-[#2563EB] dark:bg-[#06B6D4]" />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
           </motion.div>
         )}
