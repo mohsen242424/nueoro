@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Maximize, Share2, Copy, Check, Info } from 'lucide-react';
+import { X, Maximize, Minimize, Share2, Copy, Check, Info } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
@@ -73,6 +73,13 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
     }
   };
 
+  // Ensure Sketchfab starts cleanly, full viewport and centered
+  const getFullEmbedUrl = (url: string) => {
+    if (!url) return '';
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}autostart=1&preload=1&ui_theme=dark&transparent=0`;
+  };
+
   return (
     <AnimatePresence>
       {isOpen && model && (
@@ -80,7 +87,7 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xl p-4 sm:p-6 md:p-12"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-2xl p-2 sm:p-4 md:p-8"
           onClick={onClose}
         >
           <motion.div
@@ -88,45 +95,51 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className={`relative flex flex-col bg-[#050816]/90 border border-white/10 rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 ${
-              isFullscreen ? 'w-full h-full' : 'w-full max-w-5xl max-h-[90vh]'
+            className={`relative flex flex-col bg-[#0A0508] border border-rose-900/30 rounded-3xl overflow-hidden shadow-2xl shadow-rose-950/50 transition-all duration-300 ${
+              isFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-5xl h-[88vh] max-h-[850px]'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-white/5">
-              <h2 className="text-xl md:text-2xl font-bold font-poppins text-white">{model.title}</h2>
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-6 py-3.5 border-b border-rose-900/20 bg-[#12070D]/90 z-20">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-[#E11D48] animate-pulse"></div>
+                <h2 className="text-base sm:text-lg md:text-xl font-bold font-poppins text-white truncate max-w-md">
+                  {model.title}
+                </h2>
+              </div>
+
               <div className="flex items-center gap-2">
                 <button
                   onClick={toggleFullscreen}
-                  className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                  className="p-2 text-rose-200/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors"
                   aria-label="Toggle Fullscreen"
                 >
-                  <Maximize className="w-5 h-5" />
+                  {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
                 </button>
                 <button
                   onClick={onClose}
-                  className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                  className="p-2 text-rose-200/70 hover:text-white hover:bg-rose-500/20 rounded-xl transition-colors"
                   aria-label={t.anatomy.close}
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Viewer Body */}
-            <div className="relative flex-grow bg-black/50 overflow-hidden" style={{ minHeight: isFullscreen ? '0' : '400px', flexBasis: '100%' }}>
+            {/* 3D Model Canvas Area - Occupies full height seamlessly */}
+            <div className="relative flex-grow w-full h-full bg-black overflow-hidden">
               {isLoading && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                  <div className="w-10 h-10 border-4 border-[#2563EB] border-t-transparent rounded-full animate-spin"></div>
-                  <span className="text-white text-sm font-medium">{t.anatomy.loading}</span>
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[#080406] z-10">
+                  <div className="w-12 h-12 border-4 border-[#9F1239] border-t-transparent rounded-full animate-spin"></div>
+                  <span className="text-rose-200 text-xs font-semibold tracking-wide">{t.anatomy.loading}</span>
                 </div>
               )}
               <iframe
                 ref={iframeRef}
                 title={model.title}
-                className="w-full h-full border-none"
-                src={model.embedUrl}
+                className="absolute inset-0 w-full h-full border-0"
+                src={getFullEmbedUrl(model.embedUrl)}
                 allow="autoplay; fullscreen; xr-spatial-tracking"
                 allowFullScreen
                 onLoad={() => setIsLoading(false)}
@@ -135,38 +148,38 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
 
             {/* Footer Details */}
             {!isFullscreen && (
-              <div className="p-6 bg-[#050816] border-t border-white/10 flex flex-col md:flex-row gap-6 justify-between items-start md:items-center">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white bg-gradient-to-r from-[#2563EB] to-[#7C3AED] rounded-full">
+              <div className="p-4 sm:p-5 bg-[#12070D] border-t border-rose-900/20 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center z-20">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                    <span className="px-3 py-0.5 text-[11px] font-bold uppercase tracking-wider text-white bg-gradient-to-r from-[#881337] to-[#BE123C] rounded-full shadow-sm">
                       {model.category}
                     </span>
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {model.tags.map((tag) => (
-                        <span key={tag} className="px-2 py-0.5 text-xs text-gray-400 bg-white/5 rounded-md border border-white/10">
+                        <span key={tag} className="px-2 py-0.5 text-[11px] font-semibold text-rose-200/80 bg-white/5 rounded-lg border border-rose-900/20">
                           #{tag}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <p className="text-gray-300 text-sm flex items-start gap-2">
-                    <Info className="w-4 h-4 mt-0.5 flex-shrink-0 text-[#06B6D4]" />
-                    {model.description}
+                  <p className="text-rose-200/70 text-xs flex items-start gap-1.5 leading-relaxed">
+                    <Info className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-[#FB7185]" />
+                    <span>{model.description}</span>
                   </p>
                 </div>
 
-                <div className="flex gap-3 w-full md:w-auto">
+                <div className="flex gap-2 w-full sm:w-auto shrink-0">
                   <button
                     onClick={handleShare}
-                    className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white text-sm font-medium transition-colors"
+                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-white/5 hover:bg-white/10 border border-rose-900/20 rounded-xl text-rose-100 text-xs font-bold transition-colors"
                   >
-                    <Share2 className="w-4 h-4" /> {t.anatomy.share}
+                    <Share2 className="w-3.5 h-3.5" /> {t.anatomy.share}
                   </button>
                   <button
                     onClick={handleCopyLink}
-                    className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white text-sm font-medium transition-colors relative"
+                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#881337] to-[#9F1239] hover:from-[#9F1239] hover:to-[#BE123C] text-white rounded-xl text-xs font-bold transition-all shadow-sm relative"
                   >
-                    {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                     {copied ? t.anatomy.copied : t.anatomy.copyLink}
                   </button>
                 </div>
