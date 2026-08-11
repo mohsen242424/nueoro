@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../providers/ThemeProvider";
 import { useLanguage } from "../providers/LanguageProvider";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
-import { Menu, X, Sun, Moon, Sparkles } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -37,7 +38,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when pathname changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
@@ -46,28 +46,35 @@ export default function Navbar() {
     <header
       className={`fixed top-0 inset-x-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/85 dark:bg-[#050816]/85 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] border-b border-slate-200/60 dark:border-white/10 py-3"
+          ? "bg-white/90 dark:bg-[#080406]/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(159,18,57,0.08)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.7)] border-b border-rose-900/10 dark:border-rose-900/20 py-3"
           : "bg-transparent py-4 md:py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4">
           
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#2563EB] via-[#7C3AED] to-[#06B6D4] p-0.5 shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
-              <div className="w-full h-full bg-white dark:bg-[#050816] rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-[#2563EB] dark:text-[#06B6D4]" />
+          {/* Logo with Real Brand Graphic */}
+          <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
+            <div className="relative w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#881337] via-[#BE123C] to-[#FB7185] shadow-md shadow-rose-900/30 group-hover:scale-105 transition-transform duration-200 overflow-hidden">
+              <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
+                <Image
+                  src="/logo.png"
+                  alt="NEURO Logo"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-cover"
+                  priority
+                />
               </div>
             </div>
-            <span className="font-poppins font-black text-2xl tracking-tighter bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#06B6D4] bg-clip-text text-transparent">
+            <span className="font-poppins font-black text-2xl tracking-tighter bg-gradient-to-r from-[#BE123C] via-[#E11D48] to-[#FDA4AF] bg-clip-text text-transparent">
               NEURO
             </span>
           </Link>
 
           {/* Centered Navigation Bar (Desktop) */}
           <nav className="hidden xl:flex items-center justify-center flex-1 max-w-fit mx-auto">
-            <div className="flex items-center gap-1 p-1.5 rounded-full bg-slate-100/80 dark:bg-white/[0.06] backdrop-blur-md border border-slate-200/70 dark:border-white/10 shadow-inner">
+            <div className="flex items-center gap-1 p-1.5 rounded-full bg-slate-100/90 dark:bg-[#150B10]/80 backdrop-blur-md border border-rose-900/10 dark:border-rose-900/30 shadow-inner">
               {navLinks.map((link) => {
                 const isActive = pathname === link.path;
                 return (
@@ -77,13 +84,13 @@ export default function Navbar() {
                     className={`relative px-3.5 py-1.5 rounded-full text-xs font-semibold font-manrope transition-all duration-200 whitespace-nowrap ${
                       isActive
                         ? "text-white shadow-sm"
-                        : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-white/10"
+                        : "text-slate-700 dark:text-rose-100/80 hover:text-rose-950 dark:hover:text-white hover:bg-rose-50 dark:hover:bg-rose-950/40"
                     }`}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="activeNavPill"
-                        className="absolute inset-0 bg-gradient-to-r from-[#2563EB] to-[#7C3AED] dark:from-[#06B6D4] dark:to-[#7C3AED] rounded-full z-[-1]"
+                        className="absolute inset-0 bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#E11D48] rounded-full z-[-1] shadow-md shadow-rose-900/30"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -101,8 +108,8 @@ export default function Navbar() {
               href="/join"
               className={`px-4 py-2 rounded-full text-xs font-bold font-manrope transition-all duration-200 border ${
                 pathname === "/join"
-                  ? "bg-gradient-to-r from-[#C41E3A] to-rose-600 text-white border-transparent shadow-md shadow-rose-500/25"
-                  : "bg-rose-500/10 dark:bg-rose-500/20 text-[#C41E3A] dark:text-rose-400 border-rose-500/30 hover:bg-[#C41E3A] hover:text-white hover:border-transparent"
+                  ? "bg-gradient-to-r from-[#9F1239] to-[#E11D48] text-white border-transparent shadow-md shadow-rose-900/30"
+                  : "bg-rose-900/10 dark:bg-rose-900/25 text-[#9F1239] dark:text-rose-300 border-rose-900/20 dark:border-rose-800/40 hover:bg-gradient-to-r hover:from-[#9F1239] hover:to-[#E11D48] hover:text-white hover:border-transparent"
               }`}
             >
               {t.nav.join}
@@ -115,14 +122,14 @@ export default function Navbar() {
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="p-2 rounded-full bg-slate-100 dark:bg-white/[0.07] border border-slate-200/70 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/15 transition-all duration-200 focus:outline-none"
+              className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/10 dark:border-rose-900/30 text-slate-700 dark:text-rose-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-all duration-200 focus:outline-none"
             >
               <motion.div
                 animate={{ rotate: theme === "dark" ? 180 : 0 }}
                 transition={{ duration: 0.4 }}
               >
                 {theme === "dark" ? (
-                  <Moon className="w-4 h-4 text-cyan-400" />
+                  <Moon className="w-4 h-4 text-rose-400" />
                 ) : (
                   <Sun className="w-4 h-4 text-amber-500" />
                 )}
@@ -137,10 +144,10 @@ export default function Navbar() {
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="p-2 rounded-full bg-slate-100 dark:bg-white/[0.07] border border-slate-200/70 dark:border-white/10 text-slate-700 dark:text-slate-300 focus:outline-none"
+              className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/10 dark:border-rose-900/30 text-slate-700 dark:text-rose-200 focus:outline-none"
             >
               {theme === "dark" ? (
-                <Moon className="w-4 h-4 text-cyan-400" />
+                <Moon className="w-4 h-4 text-rose-400" />
               ) : (
                 <Sun className="w-4 h-4 text-amber-500" />
               )}
@@ -149,7 +156,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle navigation menu"
-              className="p-2 rounded-full bg-slate-100 dark:bg-white/[0.07] border border-slate-200/70 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-[#2563EB] dark:hover:text-[#06B6D4] focus:outline-none"
+              className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/10 dark:border-rose-900/30 text-slate-700 dark:text-rose-200 hover:text-[#BE123C] dark:hover:text-[#FB7185] focus:outline-none"
             >
               {isMobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -170,13 +177,13 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="xl:hidden bg-white/95 dark:bg-[#050816]/95 backdrop-blur-2xl border-b border-slate-200/70 dark:border-white/10 shadow-2xl mt-3 px-4 pt-3 pb-6 max-h-[85vh] overflow-y-auto"
+            className="xl:hidden bg-white/95 dark:bg-[#080406]/95 backdrop-blur-2xl border-b border-rose-900/10 dark:border-rose-900/30 shadow-2xl mt-3 px-4 pt-3 pb-6 max-h-[85vh] overflow-y-auto"
           >
             <div className="space-y-1 max-w-md mx-auto">
               <Link
                 href="/join"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center w-full py-3 mb-3 rounded-2xl bg-gradient-to-r from-[#2563EB] to-[#7C3AED] text-white font-bold text-sm shadow-md"
+                className="flex items-center justify-center w-full py-3 mb-3 rounded-2xl bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#E11D48] text-white font-bold text-sm shadow-md shadow-rose-900/30"
               >
                 {t.nav.join}
               </Link>
@@ -190,13 +197,13 @@ export default function Navbar() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium font-manrope transition-all ${
                       isActive
-                        ? "bg-blue-500/10 dark:bg-cyan-500/10 text-[#2563EB] dark:text-[#06B6D4] font-bold"
-                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/70 dark:hover:bg-white/5"
+                        ? "bg-rose-500/10 dark:bg-rose-500/15 text-[#BE123C] dark:text-[#FB7185] font-bold"
+                        : "text-slate-700 dark:text-slate-300 hover:bg-rose-50/70 dark:hover:bg-rose-950/30"
                     }`}
                   >
                     <span>{link.name}</span>
                     {isActive && (
-                      <span className="w-2 h-2 rounded-full bg-[#2563EB] dark:bg-[#06B6D4]" />
+                      <span className="w-2 h-2 rounded-full bg-[#BE123C] dark:bg-[#FB7185]" />
                     )}
                   </Link>
                 );

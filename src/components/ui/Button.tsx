@@ -14,10 +14,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: "bg-gradient-to-r from-[#2563EB] to-[#7C3AED] text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 border-transparent",
-  secondary: "bg-white/10 dark:bg-white/5 backdrop-blur-md text-gray-900 dark:text-white border-gray-200 dark:border-white/10 hover:bg-white/20 dark:hover:bg-white/10",
-  outline: "bg-transparent text-gray-900 dark:text-white border-2 border-transparent bg-clip-padding relative before:absolute before:inset-0 before:-m-[2px] before:rounded-[inherit] before:bg-gradient-to-r before:from-[#06B6D4] before:to-[#7C3AED] before:-z-10 hover:shadow-lg hover:shadow-cyan-500/20",
-  danger: "bg-gradient-to-r from-[#C41E3A] to-red-600 text-white shadow-lg shadow-red-500/25 hover:shadow-red-500/40 border-transparent",
+  primary: "bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#E11D48] text-white shadow-lg shadow-rose-900/30 hover:shadow-rose-900/50 border-transparent",
+  secondary: "bg-rose-950/10 dark:bg-white/5 backdrop-blur-md text-rose-950 dark:text-rose-100 border border-rose-900/20 dark:border-white/10 hover:bg-rose-950/20 dark:hover:bg-white/10",
+  outline: "bg-transparent text-rose-950 dark:text-white border-2 border-rose-800/40 hover:border-rose-600 hover:bg-rose-500/10 hover:shadow-lg hover:shadow-rose-900/20",
+  danger: "bg-gradient-to-r from-[#881337] to-red-700 text-white shadow-lg shadow-rose-900/30 hover:shadow-rose-900/50 border-transparent",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -33,7 +33,7 @@ export function Button({ className = "", variant = "primary", size = "md", isLoa
         whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
         className={`
           relative inline-flex items-center justify-center font-manrope rounded-xl transition-all duration-200
-          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2563EB] dark:focus:ring-offset-[#050816]
+          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9F1239] dark:focus:ring-offset-[#080406]
           disabled:opacity-60 disabled:cursor-not-allowed border z-0 overflow-hidden
           ${variantStyles[variant]}
           ${sizeStyles[size]}

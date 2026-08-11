@@ -25,7 +25,6 @@ const StatCounter = ({ value, duration = 2, inView }: { value: number; duration?
 
       let totalMiliseconds = duration * 1000;
       let incrementTime = (totalMiliseconds / end) * 50; 
-      // simple interpolation
       if(incrementTime < 10) incrementTime = 10;
 
       let timer = setInterval(() => {
@@ -55,36 +54,36 @@ const StatCard = ({ label, value, suffix = '', icon, gradientClass, delay }: Sta
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.6, delay: delay }}
-      className="relative p-6 rounded-2xl bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden group hover:scale-[1.02] transition-transform"
+      className="relative p-6 rounded-3xl bg-white/70 dark:bg-[#12070D]/80 backdrop-blur-xl border border-rose-900/10 dark:border-rose-900/30 shadow-xl overflow-hidden group hover:scale-[1.03] transition-all duration-300"
     >
       <div className={`absolute top-0 right-0 w-32 h-32 rounded-bl-full opacity-20 blur-2xl transition-opacity group-hover:opacity-40 ${gradientClass}`} />
       
       <div className="flex items-center gap-4 mb-4">
-        <div className={`p-3 rounded-xl bg-gradient-to-br ${gradientClass} text-white shadow-lg`}>
+        <div className={`p-3.5 rounded-2xl bg-gradient-to-br ${gradientClass} text-white shadow-lg shadow-rose-900/30`}>
           {icon}
         </div>
       </div>
       
       <div className="flex flex-col">
-        <h3 className="text-4xl font-bold font-poppins text-slate-900 dark:text-white flex items-baseline">
+        <h3 className="text-4xl font-bold font-poppins text-slate-900 dark:text-rose-100 flex items-baseline">
           <StatCounter value={value} inView={isInView} />
-          <span className="text-primary ml-1">{suffix}</span>
+          <span className="text-[#E11D48] ml-1">{suffix}</span>
         </h3>
-        <p className="text-slate-600 dark:text-slate-400 font-medium mt-1">{label}</p>
+        <p className="text-slate-600 dark:text-rose-200/70 font-medium mt-1 text-sm">{label}</p>
       </div>
     </motion.div>
   );
 };
 
 export default function StatsSection() {
-  const { t, isRTL } = useLanguage();
+  const { t } = useLanguage();
   const stats = [
     {
       label: t.stats.studentsHelped,
       value: 500,
       suffix: '+',
       icon: <Users className="w-6 h-6" />,
-      gradientClass: 'from-blue-500 to-indigo-600',
+      gradientClass: 'from-[#881337] to-[#BE123C]',
       delay: 0.1
     },
     {
@@ -92,7 +91,7 @@ export default function StatsSection() {
       value: 10000,
       suffix: '+',
       icon: <MessageSquareText className="w-6 h-6" />,
-      gradientClass: 'from-violet-500 to-purple-600',
+      gradientClass: 'from-[#9F1239] to-[#E11D48]',
       delay: 0.2
     },
     {
@@ -100,7 +99,7 @@ export default function StatsSection() {
       value: 50,
       suffix: '+',
       icon: <Cuboid className="w-6 h-6" />,
-      gradientClass: 'from-cyan-500 to-blue-600',
+      gradientClass: 'from-[#BE123C] to-[#FB7185]',
       delay: 0.3
     },
     {
@@ -108,13 +107,13 @@ export default function StatsSection() {
       value: 8,
       suffix: '',
       icon: <Landmark className="w-6 h-6" />,
-      gradientClass: 'from-emerald-500 to-teal-600',
+      gradientClass: 'from-[#7F1D1D] to-[#B91C1C]',
       delay: 0.4
     }
   ];
 
   return (
-    <section className="py-20 relative z-20">
+    <section className="py-16 relative z-20">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, idx) => (

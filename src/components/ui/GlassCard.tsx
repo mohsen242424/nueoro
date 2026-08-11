@@ -49,12 +49,12 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
         whileHover={hoverEffect ? { y: -5, transition: { duration: 0.2 } } : {}}
         className={`
           relative rounded-2xl md:rounded-3xl overflow-hidden
-          bg-white/40 dark:bg-[#050816]/40 
-          border border-gray-200/50 dark:border-white/10
-          shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]
+          bg-white/70 dark:bg-[#12070D]/70 
+          border border-rose-900/10 dark:border-rose-900/25
+          shadow-[0_8px_32px_0_rgba(159,18,57,0.06)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]
           ${blurStyles[blur]}
-          ${gradientBorder ? "before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:p-[1px] before:bg-gradient-to-br before:from-[#2563EB]/50 before:via-[#7C3AED]/50 before:to-[#06B6D4]/50 before:content-['']" : ""}
-          ${hoverEffect ? "hover:shadow-xl hover:border-gray-300/50 dark:hover:border-white/20 transition-all duration-300 group" : ""}
+          ${gradientBorder ? "before:absolute before:inset-0 before:-z-10 before:rounded-[inherit] before:p-[1px] before:bg-gradient-to-br before:from-[#9F1239]/50 before:via-[#BE123C]/50 before:to-[#FB7185]/50 before:content-['']" : ""}
+          ${hoverEffect ? "hover:shadow-2xl hover:shadow-rose-950/20 hover:border-rose-900/30 dark:hover:border-rose-800/40 transition-all duration-300 group" : ""}
           ${className}
         `}
         {...props}

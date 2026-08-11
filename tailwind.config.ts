@@ -11,44 +11,59 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#2563eb',
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-          950: '#172554',
+          DEFAULT: '#9F1239', // Royal Burgundy / خمري
+          50: '#fff1f2',
+          100: '#ffe4e6',
+          200: '#fecdd3',
+          300: '#fda4af',
+          400: '#fb7185',
+          500: '#f43f5e',
+          600: '#e11d48',
+          700: '#be123c',
+          800: '#9f1239', // Core Burgundy
+          900: '#881337',
+          950: '#4c0519',
         },
         secondary: {
-          DEFAULT: '#7C3AED',
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7e22ce',
-          800: '#6b21a8',
-          900: '#581c87',
-          950: '#3b0764',
+          DEFAULT: '#BE123C', // Deep Crimson / قرمزي
+          50: '#fff5f5',
+          100: '#fed7d7',
+          200: '#feb2b2',
+          300: '#fc8181',
+          400: '#f56565',
+          500: '#e53e3e',
+          600: '#c53030',
+          700: '#9b2c2c',
+          800: '#742a2a',
+          900: '#63171b',
+          950: '#3f0e11',
         },
         accent: {
-          DEFAULT: '#06b6d4',
+          DEFAULT: '#FB7185', // Rose / Coral glow
+          bone: '#F5EBE6',    // Bone ivory from spine in logo
+          ivory: '#FAF6F0',
+          gold: '#D97706',
+        },
+        bone: {
+          DEFAULT: '#F5EBE6',
+          50: '#FAF8F5',
+          100: '#F5EBE6',
+          200: '#EBDCD4',
+          300: '#DFC8BC',
         },
         'brand-red': {
-          DEFAULT: '#c41e3a',
+          DEFAULT: '#9F1239',
         },
         dark: {
-          DEFAULT: '#050816',
+          DEFAULT: '#080406', // Onyx background from logo
+          surface: '#11070B',
+          card: '#180B11',
+          border: 'rgba(255, 255, 255, 0.08)',
         },
         light: {
-          DEFAULT: '#f8fafc',
+          DEFAULT: '#FAF7F5',
+          surface: '#FFFFFF',
+          card: '#FFFFFF',
         }
       },
       fontFamily: {
@@ -94,8 +109,8 @@ const config: Config = {
           '50%': { transform: 'translateY(-5%)' },
         },
         'neural-pulse': {
-          '0%, 100%': { opacity: '0.8', boxShadow: '0 0 10px rgba(6, 182, 212, 0.5)' },
-          '50%': { opacity: '1', boxShadow: '0 0 20px rgba(6, 182, 212, 1)' },
+          '0%, 100%': { opacity: '0.8', boxShadow: '0 0 10px rgba(225, 29, 72, 0.5)' },
+          '50%': { opacity: '1', boxShadow: '0 0 25px rgba(225, 29, 72, 0.9)' },
         },
         'blob-morph': {
           '0%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },

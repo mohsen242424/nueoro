@@ -29,12 +29,12 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="font-poppins font-bold text-3xl md:text-4xl lg:text-5xl tracking-tight text-gray-900 dark:text-white mb-4"
+        className="font-poppins font-black text-3xl md:text-4xl lg:text-5xl tracking-tight text-slate-900 dark:text-rose-100 mb-4"
       >
         {title.split(' ').map((word, i) => (
           <span key={i} className="inline-block mr-[0.25em]">
             {i % 2 !== 0 ? (
-              <span className="bg-gradient-to-r from-[#2563EB] to-[#7C3AED] dark:from-[#06B6D4] dark:to-[#7C3AED] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#FDA4AF] bg-clip-text text-transparent">
                 {word}
               </span>
             ) : (
@@ -49,7 +49,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className={`font-inter text-gray-600 dark:text-gray-400 text-base md:text-lg max-w-2xl ${isCenter ? "mx-auto" : ""}`}
+          className={`font-inter text-slate-600 dark:text-rose-200/70 text-base md:text-lg max-w-2xl ${isCenter ? "mx-auto" : ""}`}
         >
           {subtitle}
         </motion.p>
@@ -61,7 +61,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           animate={isInView ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeInOut" }}
           style={{ originX: isCenter ? 0.5 : 0 }}
-          className={`mt-6 h-1 w-24 rounded-full bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#06B6D4] opacity-80`}
+          className={`mt-6 h-1.5 w-24 rounded-full bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#FDA4AF] opacity-90 shadow-md shadow-rose-900/30`}
         />
       )}
     </div>

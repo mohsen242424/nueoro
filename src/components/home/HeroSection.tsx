@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { ChevronDown, Zap, BrainCircuit, Box, Users } from 'lucide-react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { ChevronDown, Zap, BrainCircuit, Box, Users, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
@@ -20,7 +21,7 @@ export default function HeroSection() {
       opacity: 1,
       transition: {
         staggerChildren: 0.15,
-        delayChildren: 0.3,
+        delayChildren: 0.2,
       },
     },
   };
@@ -42,158 +43,148 @@ export default function HeroSection() {
   const subtitleWords = t.hero.subtitle.split(' ');
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20">
-      {/* Background Elements */}
+    <section className="relative min-h-[92vh] flex flex-col justify-center items-center overflow-hidden pt-24 pb-16">
+      {/* Background Ambient Glow & Neural Network */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-20 dark:opacity-10"></div>
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(#9F1239_1px,transparent_1px)] [background-size:24px_24px] opacity-15 dark:opacity-20"></div>
         
-        {/* Floating blobs */}
+        {/* Floating Brand Glow Blobs */}
         <motion.div 
-          className="absolute top-[10%] left-[20%] w-96 h-96 bg-primary/20 rounded-full blur-[100px]"
-          animate={{ x: [0, 50, 0], y: [0, -50, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+          className="absolute top-[10%] left-[15%] w-96 h-96 bg-primary/25 rounded-full blur-[120px] pointer-events-none"
+          animate={{ x: [0, 40, 0], y: [0, -40, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div 
-          className="absolute bottom-[20%] right-[10%] w-96 h-96 bg-secondary/20 rounded-full blur-[100px]"
-          animate={{ x: [0, -50, 0], y: [0, 50, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
+          className="absolute bottom-[15%] right-[10%] w-96 h-96 bg-rose-600/20 rounded-full blur-[130px] pointer-events-none"
+          animate={{ x: [0, -40, 0], y: [0, 40, 0], scale: [1, 1.15, 1] }}
+          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div 
-          className="absolute top-[40%] right-[30%] w-72 h-72 bg-accent/20 rounded-full blur-[80px]"
-          animate={{ x: [0, 30, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#4C0519]/30 rounded-full blur-[160px] pointer-events-none"
         />
 
-        {/* Particles */}
-        {mounted && Array.from({ length: 20 }).map((_, i) => (
-          <motion.div
-            key={`particle-${i}`}
-            className="absolute w-1 h-1 bg-white/40 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: 'linear',
-            }}
-          />
-        ))}
-
-        {/* Neural Network SVG */}
-        <svg className="absolute inset-0 w-full h-full opacity-10 dark:opacity-20" xmlns="http://www.w3.org/2000/svg">
+        {/* Neural Network Connecting Lines (SVG) */}
+        <svg className="absolute inset-0 w-full h-full opacity-30 dark:opacity-40" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#2563EB" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="#7C3AED" stopOpacity="0.5" />
+                <linearGradient id="neural-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#9F1239" stopOpacity="0.8" />
+                    <stop offset="50%" stopColor="#E11D48" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#FDA4AF" stopOpacity="0.2" />
                 </linearGradient>
             </defs>
-            <motion.path d="M100 200 L300 400 L500 150 L700 500 L900 250" stroke="url(#line-grad)" strokeWidth="2" fill="none"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+            <motion.path 
+                d="M 100,200 Q 300,50 500,250 T 900,150 T 1200,300" 
+                fill="none" 
+                stroke="url(#neural-grad)" 
+                strokeWidth="1.5"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
             />
-             <motion.path d="M200 600 L400 300 L600 700 L800 350 L1000 600" stroke="url(#line-grad)" strokeWidth="2" fill="none"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 1 }}
+            <motion.path 
+                d="M 50,500 Q 250,300 600,450 T 1000,350 T 1300,600" 
+                fill="none" 
+                stroke="url(#neural-grad)" 
+                strokeWidth="1.5"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 4, delay: 1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
             />
+            {/* Animated Synapse Nodes */}
             {[
-                {cx: 100, cy: 200}, {cx: 300, cy: 400}, {cx: 500, cy: 150}, {cx: 700, cy: 500}, {cx: 900, cy: 250},
-                {cx: 200, cy: 600}, {cx: 400, cy: 300}, {cx: 600, cy: 700}, {cx: 800, cy: 350}, {cx: 1000, cy: 600}
+                {cx: 100, cy: 200}, {cx: 500, cy: 250}, {cx: 900, cy: 150}, {cx: 1200, cy: 300},
+                {cx: 250, cy: 300}, {cx: 600, cy: 450}, {cx: 1000, cy: 350}, {cx: 1300, cy: 600}
             ].map((pt, i) => (
-                <motion.circle key={`dot-${i}`} cx={pt.cx} cy={pt.cy} r="4" fill="#06B6D4"
-                  animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                <motion.circle key={`dot-${i}`} cx={pt.cx} cy={pt.cy} r="4" fill="#FB7185"
+                  animate={{ scale: [1, 1.8, 1], opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.25 }}
                 />
             ))}
         </svg>
-
-        {/* 3D Floating Brain Illustration */}
-        <motion.div 
-            className="absolute top-1/4 right-1/4 opacity-10 pointer-events-none hidden md:block"
-            animate={{ y: [-10, 10, -10], rotate: [-2, 2, -2] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        >
-             <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                 <path d="M9.5 2h5v5l2.5 2.5V14a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2V9.5L9.5 7V2z" />
-                 <path d="M7 16v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1" />
-                 <path d="M12 2v5" />
-                 <path d="M7 9.5H5.5A2.5 2.5 0 0 0 3 12v0a2.5 2.5 0 0 0 2.5 2.5H7" />
-                 <path d="M17 9.5h1.5A2.5 2.5 0 0 1 21 12v0a2.5 2.5 0 0 1-2.5 2.5H17" />
-             </svg>
-        </motion.div>
       </div>
 
       <motion.div 
-        className="relative z-10 flex flex-col items-center text-center px-4 max-w-5xl mx-auto mt-10"
+        className="relative z-10 flex flex-col items-center text-center px-4 max-w-5xl mx-auto"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
+        {/* Animated Brand Logo Badge */}
+        <motion.div 
+          variants={itemVariants}
+          className="relative mb-6 group cursor-pointer"
+        >
+          <div className="absolute -inset-2 bg-gradient-to-r from-[#9F1239] via-[#E11D48] to-[#FB7185] rounded-full blur-md opacity-60 group-hover:opacity-100 transition duration-500 group-hover:scale-105 animate-pulse-glow"></div>
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-[#881337] via-[#BE123C] to-[#FDA4AF] shadow-2xl overflow-hidden">
+            <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
+              <Image
+                src="/logo.png"
+                alt="NEURO"
+                width={120}
+                height={120}
+                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                priority
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Main Brand Title */}
         <motion.h1 
-          className="text-7xl md:text-9xl font-poppins font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent animate-gradient-x py-4"
+          className="text-6xl sm:text-7xl md:text-9xl font-poppins font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#9F1239] via-[#E11D48] to-[#FDA4AF] animate-gradient-x py-2 drop-shadow-sm"
           variants={itemVariants}
         >
           {t.hero.title}
         </motion.h1>
 
+        {/* Tagline Words */}
         <motion.div 
-          className="text-xl md:text-3xl font-medium text-slate-700 dark:text-slate-300 mb-4 flex flex-wrap justify-center gap-x-2"
+          className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 dark:text-rose-100/90 mb-4 flex flex-wrap justify-center gap-x-2"
           variants={containerVariants}
         >
           {subtitleWords.map((word, i) => (
-            <motion.span key={i} variants={wordVariants}>
+            <motion.span key={i} variants={wordVariants} className="hover:text-[#E11D48] transition-colors">
               {word}
             </motion.span>
           ))}
         </motion.div>
 
+        {/* University & Faculty */}
         <motion.p 
-          className="text-sm md:text-lg text-slate-500 dark:text-slate-400 mb-12 max-w-2xl font-light tracking-wide"
+          className="text-xs sm:text-sm md:text-base text-rose-900/70 dark:text-rose-200/60 mb-10 max-w-2xl font-medium tracking-wide"
           variants={itemVariants}
         >
           {t.hero.university}
         </motion.p>
 
+        {/* 4 Interactive CTA Action Buttons */}
         <motion.div 
           className="flex flex-wrap justify-center gap-4 w-full px-4"
           variants={itemVariants}
         >
-          <Link href="/courses" className="flex items-center justify-center gap-2 px-8 py-3.5 bg-primary hover:bg-blue-700 text-white rounded-full font-medium transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:-translate-y-1 w-full sm:w-auto">
-            {t.hero.explore} <Zap className="w-4 h-4" />
+          <Link href="/courses" className="flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#9F1239] to-[#BE123C] hover:from-[#BE123C] hover:to-[#E11D48] text-white rounded-full font-semibold transition-all shadow-[0_0_25px_rgba(159,18,57,0.4)] hover:shadow-[0_0_35px_rgba(225,29,72,0.7)] hover:-translate-y-1 w-full sm:w-auto">
+            {t.hero.explore} <Zap className="w-4 h-4 text-amber-300" />
           </Link>
-          <Link href="/ai-assistant" className="flex items-center justify-center gap-2 px-8 py-3.5 bg-secondary hover:bg-violet-700 text-white rounded-full font-medium transition-all shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:shadow-[0_0_30px_rgba(124,58,237,0.6)] hover:-translate-y-1 w-full sm:w-auto">
-            {t.hero.useAI} <BrainCircuit className="w-4 h-4" />
+          <Link href="/ai-assistant" className="flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#881337] to-[#9F1239] hover:from-[#9F1239] hover:to-[#BE123C] text-white rounded-full font-semibold transition-all shadow-[0_0_25px_rgba(136,19,55,0.4)] hover:shadow-[0_0_35px_rgba(190,18,60,0.6)] hover:-translate-y-1 w-full sm:w-auto">
+            {t.hero.useAI} <BrainCircuit className="w-4 h-4 text-rose-300" />
           </Link>
-          <Link href="/anatomy" className="flex items-center justify-center gap-2 px-8 py-3.5 border border-slate-300 dark:border-slate-700 hover:border-accent hover:bg-accent/10 dark:hover:bg-accent/20 rounded-full font-medium transition-all hover:-translate-y-1 w-full sm:w-auto bg-white/50 dark:bg-black/50 backdrop-blur-sm">
-            {t.hero.anatomy3D} <Box className="w-4 h-4" />
+          <Link href="/anatomy" className="flex items-center justify-center gap-2 px-8 py-3.5 border border-rose-900/20 dark:border-rose-800/40 hover:border-rose-500 hover:bg-rose-500/10 dark:hover:bg-rose-950/40 text-slate-800 dark:text-rose-100 rounded-full font-semibold transition-all hover:-translate-y-1 w-full sm:w-auto bg-white/70 dark:bg-[#12070D]/70 backdrop-blur-md">
+            {t.hero.anatomy3D} <Box className="w-4 h-4 text-rose-400" />
           </Link>
-          <Link href="/join" className="flex items-center justify-center gap-2 px-8 py-3.5 border border-slate-300 dark:border-slate-700 hover:border-brand-red hover:bg-brand-red/10 dark:hover:bg-brand-red/20 rounded-full font-medium transition-all hover:-translate-y-1 w-full sm:w-auto bg-white/50 dark:bg-black/50 backdrop-blur-sm">
+          <Link href="/join" className="flex items-center justify-center gap-2 px-8 py-3.5 border border-rose-600/30 hover:border-rose-600 hover:bg-[#9F1239] hover:text-white text-[#9F1239] dark:text-rose-300 rounded-full font-semibold transition-all hover:-translate-y-1 w-full sm:w-auto bg-white/70 dark:bg-[#12070D]/70 backdrop-blur-md">
             {t.hero.joinNeuro} <Users className="w-4 h-4" />
           </Link>
         </motion.div>
       </motion.div>
 
+      {/* Subtle Scroll Down Indicator */}
       <motion.div 
-        className="absolute bottom-10 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-rose-900/40 dark:text-rose-200/30 flex flex-col items-center gap-1"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="w-8 h-8 text-slate-400" />
-        </motion.div>
+        <ChevronDown className="w-5 h-5 text-primary" />
       </motion.div>
     </section>
   );
