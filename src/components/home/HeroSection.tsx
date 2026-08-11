@@ -110,24 +110,22 @@ export default function HeroSection() {
         initial="hidden"
         animate="visible"
       >
-        {/* Animated Brand Logo Badge */}
+        {/* Transparent Brand Logo Emblem */}
         <motion.div 
           variants={itemVariants}
-          className="relative mb-6 group cursor-pointer"
+          className="relative mb-6 flex items-center justify-center group cursor-pointer"
         >
-          <div className="absolute -inset-2 bg-gradient-to-r from-[#9F1239] via-[#E11D48] to-[#FB7185] rounded-full blur-md opacity-60 group-hover:opacity-100 transition duration-500 group-hover:scale-105 animate-pulse-glow"></div>
-          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-[#881337] via-[#BE123C] to-[#FDA4AF] shadow-2xl overflow-hidden">
-            <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
-              <Image
-                src="/logo.png"
-                alt="NEURO"
-                width={120}
-                height={120}
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                priority
-              />
-            </div>
-          </div>
+          {/* Ambient soft crimson glow */}
+          <div className="absolute w-44 h-44 sm:w-56 sm:h-56 bg-[#9F1239]/20 dark:bg-[#E11D48]/25 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700 pointer-events-none"></div>
+          
+          <Image
+            src="/logo.png"
+            alt="NEURO"
+            width={200}
+            height={200}
+            className="w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 object-contain drop-shadow-[0_10px_30px_rgba(159,18,57,0.35)] group-hover:scale-105 transition-transform duration-500"
+            priority
+          />
         </motion.div>
 
         {/* Main Brand Title */}

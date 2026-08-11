@@ -54,20 +54,16 @@ export default function Navbar() {
         <div className="flex items-center justify-between gap-4">
           
           {/* Logo with Real Brand Graphic */}
-          <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-            <div className="relative w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#881337] via-[#BE123C] to-[#FB7185] shadow-md shadow-rose-900/30 group-hover:scale-105 transition-transform duration-200 overflow-hidden">
-              <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
-                <Image
-                  src="/logo.png"
-                  alt="NEURO Logo"
-                  width={36}
-                  height={36}
-                  className="w-full h-full object-cover"
-                  priority
-                />
-              </div>
-            </div>
-            <span className="font-poppins font-black text-2xl tracking-tighter bg-gradient-to-r from-[#BE123C] via-[#E11D48] to-[#FDA4AF] bg-clip-text text-transparent">
+          <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
+            <Image
+              src="/logo.png"
+              alt="NEURO Logo"
+              width={42}
+              height={42}
+              className="w-9 h-9 sm:w-10 sm:h-10 object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
+              priority
+            />
+            <span className="font-poppins font-black text-xl sm:text-2xl tracking-tighter bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#E11D48] bg-clip-text text-transparent">
               NEURO
             </span>
           </Link>

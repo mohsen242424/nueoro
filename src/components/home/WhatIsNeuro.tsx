@@ -82,17 +82,16 @@ export default function WhatIsNeuro() {
           >
             <div className="relative aspect-square max-w-md mx-auto">
               <div className="absolute inset-0 bg-gradient-to-tr from-[#881337]/30 to-[#BE123C]/30 rounded-[40px] rotate-6 backdrop-blur-3xl animate-pulse-slow"></div>
-              <div className="absolute inset-0 bg-white/40 dark:bg-[#11070C]/90 rounded-[40px] -rotate-2 border border-rose-900/20 dark:border-rose-900/40 backdrop-blur-xl flex flex-col items-center justify-center p-8 shadow-2xl overflow-hidden">
-                <div className="relative w-44 h-44 rounded-full p-1 bg-gradient-to-tr from-[#9F1239] via-[#E11D48] to-[#FDA4AF] shadow-2xl shadow-rose-950/50 mb-4">
-                  <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
-                    <Image
-                      src="/logo.png"
-                      alt="NEURO Brand"
-                      width={170}
-                      height={170}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+              <div className="absolute inset-0 bg-white/70 dark:bg-[#12070D]/80 rounded-[40px] -rotate-2 border border-rose-900/15 dark:border-rose-900/30 backdrop-blur-xl flex flex-col items-center justify-center p-8 shadow-2xl shadow-rose-950/10 overflow-hidden">
+                <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center mb-3">
+                  <div className="absolute inset-0 bg-[#9F1239]/15 dark:bg-[#E11D48]/20 rounded-full blur-2xl animate-pulse-slow"></div>
+                  <Image
+                    src="/logo.png"
+                    alt="NEURO Brand"
+                    width={200}
+                    height={200}
+                    className="w-full h-full object-contain drop-shadow-[0_10px_25px_rgba(159,18,57,0.35)]"
+                  />
                 </div>
                 <span className="font-poppins font-black text-2xl tracking-tight bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#E11D48] bg-clip-text text-transparent">
                   NEURO

@@ -17,17 +17,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#881337] via-[#BE123C] to-[#FB7185] overflow-hidden shadow-md shadow-rose-900/30">
-                <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
-                  <Image
-                    src="/logo.png"
-                    alt="NEURO Logo"
-                    width={36}
-                    height={36}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="NEURO Logo"
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain drop-shadow-sm"
+              />
               <span className="font-poppins font-black text-2xl tracking-tighter bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#FDA4AF] bg-clip-text text-transparent">
                 NEURO
               </span>
