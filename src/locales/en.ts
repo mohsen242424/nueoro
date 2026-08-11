@@ -5,8 +5,8 @@ export const en = {
     anatomy: '3D Anatomy',
     aiAssistant: 'AI Assistant',
     courses: 'Courses',
-    doctors: 'Doctors',
-    map: 'University Map',
+    doctors: 'Faculty Directory',
+    map: 'Campus Map',
     gpa: 'GPA Calculator',
     committees: 'Committees',
     join: 'Join Neuro',
@@ -155,16 +155,17 @@ export const en = {
   },
   // Doctors Page
   doctors: {
-    title: 'Doctors Directory',
-    subtitle: 'Find and contact faculty doctors at The Hashemite University',
-    searchPlaceholder: 'Search by name or department...',
+    title: 'Faculty & Staff Directory',
+    subtitle: 'Faculty members, professors, lecturers, and staff directory at the Faculty of Applied Medical Sciences - Hashemite University',
+    searchPlaceholder: 'Search by name, department, or academic rank...',
     all: 'All',
-    office: 'Office',
+    office: 'Office / Ext',
     officeHours: 'Office Hours',
     email: 'Email',
     openTeams: 'Open Teams',
     copyEmail: 'Copy Email',
-    emailCopied: 'Email Copied!',
+    emailCopied: 'Email copied!',
+    role: 'Academic Rank',
   },
   // Committees Page
   committees: {

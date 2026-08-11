@@ -1,56 +1,702 @@
 [
   {
     "id": 1,
-    "name": "Dr. Mohammad Al-Khateeb",
-    "department": "Anatomy",
-    "office": "Building A, Room 201",
-    "officeHours": "Sun-Tue 10:00 AM - 12:00 PM",
-    "email": "m.alkhateeb@hu.edu.jo",
-    "photo": "/images/doctors/placeholder.jpg"
+    "name": "أ.د. منار فايز موسى عتوم",
+    "nameEn": "Prof. Manar Fayiz Atoum",
+    "role": "استاذ",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5351",
+    "officeHours": "الأحد - الثلاثاء 10:00 - 12:00",
+    "email": "manar@hu.edu.jo"
   },
   {
     "id": 2,
-    "name": "Dr. Sarah Al-Masri",
-    "department": "Physiology",
-    "office": "Building B, Room 105",
-    "officeHours": "Mon-Wed 9:00 AM - 11:00 AM",
-    "email": "s.almasri@hu.edu.jo",
-    "photo": "/images/doctors/placeholder.jpg"
+    "name": "أ.د. مراد احمد محمد الحولي",
+    "nameEn": "Prof. Murad Ahmad Al-Houli",
+    "role": "استاذ",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5389",
+    "officeHours": "الإثنين - الأربعاء 10:00 - 12:00",
+    "email": "murad@hu.edu.jo"
   },
   {
     "id": 3,
-    "name": "Dr. Ahmad Nasser",
-    "department": "Pharmacology",
-    "office": "Building C, Room 302",
-    "officeHours": "Sun-Tue 1:00 PM - 3:00 PM",
-    "email": "a.nasser@hu.edu.jo",
-    "photo": "/images/doctors/placeholder.jpg"
+    "name": "أ.د. نوال سميح حسن حجاوي",
+    "nameEn": "Prof. Nawal Samih Hijjawi",
+    "role": "استاذ",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5386",
+    "officeHours": "الأحد - الثلاثاء 11:00 - 01:00",
+    "email": "nhijjawi@hu.edu.jo"
   },
   {
     "id": 4,
-    "name": "Dr. Layla Mansour",
-    "department": "Nursing",
-    "office": "Building D, Room 110",
-    "officeHours": "Mon-Wed 11:00 AM - 1:00 PM",
-    "email": "l.mansour@hu.edu.jo",
-    "photo": "/images/doctors/placeholder.jpg"
+    "name": "أ.د. عبد المجيد رجا محمد المالطي",
+    "nameEn": "Prof. Abdel-Majeed Raja Al-Malti",
+    "role": "استاذ",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 5534",
+    "officeHours": "الإثنين - الأربعاء 09:00 - 11:00",
+    "email": "abedmalty@hu.edu.jo"
   },
   {
     "id": 5,
-    "name": "Dr. Omar Haddad",
-    "department": "Medical Lab Sciences",
-    "office": "Building A, Room 315",
-    "officeHours": "Tue-Thu 10:00 AM - 12:00 PM",
-    "email": "o.haddad@hu.edu.jo",
-    "photo": "/images/doctors/placeholder.jpg"
+    "name": "أ.د. سهاد سمير قاسم ابو مويس",
+    "nameEn": "Prof. Suhad Samir Abu Mweis",
+    "role": "استاذ",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5387",
+    "officeHours": "الأحد - الثلاثاء 10:00 - 12:00",
+    "email": "suhad.abumweis@hu.edu.jo"
   },
   {
     "id": 6,
-    "name": "Dr. Rania Qasem",
-    "department": "Radiology",
-    "office": "Building B, Room 220",
-    "officeHours": "Sun-Tue 9:00 AM - 11:00 AM",
-    "email": "r.qasem@hu.edu.jo",
-    "photo": "/images/doctors/placeholder.jpg"
+    "name": "أ.د. خالد احمد مجلي ربابعه",
+    "nameEn": "Prof. Khalid Ahmad Rababa'h",
+    "role": "استاذ",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5492 / 5414",
+    "officeHours": "الإثنين - الأربعاء 11:00 - 01:00",
+    "email": "Khalidr@hu.edu.jo"
+  },
+  {
+    "id": 7,
+    "name": "أ. شادن عبد الفتاح محمد البستنجي",
+    "nameEn": "Ms. Shaden Abdelfattah Al-Bostanji",
+    "role": "مدرس",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 5548",
+    "officeHours": "الأحد - الخميس 09:00 - 11:00",
+    "email": "s_bostanji@hu.edu.jo"
+  },
+  {
+    "id": 8,
+    "name": "أ. اسلام خالد علي عليان الشامي",
+    "nameEn": "Ms. Islam Khaled Al-Shami",
+    "role": "مدرس",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5528",
+    "officeHours": "الأحد - الثلاثاء 10:00 - 12:00",
+    "email": "IslamK@hu.edu.jo"
+  },
+  {
+    "id": 9,
+    "name": "أ. ساجده فيصل طلال بطاينه",
+    "nameEn": "Ms. Sajeda Faisal Bataineh",
+    "role": "مدرس",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5383",
+    "officeHours": "الإثنين - الأربعاء 11:00 - 01:00",
+    "email": "Sajeda@hu.edu.jo"
+  },
+  {
+    "id": 10,
+    "name": "أ.د. مهند محمد يوسف حوامده",
+    "nameEn": "Prof. Mohannad Mohammad Hawamdeh",
+    "role": "استاذ",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 5576",
+    "officeHours": "الأحد - الثلاثاء 09:00 - 11:00",
+    "email": "MohannadHawamdeh@hu.edu.jo"
+  },
+  {
+    "id": 11,
+    "name": "د. عبد الرحمن سالم احمد الشديفات",
+    "nameEn": "Dr. Abdel Rahman Salem Al-Shdeifat",
+    "role": "استاذ مشارك",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5393",
+    "officeHours": "الإثنين - الأربعاء 10:00 - 12:00",
+    "email": "abdsalem29@hu.edu.jo"
+  },
+  {
+    "id": 12,
+    "name": "أ. مصطفى احمد مصطفى القيسي",
+    "nameEn": "Mr. Mustafa Ahmad Al-Qaisi",
+    "role": "مدرس",
+    "department": "العلاج الوظيفي",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الأحد - الثلاثاء 11:00 - 01:00",
+    "email": "MustafaA_Mu@hu.edu.jo"
+  },
+  {
+    "id": 13,
+    "name": "أ. سامية عبد الكريم محمد العموش",
+    "nameEn": "Ms. Samyah Abdel Karim Al-Omoush",
+    "role": "مدرس",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5419",
+    "officeHours": "الإثنين - الأربعاء 09:00 - 11:00",
+    "email": "Samyah@hu.edu.jo"
+  },
+  {
+    "id": 14,
+    "name": "أ. ايمان محمد احمد ربابعه",
+    "nameEn": "Ms. Eaman Mohammad Rababa'h",
+    "role": "مدرس",
+    "department": "العلوم الطبية المساندة",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الأحد - الثلاثاء 10:00 - 12:00",
+    "email": "Eaman@hu.edu.jo"
+  },
+  {
+    "id": 15,
+    "name": "أ. خلدون منصور محمد يعقوب",
+    "nameEn": "Mr. Khaldun Mansour Yaqoub",
+    "role": "مدرس",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الإثنين - الأربعاء 10:00 - 12:00",
+    "email": "khaldun@hu.edu.jo"
+  },
+  {
+    "id": 16,
+    "name": "د. رائد علي مصطفى حلالشه",
+    "nameEn": "Dr. Raed Ali Halalsheh",
+    "role": "استاذ مشارك",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5397",
+    "officeHours": "الأحد - الثلاثاء 11:00 - 01:00",
+    "email": "halalsheh@hu.edu.jo"
+  },
+  {
+    "id": 17,
+    "name": "أ.د. امين ناصر منيزل عليمات",
+    "nameEn": "Prof. Amin Naser Olaimat",
+    "role": "استاذ",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5599",
+    "officeHours": "الإثنين - الأربعاء 09:00 - 11:00",
+    "email": "aminolaimat@hu.edu.jo"
+  },
+  {
+    "id": 18,
+    "name": "أ. رنا محمد محمود عبد القادر",
+    "nameEn": "Ms. Rana Mohammad Abdelqader",
+    "role": "مدرس",
+    "department": "العلوم الطبية المساندة",
+    "office": "مكتب رقم 5613",
+    "officeHours": "الأحد - الثلاثاء 10:00 - 12:00",
+    "email": "RanaM@hu.edu.jo"
+  },
+  {
+    "id": 19,
+    "name": "أ. دلال عبد الرحيم عثمان شقير",
+    "nameEn": "Ms. Dalal Abdel Rahim Shuqair",
+    "role": "مدرس",
+    "department": "العلوم الطبية المساندة",
+    "office": "مكتب رقم 5368",
+    "officeHours": "الإثنين - الأربعاء 11:00 - 01:00",
+    "email": "Dalal@hu.edu.jo"
+  },
+  {
+    "id": 20,
+    "name": "د. اسماعيل سامي اسماعيل محمود",
+    "nameEn": "Dr. Ismail Sami Mahmoud",
+    "role": "استاذ مشارك",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الأحد - الثلاثاء 09:00 - 11:00",
+    "email": "ismails@hu.edu.jo"
+  },
+  {
+    "id": 21,
+    "name": "د. عمر ماجد عمر ابو يمن",
+    "nameEn": "Dr. Omar Majid Abu Yaman",
+    "role": "استاذ مشارك",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الإثنين - الأربعاء 10:00 - 12:00",
+    "email": "OmarM_Om@hu.edu.jo"
+  },
+  {
+    "id": 22,
+    "name": "د. عبد الرحمن محمد عبد الله زعيتر",
+    "nameEn": "Dr. Abdel Rahman Zuaiter",
+    "role": "استاذ مساعد",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5378",
+    "officeHours": "الأحد - الثلاثاء 10:00 - 12:00",
+    "email": "abdelr@hu.edu.jo"
+  },
+  {
+    "id": 23,
+    "name": "د. لؤى عصام محمد العناقره",
+    "nameEn": "Dr. Loai Issam Alanagreh",
+    "role": "استاذ مشارك",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5596",
+    "officeHours": "الإثنين - الأربعاء 11:00 - 01:00",
+    "email": "loai-alanagreh@hu.edu.jo"
+  },
+  {
+    "id": 24,
+    "name": "د. عمار انور خالد عقلات",
+    "nameEn": "Dr. Ammar Anwar Oglat",
+    "role": "استاذ مشارك",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5354",
+    "officeHours": "الأحد - الثلاثاء 09:00 - 11:00",
+    "email": "AmmarA@hu.edu.jo"
+  },
+  {
+    "id": 25,
+    "name": "د. امجد ابراهيم عبد شعلان",
+    "nameEn": "Dr. Amjad Ibrahim Shaalan",
+    "role": "استاذ مشارك",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 5478",
+    "officeHours": "الإثنين - الأربعاء 10:00 - 12:00",
+    "email": "amjad@hu.edu.jo"
+  },
+  {
+    "id": 26,
+    "name": "د. خلود صبحي عيد الزيود",
+    "nameEn": "Dr. Kholoud Sobhi Al-Zyoud",
+    "role": "استاذ مشارك",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5357",
+    "officeHours": "الأحد - الثلاثاء 11:00 - 01:00",
+    "email": "kholouds@hu.edu.jo"
+  },
+  {
+    "id": 27,
+    "name": "د. عدنان علي حسن وشاح",
+    "nameEn": "Dr. Adnan Ali Wshah",
+    "role": "استاذ مشارك",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 3419",
+    "officeHours": "الإثنين - الأربعاء 09:00 - 11:00",
+    "email": "adnan.wshah@hu.edu.jo"
+  },
+  {
+    "id": 28,
+    "name": "د. علي محمود شريف عبد الفتاح",
+    "nameEn": "Dr. Ali Mahmoud Sharif",
+    "role": "استاذ مساعد",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5486",
+    "officeHours": "الأحد - الثلاثاء 10:00 - 12:00",
+    "email": "alisharif@hu.edu.jo"
+  },
+  {
+    "id": 29,
+    "name": "د. احمد عبد الرحمن محمد محسن",
+    "nameEn": "Dr. Ahmad Abdel Rahman Muhsen",
+    "role": "استاذ مساعد",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 3415",
+    "officeHours": "الإثنين - الأربعاء 11:00 - 01:00",
+    "email": "muhsen_a@hu.edu.jo"
+  },
+  {
+    "id": 30,
+    "name": "د. صخر محمود محمد عبيدات",
+    "nameEn": "Dr. Sakher Mahmoud Obaidat",
+    "role": "استاذ مساعد",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 3417",
+    "officeHours": "الأحد - الثلاثاء 09:00 - 11:00",
+    "email": "s.m.obaidat@hu.edu.jo"
+  },
+  {
+    "id": 31,
+    "name": "أ. منار يحيى محمد المحمد",
+    "nameEn": "Ms. Manar Yahya Al-Mohammad",
+    "role": "مدرس مساعد",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5579",
+    "officeHours": "الإثنين - الأربعاء 10:00 - 12:00",
+    "email": "manary@hu.edu.jo"
+  },
+  {
+    "id": 32,
+    "name": "أ. ندى عبد الله محمد صالح",
+    "nameEn": "Ms. Nada Abdullah Saleh",
+    "role": "مدرس مساعد",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5609",
+    "officeHours": "الأحد - الثلاثاء 11:00 - 01:00",
+    "email": "nadaa_mo@hu.edu.jo"
+  },
+  {
+    "id": 33,
+    "name": "د. فاتن جودت فضل شحاده توت",
+    "nameEn": "Dr. Faten Jawdat Tout",
+    "role": "استاذ مساعد",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الإثنين - الأربعاء 09:00 - 11:00",
+    "email": "fatenj@hu.edu.jo"
+  },
+  {
+    "id": 34,
+    "name": "د. بثينه محمود محمد الخطيب",
+    "nameEn": "Dr. Buthaina Mahmoud Al-Khatib",
+    "role": "استاذ مساعد",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5540",
+    "officeHours": "الأحد - الثلاثاء 10:00 - 12:00",
+    "email": "bkhatib@hu.edu.jo"
+  },
+  {
+    "id": 35,
+    "name": "د. علاء الدين علي عبد الحميد القطاطشه",
+    "nameEn": "Dr. Ala'a Eldin Qatatsheh",
+    "role": "استاذ مشارك",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5565",
+    "officeHours": "الإثنين - الأربعاء 11:00 - 01:00",
+    "email": "a.qatatsheh@hu.edu.jo"
+  },
+  {
+    "id": 36,
+    "name": "د. داليا زكريا صالح العمري",
+    "nameEn": "Dr. Dalia Zakaria Al-Omari",
+    "role": "استاذ مساعد",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5418",
+    "officeHours": "الأحد - الثلاثاء 09:00 - 11:00",
+    "email": "daliaz.alomari@hu.edu.jo"
+  },
+  {
+    "id": 37,
+    "name": "د. براءه علي حسن عزايزه",
+    "nameEn": "Dr. Bara'ah Ali Azaizeh",
+    "role": "استاذ مساعد",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الإثنين - الأربعاء 10:00 - 12:00",
+    "email": "baraah@hu.edu.jo"
+  },
+  {
+    "id": 38,
+    "name": "أ. بتول ثائر محمود صوافطه",
+    "nameEn": "Ms. Batoul Thaer Sawafta",
+    "role": "مدرس مساعد",
+    "department": "العلاج الطبيعي",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الأحد - الثلاثاء 11:00 - 01:00",
+    "email": "batul@hu.edu.jo"
+  },
+  {
+    "id": 39,
+    "name": "د. هبه صلاح عبد الرحمن الشرع",
+    "nameEn": "Dr. Heba Salah Al-Shara'",
+    "role": "استاذ مساعد",
+    "department": "العلاج الوظيفي",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الإثنين - الأربعاء 09:00 - 11:00",
+    "email": "hebas@hu.edu.jo"
+  },
+  {
+    "id": 40,
+    "name": "د. ثامر احمد عبد الكريم التيم",
+    "nameEn": "Dr. Thamer Ahmad Altaim",
+    "role": "استاذ مساعد",
+    "department": "العلاج الطبيعي",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الأحد - الثلاثاء 10:00 - 12:00",
+    "email": "altaim@hu.edu.jo"
+  },
+  {
+    "id": 41,
+    "name": "أ. سجى شاهر حمد حمايده",
+    "nameEn": "Ms. Saja Shaher Hamaideh",
+    "role": "محاضر متفرغ",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الإثنين - الأربعاء 11:00 - 01:00",
+    "email": "sajas@hu.edu.jo"
+  },
+  {
+    "id": 42,
+    "name": "د. اويس جعفر ابراهيم عليان",
+    "nameEn": "Dr. Owis Ja'far Eilayyan",
+    "role": "استاذ مساعد",
+    "department": "العلاج الطبيعي",
+    "office": "مبنى كلية العلوم الطبية",
+    "officeHours": "الأحد - الثلاثاء 09:00 - 11:00",
+    "email": "Owis.Eilayyan@hu.edu.jo"
+  },
+  {
+    "id": 43,
+    "name": "د. حمزه احمد محمد المصرى",
+    "nameEn": "Dr. Hamzah Ahmad Al-Masri",
+    "role": "استاذ مساعد",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5488",
+    "officeHours": "الإثنين - الأربعاء 10:00 - 12:00",
+    "email": "hamasri@hu.edu.jo"
+  },
+  {
+    "id": 44,
+    "name": "سجى محمد سامي رجا محمود",
+    "nameEn": "Saja Mohammad Mahmoud",
+    "role": "سكرتيرة / طابعة",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5353",
+    "officeHours": "الأحد - الخميس 08:00 - 03:00",
+    "email": "saja@hu.edu.jo"
+  },
+  {
+    "id": 45,
+    "name": "ايهاب طالب مفلح المصري",
+    "nameEn": "Ihab Taleb Al-Masri",
+    "role": "رئيس ديوان الكلية",
+    "department": "الديوان والإدارة",
+    "office": "مكتب رقم 5436 / 5352",
+    "officeHours": "الأحد - الخميس 08:00 - 03:30",
+    "email": "ihabt@hu.edu.jo"
+  },
+  {
+    "id": 46,
+    "name": "عفت سليمان صالح نقرش",
+    "nameEn": "Effat Suleiman Naqresh",
+    "role": "مشرف مختبر",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مختبرات الكلية",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "effat@hu.edu.jo"
+  },
+  {
+    "id": 47,
+    "name": "ناصر صبحي محمد ظاهر",
+    "nameEn": "Naser Sobhi Dhaher",
+    "role": "فني مختبر",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5489",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "nasers@hu.edu.jo"
+  },
+  {
+    "id": 48,
+    "name": "شادن محمد محمود عبدالقادر",
+    "nameEn": "Shaden Mohammad Abdelqader",
+    "role": "مشرف مختبر",
+    "department": "العلاج الوظيفي",
+    "office": "مكتب رقم 5556",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "Shaden@hu.edu.jo"
+  },
+  {
+    "id": 49,
+    "name": "نور عوده خالد الزواهره",
+    "nameEn": "Nour Odeh Al-Zawahreh",
+    "role": "سكرتيرة / طابعة",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5355",
+    "officeHours": "الأحد - الخميس 08:00 - 03:00",
+    "email": "NourO@hu.edu.jo"
+  },
+  {
+    "id": 50,
+    "name": "دلال حامد عيسى ابو سنينه",
+    "nameEn": "Dalal Hamed Abu Suneineh",
+    "role": "سكرتيرة / طابعة",
+    "department": "الديوان والإدارة",
+    "office": "مكتب رقم 5375 / 5350",
+    "officeHours": "الأحد - الخميس 08:00 - 03:00",
+    "email": "imaging@hu.edu.jo"
+  },
+  {
+    "id": 51,
+    "name": "عائشه سليمان عبد الرزاق حسونه",
+    "nameEn": "Aysheh Suleiman Hassouneh",
+    "role": "مشرف مختبر",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5438",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "ayshehhasoneh@hu.edu.jo"
+  },
+  {
+    "id": 52,
+    "name": "ميساء عبد الحفيظ حسين الاشرم",
+    "nameEn": "Maysa Abdel Hafeez Al-Ashram",
+    "role": "مشرف مختبر",
+    "department": "العلاج الوظيفي",
+    "office": "مكتب رقم 5401",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "mai@hu.edu.jo"
+  },
+  {
+    "id": 53,
+    "name": "لمى احمد محمد مخلوف",
+    "nameEn": "Lama Ahmad Makhlouf",
+    "role": "مشرف مختبر",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5570 / 5554",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "Lmakhlouf@hu.edu.jo"
+  },
+  {
+    "id": 54,
+    "name": "شادي محمود حسن أبو دية",
+    "nameEn": "Shadi Mahmoud Abu Deyeh",
+    "role": "مشرف مختبر",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5489",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "shadiabu_deyeh@hu.edu.jo"
+  },
+  {
+    "id": 55,
+    "name": "لبنى ماجد محمود ابو خلف",
+    "nameEn": "Lubna Majid Abu Khalaf",
+    "role": "مشرف مختبر",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5410",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "lu2zgool@hu.edu.jo"
+  },
+  {
+    "id": 56,
+    "name": "زياد احمد غازي العويدات",
+    "nameEn": "Ziad Ahmad Al-Oweidat",
+    "role": "مأمور فرز وتوزيع بريد",
+    "department": "الديوان والإدارة",
+    "office": "ديوان الكلية",
+    "officeHours": "الأحد - الخميس 08:00 - 03:00",
+    "email": "ziada_gh@hu.edu.jo"
+  },
+  {
+    "id": 57,
+    "name": "عبير تيسير عوده عوده",
+    "nameEn": "Abeer Tayseer Odeh",
+    "role": "مشرف مختبر",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5385",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "AbeerT@hu.edu.jo"
+  },
+  {
+    "id": 58,
+    "name": "تغريد عوني يونس عيد",
+    "nameEn": "Taghreed Awni Eid",
+    "role": "مشرف مختبر",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 5372",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "TaghreedA@hu.edu.jo"
+  },
+  {
+    "id": 59,
+    "name": "حنين منتصر علي المومني",
+    "nameEn": "Haneen Montaser Al-Momani",
+    "role": "إداري",
+    "department": "الديوان والإدارة",
+    "office": "مكتب رقم 5451",
+    "officeHours": "الأحد - الخميس 08:00 - 03:00",
+    "email": "haneen@hu.edu.jo"
+  },
+  {
+    "id": 60,
+    "name": "منذره محمد محمود الزعبي",
+    "nameEn": "Munthira Mohammad Al-Zoubi",
+    "role": "مشرف مختبر",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 5517",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "monthira@hu.edu.jo"
+  },
+  {
+    "id": 61,
+    "name": "سوزان كايد محمد عمرو",
+    "nameEn": "Suzan Kayed Amr",
+    "role": "مشرف مختبر",
+    "department": "العلاج الوظيفي",
+    "office": "مختبرات الكلية",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "suzank@hu.edu.jo"
+  },
+  {
+    "id": 62,
+    "name": "كفاح محمد مصطفى صباح",
+    "nameEn": "Kefah Mohammad Sabbah",
+    "role": "مشرف مختبر",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5395 / 5394 / 5388",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "kefah@hu.edu.jo"
+  },
+  {
+    "id": 63,
+    "name": "رزان جمال منصور الخزاعله",
+    "nameEn": "Razan Jamal Al-Khaza'leh",
+    "role": "مشرف مختبر",
+    "department": "التصوير الطبي",
+    "office": "مكتب رقم 5420",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "Razan@hu.edu.jo"
+  },
+  {
+    "id": 64,
+    "name": "فاطمه محمد حسونه ابو رياش",
+    "nameEn": "Fatima Mohammad Abu Reyash",
+    "role": "مشرف مختبر",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5564",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "FatimaM@hu.edu.jo"
+  },
+  {
+    "id": 65,
+    "name": "مروه زكريا يحيى الحزينه",
+    "nameEn": "Marwa Zakaria Al-Hazeenah",
+    "role": "مشرف مختبر",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مختبرات الكلية",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "MarwaZ@hu.edu.jo"
+  },
+  {
+    "id": 66,
+    "name": "محمد مصطفى عبد الرحمن ابو كبر",
+    "nameEn": "Mohammad Mustafa Abu Kabar",
+    "role": "مشرف مختبر",
+    "department": "العلاج الطبيعي",
+    "office": "مكتب رقم 5586",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "MohamadM@hu.edu.jo"
+  },
+  {
+    "id": 67,
+    "name": "دعاء عرفات علي ابو رجب",
+    "nameEn": "Doaa Arafat Abu Rajab",
+    "role": "مشرف مختبر",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مكتب رقم 5592 / 5463",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "doaaaburajab@hu.edu.jo"
+  },
+  {
+    "id": 68,
+    "name": "ايه واصف عبد الله ابو محارب",
+    "nameEn": "Ayah Wasef Abu Muhareb",
+    "role": "مشرف مختبر",
+    "department": "العلوم الطبية المخبرية",
+    "office": "مختبرات الكلية",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "ayah@hu.edu.jo"
+  },
+  {
+    "id": 69,
+    "name": "هند علي محمد الترك",
+    "nameEn": "Hind Ali Al-Turk",
+    "role": "سكرتيرة / طابعة",
+    "department": "التغذية السريرية و الحميات",
+    "office": "مكتب رقم 5550 / 5390",
+    "officeHours": "الأحد - الخميس 08:00 - 03:00",
+    "email": "hinda_mo@hu.edu.jo"
+  },
+  {
+    "id": 70,
+    "name": "رؤى كساب سالم الحراحشه",
+    "nameEn": "Roa'a Kassab Al-Harahsheh",
+    "role": "معالج طبيعي",
+    "department": "العلاج الطبيعي",
+    "office": "عيادات الكلية",
+    "officeHours": "الأحد - الخميس 08:30 - 03:00",
+    "email": "roa@hu.edu.jo"
   }
 ]
