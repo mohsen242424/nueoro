@@ -12,6 +12,7 @@ export interface AnatomyModel {
   description: string;
   embedUrl: string;
   tags: string[];
+  thumbnail?: string;
 }
 
 interface SketchfabModalProps {
@@ -73,7 +74,6 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
     }
   };
 
-  // Ensure Sketchfab starts cleanly, full viewport and centered
   const getFullEmbedUrl = (url: string) => {
     if (!url) return '';
     const separator = url.includes('?') ? '&' : '?';
@@ -127,7 +127,7 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
               </div>
             </div>
 
-            {/* 3D Model Canvas Area - Occupies full height seamlessly */}
+            {/* 3D Model Canvas Area */}
             <div className="relative flex-grow w-full h-full bg-black overflow-hidden">
               {isLoading && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[#080406] z-10">

@@ -5,7 +5,12 @@
     "category": "Skull",
     "description": "Interactive 3D exploding skull model showing all cranial bones separated for detailed anatomical study.",
     "embedUrl": "https://sketchfab.com/models/252887e2e755427c90d9e3d0c6d3025f/embed",
-    "tags": ["skull", "bones", "cranial"]
+    "tags": [
+      "skull",
+      "bones",
+      "cranial"
+    ],
+    "thumbnail": "/images/anatomy/exploding-skull.jpg"
   },
   {
     "id": "human-heart",
@@ -13,7 +18,12 @@
     "category": "Cardiovascular System",
     "description": "Detailed 3D model of the human heart showing all chambers, valves, and major vessels.",
     "embedUrl": "https://sketchfab.com/models/1b7bfb07e6b24dd891099395ed98e989/embed",
-    "tags": ["heart", "cardiovascular", "organ"]
+    "tags": [
+      "heart",
+      "cardiovascular",
+      "organ"
+    ],
+    "thumbnail": "/images/anatomy/human-heart.jpg"
   },
   {
     "id": "lungs-anatomy",
@@ -21,7 +31,12 @@
     "category": "Respiratory System",
     "description": "Comprehensive 3D model of the respiratory system including bronchi and alveoli structures.",
     "embedUrl": "https://sketchfab.com/models/50c877863fe64d11a55044afb79f5664/embed",
-    "tags": ["lungs", "respiratory", "breathing"]
+    "tags": [
+      "lungs",
+      "respiratory",
+      "breathing"
+    ],
+    "thumbnail": "/images/anatomy/lungs-anatomy.jpg"
   },
   {
     "id": "skeletal-system",
@@ -29,7 +44,12 @@
     "category": "Human Skeleton",
     "description": "Complete human skeletal system model with all 206 bones labeled and interactive.",
     "embedUrl": "https://sketchfab.com/models/060fd1bedebd4e05a723f2014d66280f/embed",
-    "tags": ["skeleton", "bones", "full body"]
+    "tags": [
+      "skeleton",
+      "bones",
+      "full body"
+    ],
+    "thumbnail": "/images/anatomy/skeletal-system.jpg"
   },
   {
     "id": "human-musculature",
@@ -37,7 +57,12 @@
     "category": "Muscles",
     "description": "Detailed muscular system model showing major muscle groups and their attachments.",
     "embedUrl": "https://sketchfab.com/models/9bfa112a99844626ac2480fff6276f0e/embed",
-    "tags": ["muscles", "anatomy", "musculature"]
+    "tags": [
+      "muscles",
+      "anatomy",
+      "musculature"
+    ],
+    "thumbnail": "/images/anatomy/human-musculature.jpg"
   },
   {
     "id": "digestive-system",
@@ -45,7 +70,12 @@
     "category": "Digestive System",
     "description": "Complete digestive tract model from oral cavity to large intestine with all accessory organs.",
     "embedUrl": "https://sketchfab.com/models/584766fd58684369b166611faec98e04/embed",
-    "tags": ["digestive", "gastrointestinal", "organs"]
+    "tags": [
+      "digestive",
+      "gastrointestinal",
+      "organs"
+    ],
+    "thumbnail": "/images/anatomy/digestive-system.jpg"
   },
   {
     "id": "central-nervous-system",
@@ -53,6 +83,11 @@
     "category": "Nervous System",
     "description": "Detailed model of the central nervous system including brain and spinal cord structures.",
     "embedUrl": "https://sketchfab.com/models/5afc972d582741488e664b34b3174f97/embed",
-    "tags": ["brain", "nervous system", "spinal cord"]
+    "tags": [
+      "brain",
+      "nervous system",
+      "spinal cord"
+    ],
+    "thumbnail": "/images/anatomy/central-nervous-system.jpg"
   }
 ]
