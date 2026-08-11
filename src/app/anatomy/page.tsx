@@ -20,7 +20,7 @@ const categories = [
 ];
 
 export default function AnatomyLibraryPage() {
-  const { t, isRTL } = useLanguage();
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedModel, setSelectedModel] = useState<AnatomyModel | null>(null);
@@ -54,43 +54,28 @@ export default function AnatomyLibraryPage() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setTimeout(() => setSelectedModel(null), 300); // Wait for animation
+    setTimeout(() => setSelectedModel(null), 300);
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#050816] relative overflow-hidden transition-colors duration-300">
-      {/* Animated Background Elements */}
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-40 dark:opacity-20">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-gradient-to-br from-[#2563EB] to-[#7C3AED] blur-[120px] mix-blend-screen" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-gradient-to-tl from-[#06B6D4] to-[#2563EB] blur-[120px] mix-blend-screen" />
+    <div className="min-h-screen bg-[#FAF7F5] dark:bg-[#080406] relative overflow-hidden transition-colors duration-300">
+      {/* Ambient Crimson Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-30 dark:opacity-20">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#9F1239]/20 blur-[130px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#BE123C]/15 blur-[130px]" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-20 md:py-28 max-w-7xl">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
+        {/* Header */}
+        <div className="text-center mb-14">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="flex flex-col items-center justify-center"
           >
-            <div className="mb-6 flex justify-center text-[#2563EB] dark:text-[#06B6D4]">
-              {/* Decorative DNA/Neural icon */}
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4.5 16.5c3.6-1.8 7.2-1.8 10.8 0 3.6 1.8 7.2 1.8 10.8 0" />
-                <path d="M4.5 7.5c3.6 1.8 7.2 1.8 10.8 0 3.6-1.8 7.2-1.8 10.8 0" />
-                <line x1="8" y1="10" x2="8" y2="14" />
-                <line x1="16" y1="10" x2="16" y2="14" />
-                <circle cx="4.5" cy="16.5" r="1.5" />
-                <circle cx="15.5" cy="16.5" r="1.5" />
-                <circle cx="26.5" cy="16.5" r="1.5" />
-                <circle cx="4.5" cy="7.5" r="1.5" />
-                <circle cx="15.5" cy="7.5" r="1.5" />
-                <circle cx="26.5" cy="7.5" r="1.5" />
-              </svg>
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-poppins text-gray-900 dark:text-white tracking-tight mb-4" dangerouslySetInnerHTML={{ __html: t.anatomy.title }} />
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-poppins text-slate-900 dark:text-rose-100 tracking-tight mb-4" dangerouslySetInnerHTML={{ __html: t.anatomy.title }} />
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-rose-200/70 max-w-2xl mx-auto font-inter">
               {t.anatomy.subtitle}
             </p>
           </motion.div>
@@ -101,16 +86,16 @@ export default function AnatomyLibraryPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex flex-col items-center gap-8 mb-16"
+          className="flex flex-col items-center gap-6 mb-14"
         >
           {/* Search Bar */}
           <div className="relative w-full max-w-2xl group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-gray-400 group-focus-within:text-[#2563EB] transition-colors" />
+              <Search className="h-5 w-5 text-slate-400 dark:text-rose-300/40 group-focus-within:text-[#9F1239] transition-colors" />
             </div>
             <input
               type="text"
-              className="block w-full pl-12 pr-4 py-4 bg-white/50 dark:bg-black/20 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition-all shadow-sm"
+              className="block w-full pl-12 pr-4 py-3.5 bg-white dark:bg-[#12070D] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-rose-300/40 focus:outline-none focus:ring-2 focus:ring-[#9F1239] transition-all shadow-sm text-sm font-medium"
               placeholder={t.anatomy.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -118,15 +103,15 @@ export default function AnatomyLibraryPage() {
           </div>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-3 w-full">
+          <div className="flex flex-wrap justify-center gap-2 w-full">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
                   activeCategory === category
-                    ? 'bg-gradient-to-r from-[#2563EB] to-[#7C3AED] text-white shadow-lg shadow-[#2563EB]/25 scale-105'
-                    : 'bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10 hover:scale-105'
+                    ? 'bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] text-white shadow-md shadow-rose-900/30'
+                    : 'bg-white dark:bg-[#12070D] text-slate-600 dark:text-rose-200/70 border border-rose-900/10 dark:border-rose-900/30 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 {getCategoryTranslation(category)}
@@ -153,13 +138,13 @@ export default function AnatomyLibraryPage() {
             ))}
           </motion.div>
         ) : (
-          <div className="text-center py-20">
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">No models found</h3>
-            <p className="text-gray-500 dark:text-gray-400">Try adjusting your search or filters to find what you're looking for.</p>
+          <div className="text-center py-20 text-slate-500 dark:text-rose-200/50">
+            <p className="text-xl">{t.common.noResults}</p>
           </div>
         )}
       </div>
 
+      {/* 3D Sketchfab Viewer Modal */}
       <SketchfabModal 
         model={selectedModel} 
         isOpen={isModalOpen} 

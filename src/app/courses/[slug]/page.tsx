@@ -60,46 +60,46 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
   };
 
   return (
-    <div className="min-h-screen bg-brand-dark pt-20 pb-12">
+    <div className="min-h-screen bg-[#FAF7F5] dark:bg-[#080406] pt-20 pb-16 transition-colors duration-300">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb & Header */}
-        <div className="py-6 border-b border-white/10 mb-8">
-          <Link href="/courses" className="inline-flex items-center text-sm text-gray-400 hover:text-white transition-colors mb-4">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Courses
+        <div className="py-6 border-b border-rose-900/10 dark:border-rose-900/20 mb-8">
+          <Link href="/courses" className="inline-flex items-center text-xs font-bold text-slate-500 dark:text-rose-200/60 hover:text-[#9F1239] dark:hover:text-white transition-colors mb-4 gap-1.5">
+            <ArrowLeft className="w-3.5 h-3.5" /> Back to Courses
           </Link>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-brand-blue">
+                <span className="rounded-full bg-rose-500/10 dark:bg-rose-950/50 border border-rose-900/15 dark:border-rose-900/30 px-3 py-1 text-xs font-bold text-[#9F1239] dark:text-[#FDA4AF]">
                   {course.category}
                 </span>
-                <span className="flex items-center text-sm text-gray-400">
-                  <User className="w-4 h-4 mr-1" /> {t.courses.instructor}: {course.instructor}
+                <span className="flex items-center text-xs font-semibold text-slate-500 dark:text-rose-200/60">
+                  <User className="w-3.5 h-3.5 mr-1 text-[#9F1239] dark:text-[#FB7185]" /> {t.courses.instructor}: {course.instructor}
                 </span>
               </div>
-              <h1 className="font-poppins text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-2">
+              <h1 className="font-poppins text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 dark:text-rose-100 mb-2 tracking-tight">
                 {course.title}
               </h1>
-              <p className="text-gray-400 max-w-2xl text-sm md:text-base">
+              <p className="text-slate-600 dark:text-rose-200/70 max-w-2xl text-xs sm:text-sm leading-relaxed">
                 {course.description}
               </p>
             </div>
             
             {/* Progress Card */}
             {mounted && (
-              <div className="bg-white/5 border border-white/10 rounded-xl p-4 w-full md:w-64 backdrop-blur-sm">
+              <div className="bg-white dark:bg-[#12070D] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl p-4 w-full md:w-64 backdrop-blur-sm shadow-sm">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-300">{t.courses.progress}</span>
-                  <span className="text-sm font-bold text-brand-blue">{progressPercentage}%</span>
+                  <span className="text-xs font-bold text-slate-700 dark:text-rose-200/80">{t.courses.progress}</span>
+                  <span className="text-xs font-black text-[#9F1239] dark:text-[#FB7185]">{progressPercentage}%</span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-slate-100 dark:bg-[#180A11] rounded-full h-2 overflow-hidden">
                   <div 
-                    className="bg-gradient-to-r from-brand-blue to-brand-cyan h-2 rounded-full transition-all duration-500" 
+                    className="bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] h-2 rounded-full transition-all duration-500" 
                     style={{ width: `${progressPercentage}%` }}
                   />
                 </div>
-                <div className="mt-2 text-xs text-gray-500 text-right">
+                <div className="mt-2 text-xs font-medium text-slate-500 dark:text-rose-200/50 text-right">
                   {completedLessons.length} of {course.lessons.length} completed
                 </div>
               </div>
@@ -110,7 +110,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Video Area */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-black rounded-2xl overflow-hidden aspect-video border border-white/10 shadow-2xl relative group">
+            <div className="bg-black rounded-3xl overflow-hidden aspect-video border border-rose-900/15 dark:border-rose-900/30 shadow-2xl relative group">
               {activeLesson ? (
                 <iframe
                   className="w-full h-full"
@@ -120,36 +120,36 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                   allowFullScreen
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-gray-500">
+                <div className="w-full h-full flex items-center justify-center text-slate-500">
                   Select a lesson to start watching
                 </div>
               )}
             </div>
 
             {activeLesson && (
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/10 dark:border-rose-900/30 rounded-3xl p-6 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
                 <div>
-                  <h2 className="text-xl font-semibold text-white mb-2">
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-rose-100 mb-1">
                     {currentIndex + 1}. {activeLesson.title}
                   </h2>
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-400">
-                    <span className="flex items-center"><Clock className="w-4 h-4 mr-1" /> {activeLesson.duration}</span>
+                  <div className="flex flex-wrap gap-4 text-xs font-medium text-slate-500 dark:text-rose-200/60">
+                    <span className="flex items-center"><Clock className="w-3.5 h-3.5 mr-1 text-[#9F1239] dark:text-[#FB7185]" /> {activeLesson.duration}</span>
                   </div>
                 </div>
                 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
                   <button
                     onClick={() => toggleComplete(activeLesson.id)}
-                    className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${
+                    className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs transition-all ${
                       completedLessons.includes(activeLesson.id)
-                        ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                        : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+                        ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
+                        : 'bg-rose-50 dark:bg-rose-950/40 text-[#9F1239] dark:text-rose-200 hover:bg-[#9F1239] hover:text-white border border-rose-900/15'
                     }`}
                   >
                     {completedLessons.includes(activeLesson.id) ? (
-                      <><CheckCircle2 className="w-5 h-5" /> {t.courses.completed}</>
+                      <><CheckCircle2 className="w-4 h-4" /> {t.courses.completed}</>
                     ) : (
-                      <><Circle className="w-5 h-5" /> {t.courses.markComplete}</>
+                      <><Circle className="w-4 h-4" /> {t.courses.markComplete}</>
                     )}
                   </button>
                 </div>
@@ -160,29 +160,29 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
               <button
                 onClick={goToPrev}
                 disabled={currentIndex === 0}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-600 dark:text-rose-200/70 hover:text-[#9F1239] dark:hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
               >
-                <ArrowLeft className="w-4 h-4" /> {t.courses.previousLesson}
+                <ArrowLeft className="w-3.5 h-3.5" /> {t.courses.previousLesson}
               </button>
               <button
                 onClick={goToNext}
                 disabled={currentIndex === course.lessons.length - 1}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-600 dark:text-rose-200/70 hover:text-[#9F1239] dark:hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-colors"
               >
-                {t.courses.nextLesson} <ArrowRight className="w-4 h-4" />
+                {t.courses.nextLesson} <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
           {/* Lessons Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md overflow-hidden flex flex-col h-[calc(100vh-200px)] lg:sticky lg:top-24 max-h-[800px]">
-              <div className="p-5 border-b border-white/10 bg-white/5">
-                <h3 className="font-semibold text-lg text-white flex items-center gap-2">
-                  <BookOpen className="w-5 h-5 text-brand-blue" /> Course Content
+            <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/10 dark:border-rose-900/30 rounded-3xl backdrop-blur-md overflow-hidden flex flex-col h-[calc(100vh-200px)] lg:sticky lg:top-24 max-h-[800px] shadow-sm">
+              <div className="p-5 border-b border-rose-900/10 dark:border-rose-900/20 bg-rose-50/50 dark:bg-rose-950/20">
+                <h3 className="font-bold text-sm text-slate-900 dark:text-rose-100 flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-[#9F1239] dark:text-[#FB7185]" /> Course Content
                 </h3>
               </div>
-              <div className="overflow-y-auto flex-grow p-3 space-y-2 custom-scrollbar">
+              <div className="overflow-y-auto flex-grow p-3 space-y-1.5 custom-scrollbar">
                 {course.lessons.map((lesson, index) => {
                   const isActive = activeLessonId === lesson.id;
                   const isCompleted = completedLessons.includes(lesson.id);
@@ -191,28 +191,28 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                     <button
                       key={lesson.id}
                       onClick={() => setActiveLessonId(lesson.id)}
-                      className={`w-full text-left p-4 rounded-xl flex gap-3 transition-all ${
+                      className={`w-full text-left p-3.5 rounded-2xl flex gap-3 transition-all ${
                         isActive 
-                          ? 'bg-brand-blue/20 border border-brand-blue/30 shadow-[0_0_15px_rgba(37,99,235,0.1)]' 
-                          : 'hover:bg-white/5 border border-transparent'
+                          ? 'bg-rose-500/10 dark:bg-rose-950/50 border border-rose-500/30 shadow-sm' 
+                          : 'hover:bg-rose-50/50 dark:hover:bg-rose-950/20 border border-transparent'
                       }`}
                     >
                       <div className="mt-0.5 shrink-0">
                         {isCompleted ? (
-                          <CheckCircle2 className="w-5 h-5 text-green-400" />
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                         ) : isActive ? (
-                          <PlayCircle className="w-5 h-5 text-brand-blue" />
+                          <PlayCircle className="w-4 h-4 text-[#9F1239] dark:text-[#FB7185]" />
                         ) : (
-                          <span className="flex w-5 h-5 items-center justify-center text-xs font-medium text-gray-500">
+                          <span className="flex w-4 h-4 items-center justify-center text-xs font-bold text-slate-400 dark:text-rose-200/40">
                             {index + 1}
                           </span>
                         )}
                       </div>
                       <div className="flex-grow">
-                        <p className={`font-medium text-sm line-clamp-2 ${isActive ? 'text-white' : 'text-gray-300'}`}>
+                        <p className={`font-bold text-xs line-clamp-2 ${isActive ? 'text-[#9F1239] dark:text-white' : 'text-slate-700 dark:text-rose-200/70'}`}>
                           {lesson.title}
                         </p>
-                        <p className="text-xs text-gray-500 mt-1 flex items-center">
+                        <p className="text-[11px] text-slate-400 dark:text-rose-200/50 mt-1 flex items-center">
                           <Clock className="w-3 h-3 mr-1" /> {lesson.duration}
                         </p>
                       </div>

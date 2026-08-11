@@ -28,55 +28,55 @@ export default function DoctorCard({ doctor }: { doctor: Doctor }) {
 
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_30px_rgba(124,58,237,0.2)]"
+      whileHover={{ y: -6 }}
+      className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-rose-900/10 dark:border-rose-900/30 bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl transition-all duration-300 hover:border-rose-600/40 hover:shadow-2xl hover:shadow-rose-950/20"
     >
       <div className="p-6 pb-0 flex flex-col items-center">
-        <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-brand-blue to-brand-purple text-2xl font-bold text-white shadow-lg">
+        <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-[#881337] via-[#9F1239] to-[#BE123C] text-xl font-black text-white shadow-lg shadow-rose-900/30 group-hover:scale-105 transition-transform">
           {initials}
         </div>
         
-        <h3 className="font-poppins mb-1 text-center text-xl font-semibold text-white">
+        <h3 className="font-poppins mb-1.5 text-center text-lg font-bold text-slate-900 dark:text-rose-100 line-clamp-1">
           {doctor.name}
         </h3>
         
-        <span className="mb-6 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-brand-cyan">
+        <span className="mb-6 rounded-full bg-rose-500/10 dark:bg-rose-950/50 border border-rose-900/15 dark:border-rose-900/30 px-3 py-1 text-xs font-bold text-[#9F1239] dark:text-[#FDA4AF]">
           {doctor.department}
         </span>
       </div>
 
-      <div className="flex-grow space-y-3 px-6 text-sm text-gray-300">
-        <div className="flex items-start">
-          <MapPin className="mr-3 h-5 w-5 shrink-0 text-brand-blue" />
-          <span><span className="font-semibold">{t.doctors.office}:</span> {doctor.office}</span>
+      <div className="flex-grow space-y-2.5 px-6 text-xs font-medium text-slate-600 dark:text-rose-200/70">
+        <div className="flex items-start gap-2.5">
+          <MapPin className="h-4 w-4 shrink-0 text-[#9F1239] dark:text-[#FB7185] mt-0.5" />
+          <span><strong className="text-slate-800 dark:text-rose-100">{t.doctors.office}:</strong> {doctor.office}</span>
         </div>
-        <div className="flex items-start">
-          <Clock className="mr-3 h-5 w-5 shrink-0 text-brand-purple" />
-          <span><span className="font-semibold">{t.doctors.officeHours}:</span> {doctor.officeHours}</span>
+        <div className="flex items-start gap-2.5">
+          <Clock className="h-4 w-4 shrink-0 text-[#BE123C] dark:text-[#FDA4AF] mt-0.5" />
+          <span><strong className="text-slate-800 dark:text-rose-100">{t.doctors.officeHours}:</strong> {doctor.officeHours}</span>
         </div>
-        <div className="flex items-center">
-          <Mail className="mr-3 h-5 w-5 shrink-0 text-brand-red" />
-          <a href={`mailto:${doctor.email}`} className="hover:text-white transition-colors truncate">
-            <span className="font-semibold">{t.doctors.email}:</span> {doctor.email}
+        <div className="flex items-center gap-2.5">
+          <Mail className="h-4 w-4 shrink-0 text-[#E11D48] dark:text-[#FB7185]" />
+          <a href={`mailto:${doctor.email}`} className="hover:text-[#9F1239] dark:hover:text-white transition-colors truncate">
+            <strong className="text-slate-800 dark:text-rose-100">{t.doctors.email}:</strong> {doctor.email}
           </a>
         </div>
       </div>
 
-      <div className="mt-6 flex border-t border-white/10">
+      <div className="mt-6 flex border-t border-rose-900/10 dark:border-rose-900/20">
         <a 
           href={`https://teams.microsoft.com/l/chat/0/0?users=${doctor.email}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-1 items-center justify-center gap-2 border-r border-white/10 py-4 font-medium text-white transition-colors hover:bg-white/5"
+          className="flex flex-1 items-center justify-center gap-1.5 border-r border-rose-900/10 dark:border-rose-900/20 py-3 text-xs font-bold text-[#9F1239] dark:text-rose-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
         >
-          <MessageSquare className="h-4 w-4" />
+          <MessageSquare className="h-3.5 w-3.5" />
           {t.doctors.openTeams}
         </a>
         <button 
           onClick={handleCopyEmail}
-          className="flex flex-1 items-center justify-center gap-2 py-4 font-medium text-white transition-colors hover:bg-white/5"
+          className="flex flex-1 items-center justify-center gap-1.5 py-3 text-xs font-bold text-[#9F1239] dark:text-rose-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
         >
-          {copied ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
+          {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
           {copied ? t.doctors.emailCopied : t.doctors.copyEmail}
         </button>
       </div>
