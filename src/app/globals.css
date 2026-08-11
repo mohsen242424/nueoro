@@ -182,10 +182,25 @@
 
   .custom-scrollbar::-webkit-scrollbar {
     height: 4px;
+    width: 4px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: rgba(159, 18, 57, 0.4);
     border-radius: 4px;
+  }
+
+  /* Hide scrollbars for clean touch pills */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Touch optimizations */
+  * {
+    -webkit-tap-highlight-color: transparent;
   }
 }

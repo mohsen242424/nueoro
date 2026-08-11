@@ -66,8 +66,52 @@ export default function MapPage() {
           </div>
         </div>
 
+        {/* Mobile Category Filters */}
+        <div className="flex md:hidden gap-1.5 overflow-x-auto pb-3 mb-2 no-scrollbar">
+          <button
+            onClick={() => setSearchQuery('')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold shrink-0 transition-all ${
+              !searchQuery ? 'bg-[#9F1239] text-white' : 'bg-white dark:bg-[#12070D] border border-rose-900/15 text-slate-700 dark:text-rose-200'
+            }`}
+          >
+            الكل
+          </button>
+          <button
+            onClick={() => setSearchQuery('Medical')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold shrink-0 transition-all ${
+              searchQuery === 'Medical' ? 'bg-[#9F1239] text-white' : 'bg-white dark:bg-[#12070D] border border-rose-900/15 text-slate-700 dark:text-rose-200'
+            }`}
+          >
+            كلية العلوم الطبية
+          </button>
+          <button
+            onClick={() => setSearchQuery('Labs')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold shrink-0 transition-all ${
+              searchQuery === 'Labs' ? 'bg-[#9F1239] text-white' : 'bg-white dark:bg-[#12070D] border border-rose-900/15 text-slate-700 dark:text-rose-200'
+            }`}
+          >
+            المختبرات
+          </button>
+          <button
+            onClick={() => setSearchQuery('Library')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold shrink-0 transition-all ${
+              searchQuery === 'Library' ? 'bg-[#9F1239] text-white' : 'bg-white dark:bg-[#12070D] border border-rose-900/15 text-slate-700 dark:text-rose-200'
+            }`}
+          >
+            المكتبة
+          </button>
+          <button
+            onClick={() => setSearchQuery('Administration')}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold shrink-0 transition-all ${
+              searchQuery === 'Administration' ? 'bg-[#9F1239] text-white' : 'bg-white dark:bg-[#12070D] border border-rose-900/15 text-slate-700 dark:text-rose-200'
+            }`}
+          >
+            الرئاسة والتسجيل
+          </button>
+        </div>
+
         {/* Map Container */}
-        <div className="relative flex-grow bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl rounded-3xl border border-rose-900/10 dark:border-rose-900/30 shadow-xl shadow-rose-950/5 overflow-hidden flex flex-col md:flex-row min-h-[500px]">
+        <div className="relative flex-grow bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl rounded-3xl border border-rose-900/10 dark:border-rose-900/30 shadow-xl shadow-rose-950/5 overflow-hidden flex flex-col md:flex-row min-h-[450px] sm:min-h-[500px]">
           
           {/* Legend - Desktop */}
           <div className="hidden md:block w-64 bg-rose-50/50 dark:bg-[#150910]/80 border-r border-rose-900/10 dark:border-rose-900/20 p-6 overflow-y-auto z-10">
