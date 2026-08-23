@@ -30,7 +30,7 @@ export default function AboutPage() {
               <Zap className="w-3.5 h-3.5" />
               Empowering Medical Students
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black font-poppins text-slate-900 dark:text-rose-100 mb-6 leading-tight tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black font-poppins text-slate-900 dark:text-rose-100 mb-6 leading-tight tracking-tight">
               {t.about.title}
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-rose-200/70 font-inter leading-relaxed max-w-3xl mx-auto">
@@ -49,7 +49,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl p-8 sm:p-10 rounded-3xl border border-rose-900/10 dark:border-rose-900/30 shadow-xl shadow-rose-950/5 relative overflow-hidden group"
+              className="bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl p-6 sm:p-10 rounded-3xl border border-rose-900/10 dark:border-rose-900/30 shadow-xl shadow-rose-950/5 relative overflow-hidden group"
             >
               <div className="w-14 h-14 rounded-2xl bg-rose-500/10 dark:bg-rose-950/50 flex items-center justify-center mb-6 border border-rose-900/15">
                 <Target className="w-7 h-7 text-[#9F1239] dark:text-[#FB7185]" />
@@ -65,7 +65,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl p-8 sm:p-10 rounded-3xl border border-rose-900/10 dark:border-rose-900/30 shadow-xl shadow-rose-950/5 relative overflow-hidden group"
+              className="bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl p-6 sm:p-10 rounded-3xl border border-rose-900/10 dark:border-rose-900/30 shadow-xl shadow-rose-950/5 relative overflow-hidden group"
             >
               <div className="w-14 h-14 rounded-2xl bg-rose-500/10 dark:bg-rose-950/50 flex items-center justify-center mb-6 border border-rose-900/15">
                 <Lightbulb className="w-7 h-7 text-[#BE123C] dark:text-[#FDA4AF]" />

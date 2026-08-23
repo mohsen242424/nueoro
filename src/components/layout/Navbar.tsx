@@ -100,7 +100,7 @@ export default function Navbar() {
           </nav>
 
           {/* Right Controls (Auth + Language + Theme + Join CTA) */}
-          <div className="hidden lg:flex items-center gap-2.5 flex-shrink-0">
+          <div className="hidden xl:flex items-center gap-2.5 flex-shrink-0">
             
             {/* Student Auth Button / Profile Badge */}
             {currentUser ? (

@@ -25,7 +25,7 @@ const FeatureCard = ({ title, description, icon, gradient, link, delay }: Featur
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.6, delay }}
-      className="group relative bg-white/70 dark:bg-[#12070D]/80 backdrop-blur-xl border border-rose-900/10 dark:border-rose-900/30 rounded-3xl p-8 hover:-translate-y-2 hover:shadow-2xl hover:shadow-rose-950/20 dark:hover:shadow-rose-950/40 transition-all duration-300 overflow-hidden flex flex-col justify-between"
+      className="group relative bg-white/70 dark:bg-[#12070D]/80 backdrop-blur-xl border border-rose-900/10 dark:border-rose-900/30 rounded-3xl p-5 sm:p-8 hover:-translate-y-2 hover:shadow-2xl hover:shadow-rose-950/20 dark:hover:shadow-rose-950/40 transition-all duration-300 overflow-hidden flex flex-col justify-between"
     >
       <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${gradient} opacity-50 group-hover:opacity-100 transition-opacity`} />
       <div className={`absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br ${gradient} rounded-full blur-3xl opacity-10 group-hover:opacity-25 transition-opacity`} />
@@ -112,7 +112,7 @@ export default function FeaturesGrid() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-poppins font-black text-slate-900 dark:text-rose-100 mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-poppins font-black text-slate-900 dark:text-rose-100 mb-4"
           >
             {t.features.title}
           </motion.h2>

@@ -84,7 +84,7 @@ export default function Footer() {
               <input 
                 type="email" 
                 placeholder={t.footer.emailPlaceholder}
-                className="w-full bg-white dark:bg-[#12070D] border border-rose-900/15 dark:border-rose-900/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#9F1239] dark:focus:ring-[#BE123C] transition-all text-slate-900 dark:text-white"
+                className={`w-full bg-white dark:bg-[#12070D] border border-rose-900/15 dark:border-rose-900/30 rounded-xl ${isRTL ? 'pl-24 pr-4' : 'pr-24 pl-4'} py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#9F1239] dark:focus:ring-[#BE123C] transition-all text-slate-900 dark:text-white`}
               />
               <button 
                 type="submit" 

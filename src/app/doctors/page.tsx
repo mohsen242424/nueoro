@@ -86,12 +86,12 @@ export default function DoctorsPage() {
             />
           </div>
 
-          <div className="flex flex-wrap justify-center gap-1.5">
+          <div className="flex overflow-x-auto no-scrollbar pb-2 sm:flex-wrap sm:justify-center gap-1.5 w-full md:w-auto">
             {departments.map((dept) => (
               <button
                 key={dept.id}
                 onClick={() => setActiveDept(dept.id)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-all ${
                   activeDept === dept.id
                     ? 'bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] text-white shadow-md shadow-rose-900/30'
                     : 'bg-white dark:bg-[#12070D] text-slate-600 dark:text-rose-200/70 hover:text-slate-900 dark:hover:text-white hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-rose-900/10 dark:border-rose-900/30'

@@ -47,7 +47,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-6"
           >
-            <div className="bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl rounded-3xl p-8 border border-rose-900/10 dark:border-rose-900/30 shadow-xl shadow-rose-950/5">
+            <div className="bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl rounded-3xl p-5 sm:p-8 border border-rose-900/10 dark:border-rose-900/30 shadow-xl shadow-rose-950/5">
               <h3 className="text-xl font-bold font-poppins text-slate-900 dark:text-rose-100 mb-6">Contact Information</h3>
               
               <div className="space-y-5">
@@ -108,7 +108,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl rounded-3xl p-8 border border-rose-900/10 dark:border-rose-900/30 shadow-2xl shadow-rose-950/5">
+            <div className="bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl rounded-3xl p-5 sm:p-8 border border-rose-900/10 dark:border-rose-900/30 shadow-2xl shadow-rose-950/5">
               <h3 className="text-xl font-bold font-poppins text-slate-900 dark:text-rose-100 mb-6">Send a Message</h3>
               
               {submitted ? (

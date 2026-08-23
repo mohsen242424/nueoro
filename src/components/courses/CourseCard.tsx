@@ -43,7 +43,7 @@ export default function CourseCard({ course }: { course: Course }) {
     >
       <div>
         {/* Thumbnail Gradient Header */}
-        <div className="relative h-44 w-full overflow-hidden bg-gradient-to-br from-[#500724] via-[#881337] to-[#BE123C] p-6 flex flex-col justify-between">
+        <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-gradient-to-br from-[#500724] via-[#881337] to-[#BE123C] p-6 flex flex-col justify-between">
           <div className="flex justify-between items-start z-10">
             <span className="rounded-full bg-black/40 backdrop-blur-md px-3 py-1 text-xs font-bold text-white border border-white/20">
               {course.category}
@@ -70,7 +70,7 @@ export default function CourseCard({ course }: { course: Course }) {
         </div>
 
         {/* Content Body */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <div className="flex items-center gap-2 mb-2 text-xs font-bold text-[#9F1239] dark:text-[#FDA4AF]">
             <User className="w-3.5 h-3.5" /> {course.instructor}
           </div>

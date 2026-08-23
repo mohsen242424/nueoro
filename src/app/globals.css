@@ -44,7 +44,7 @@
         rgb(var(--background-end-rgb))
       )
       rgb(var(--background-start-rgb));
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   h1, h2, h3, h4, h5, h6 {

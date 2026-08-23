@@ -96,30 +96,30 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className={`relative flex flex-col bg-[#0A0508] border border-rose-900/30 rounded-3xl overflow-hidden shadow-2xl shadow-rose-950/50 transition-all duration-300 ${
-              isFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-5xl h-[88vh] max-h-[850px]'
+              isFullscreen ? 'w-full h-full rounded-none' : 'w-full max-w-5xl h-[92vh] sm:h-[88vh] max-h-[850px]'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-3.5 border-b border-rose-900/20 bg-[#12070D]/90 z-20">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-[#E11D48] animate-pulse"></div>
-                <h2 className="text-base sm:text-lg md:text-xl font-bold font-poppins text-white truncate max-w-md">
+            <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3.5 border-b border-rose-900/20 bg-[#12070D]/90 z-20">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#E11D48] animate-pulse"></div>
+                <h2 className="text-sm sm:text-lg md:text-xl font-bold font-poppins text-white truncate max-w-[200px] sm:max-w-md">
                   {model.title}
                 </h2>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   onClick={toggleFullscreen}
-                  className="p-2 text-rose-200/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors"
+                  className="p-1.5 sm:p-2 text-rose-200/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors"
                   aria-label="Toggle Fullscreen"
                 >
                   {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
                 </button>
                 <button
                   onClick={onClose}
-                  className="p-2 text-rose-200/70 hover:text-white hover:bg-rose-500/20 rounded-xl transition-colors"
+                  className="p-1.5 sm:p-2 text-rose-200/70 hover:text-white hover:bg-rose-500/20 rounded-xl transition-colors"
                   aria-label={t.anatomy.close}
                 >
                   <X className="w-4 h-4" />
@@ -131,7 +131,7 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
             <div className="relative flex-grow w-full h-full bg-black overflow-hidden">
               {isLoading && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[#080406] z-10">
-                  <div className="w-12 h-12 border-4 border-[#9F1239] border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 border-4 border-[#9F1239] border-t-transparent rounded-full animate-spin"></div>
                   <span className="text-rose-200 text-xs font-semibold tracking-wide">{t.anatomy.loading}</span>
                 </div>
               )}
@@ -148,7 +148,7 @@ export default function SketchfabModal({ model, isOpen, onClose }: SketchfabModa
 
             {/* Footer Details */}
             {!isFullscreen && (
-              <div className="p-4 sm:p-5 bg-[#12070D] border-t border-rose-900/20 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center z-20">
+              <div className="p-3 sm:p-5 bg-[#12070D] border-t border-rose-900/20 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-start sm:items-center z-20">
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1.5">
                     <span className="px-3 py-0.5 text-[11px] font-bold uppercase tracking-wider text-white bg-gradient-to-r from-[#881337] to-[#BE123C] rounded-full shadow-sm">

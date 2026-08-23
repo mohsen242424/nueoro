@@ -1,109 +1,53 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Search, GraduationCap } from 'lucide-react';
-import CourseCard from '@/components/courses/CourseCard';
-import coursesData from '@/data/courses.json';
+import { GraduationCap, Clock, Sparkles, BookOpen } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export default function CoursesPage() {
-  const { t } = useLanguage();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
-
-  const categories = [
-    { id: 'All', label: t.courses.all },
-    { id: 'Anatomy', label: t.courses.categories.anatomy },
-    { id: 'Nursing', label: t.courses.categories.nursing },
-    { id: 'Physiology', label: t.courses.categories.physiology },
-    { id: 'Pharmacology', label: t.courses.categories.pharmacology },
-    { id: 'Study Skills', label: t.courses.categories.studySkills }
-  ];
-
-  const filteredCourses = coursesData.filter(course => {
-    const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          course.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCat = activeCategory === 'All' || course.category === activeCategory;
-    return matchesSearch && matchesCat;
-  });
+  const { t, isRTL } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-[#FAF7F5] dark:bg-[#080406] pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300">
-      {/* Background Gradients */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-[#9F1239]/15 blur-[120px]" />
-        <div className="absolute top-[60%] -right-[10%] w-[40%] h-[40%] rounded-full bg-[#BE123C]/10 blur-[100px]" />
-      </div>
+    <div className="min-h-[85vh] bg-[#FAF7F5] dark:bg-[#080406] pt-24 pb-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center relative overflow-hidden transition-colors duration-300">
+      {/* Background Ambient Glows */}
+      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#9F1239]/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#BE123C]/15 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-3 mb-3"
-          >
-            <div className="p-3 bg-rose-500/10 dark:bg-rose-950/40 rounded-2xl border border-rose-900/15 dark:border-rose-900/30">
-              <GraduationCap className="w-7 h-7 text-[#9F1239] dark:text-[#FB7185]" />
-            </div>
-            <h1 className="font-poppins text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-rose-100 tracking-tight">
-              {t.courses.title}
-            </h1>
-          </motion.div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="text-slate-600 dark:text-rose-200/70 text-base md:text-lg max-w-2xl mx-auto font-inter"
-          >
-            {t.courses.subtitle}
-          </motion.p>
-        </div>
-
-        {/* Search Bar & Category Filters */}
-        <div className="mb-12 flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="relative w-full md:w-96">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-rose-300/40" />
-            <input
-              type="text"
-              placeholder={t.courses.searchPlaceholder}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white dark:bg-[#12070D] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl py-3 pl-11 pr-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-rose-300/40 focus:outline-none focus:ring-2 focus:ring-[#9F1239] transition-all text-sm font-medium shadow-sm"
-            />
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeCategory === cat.id
-                    ? 'bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] text-white shadow-md shadow-rose-900/30'
-                    : 'bg-white dark:bg-[#12070D] text-slate-600 dark:text-rose-200/70 hover:text-slate-900 dark:hover:text-white hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-rose-900/10 dark:border-rose-900/30'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Courses Grid */}
-        <motion.div 
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      <div className="max-w-2xl mx-auto text-center relative z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white/80 dark:bg-[#12070D]/85 backdrop-blur-xl border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl shadow-rose-950/15"
         >
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
-          ))}
-          
-          {filteredCourses.length === 0 && (
-            <div className="col-span-full py-16 text-center text-slate-500 dark:text-rose-200/50">
-              <p className="text-lg font-medium">{t.common.noResults}</p>
+          {/* Animated Icon Badge */}
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-[#881337] via-[#9F1239] to-[#BE123C] flex items-center justify-center mx-auto mb-6 shadow-xl shadow-rose-900/30 text-white">
+            <GraduationCap className="w-10 h-10 sm:w-12 sm:h-12" />
+            <div className="absolute -top-1 -right-1 p-2 bg-[#E11D48] rounded-full text-white shadow-md">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
-          )}
+          </div>
+
+          {/* Main Title Badge */}
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-rose-500/10 dark:bg-rose-950/50 border border-rose-900/15 dark:border-rose-900/30 text-xs font-bold text-[#9F1239] dark:text-[#FDA4AF] mb-4">
+            <Clock className="w-3.5 h-3.5" />
+            تحديث قادم
+          </span>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-poppins text-slate-900 dark:text-rose-100 mb-4 tracking-tight">
+            سيتوفر قريباً
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-600 dark:text-rose-200/70 max-w-lg mx-auto font-inter leading-relaxed mb-8">
+            نعمل حالياً على إعداد وتسجيل <strong className="text-slate-900 dark:text-white">الدورات الأكاديمية والشروحات الطبية الشاملة</strong> لطلبة كلية العلوم الطبية التطبيقية بالجامعة الهاشمية بأعلى معايير الجودة والاحترافية.
+          </p>
+
+          {/* Details Pill */}
+          <div className="p-4 rounded-2xl bg-rose-50/60 dark:bg-rose-950/30 border border-rose-900/10 dark:border-rose-900/20 text-xs font-semibold text-slate-600 dark:text-rose-200/60 flex items-center justify-center gap-2">
+            <BookOpen className="w-4 h-4 text-[#9F1239] dark:text-[#FB7185] shrink-0" />
+            <span>منصة الدورات التفاعلية ستكون متاحة قريباً جداً لجميع التخصصات.</span>
+          </div>
         </motion.div>
       </div>
     </div>

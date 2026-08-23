@@ -40,22 +40,22 @@ export default function ProfilePage() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 dark:bg-[#12070D]/85 backdrop-blur-xl border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-6 sm:p-8 shadow-xl shadow-rose-950/10 mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+          className="bg-white/80 dark:bg-[#12070D]/85 backdrop-blur-xl border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl shadow-rose-950/10 mb-8 sm:mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6"
         >
-          <div className="flex items-center gap-5">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-[#881337] via-[#9F1239] to-[#BE123C] flex items-center justify-center text-3xl font-black text-white shadow-lg shadow-rose-900/30 shrink-0">
+          <div className="flex items-center gap-3.5 sm:gap-5">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-[#881337] via-[#9F1239] to-[#BE123C] flex items-center justify-center text-xl sm:text-3xl font-black text-white shadow-lg shadow-rose-900/30 shrink-0">
               {currentUser.name.substring(0, 2)}
             </div>
             <div>
-              <div className="flex items-center gap-2.5 mb-1">
-                <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-rose-100">
+              <div className="flex items-center gap-2 mb-1">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-rose-100">
                   {currentUser.name}
                 </h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-rose-500/10 border border-rose-900/15 text-[#9F1239] dark:text-rose-300 text-xs font-bold">
                   طالب
                 </span>
               </div>
-              <p className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-rose-200/70 flex flex-wrap items-center gap-x-4 gap-y-1">
+              <p className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-rose-200/70 flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1">
                 <span>الرقم الجامعي: <strong className="text-slate-900 dark:text-white font-mono">{currentUser.studentId}</strong></span>
                 <span>•</span>
                 <span>التخصص: <strong className="text-slate-900 dark:text-white">{currentUser.major}</strong></span>
@@ -86,7 +86,7 @@ export default function ProfilePage() {
                 <Unlock className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-slate-900 dark:text-rose-100">
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-rose-100">
                   دوراتي المفعلة ({enrolledCount})
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-rose-200/60">
@@ -97,14 +97,14 @@ export default function ProfilePage() {
           </div>
 
           {enrolledCount > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {coursesData
                 .filter(course => isCourseUnlocked(course.slug))
                 .map((course) => (
                   <motion.div
                     key={course.id}
                     whileHover={{ y: -4 }}
-                    className="bg-white dark:bg-[#12070D] border border-emerald-500/30 rounded-3xl p-6 shadow-lg shadow-emerald-950/5 flex flex-col justify-between"
+                    className="bg-white dark:bg-[#12070D] border border-emerald-500/30 rounded-3xl p-4 sm:p-6 shadow-lg shadow-emerald-950/5 flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3">

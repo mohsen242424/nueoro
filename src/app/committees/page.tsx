@@ -68,7 +68,7 @@ export default function CommitteesPage() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           {committeesData.map((committee) => {
             const IconComponent = iconMap[committee.icon] || Users;
@@ -79,18 +79,18 @@ export default function CommitteesPage() {
                 variants={itemVariants}
                 className="group bg-white/80 dark:bg-[#12070D]/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-rose-900/10 dark:border-rose-900/30 hover:border-rose-600/40 transition-all duration-300 shadow-xl shadow-rose-950/5 hover:-translate-y-2 flex flex-col h-full"
               >
-                <div className="h-32 bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] p-6 flex flex-col justify-between relative overflow-hidden">
+                <div className="h-32 bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] p-4 sm:p-6 flex flex-col justify-between relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full translate-x-16 -translate-y-16 blur-2xl group-hover:bg-white/20 transition-all duration-500" />
-                  <IconComponent className="w-8 h-8 text-white" />
-                  <div className="flex justify-between items-end">
-                    <h3 className="text-xl font-bold font-poppins text-white">{committee.name}</h3>
-                    <div className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-white">
+                  <IconComponent className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+                  <div className="flex justify-between items-end gap-2">
+                    <h3 className="text-lg sm:text-xl font-bold font-poppins text-white truncate">{committee.name}</h3>
+                    <div className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-semibold text-white shrink-0">
                       {committee.members} {t.committees.members}
                     </div>
                   </div>
                 </div>
                 
-                <div className="p-6 flex-grow flex flex-col">
+                <div className="p-4 sm:p-6 flex-grow flex flex-col">
                   <p className="text-slate-600 dark:text-rose-200/70 text-sm mb-6 font-inter flex-grow leading-relaxed">
                     {committee.description}
                   </p>

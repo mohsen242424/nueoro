@@ -179,9 +179,9 @@ export default function GPACalculator() {
 
               <div className="space-y-3">
                 <div className="grid grid-cols-12 gap-2 md:gap-4 text-xs font-bold text-slate-500 dark:text-rose-200/60 px-2 uppercase tracking-wider">
-                  <div className="col-span-5 md:col-span-6">{t.gpa.courseName}</div>
+                  <div className="col-span-4 md:col-span-6">{t.gpa.courseName}</div>
                   <div className="col-span-3 md:col-span-2 text-center">{t.gpa.creditHours}</div>
-                  <div className="col-span-3 md:col-span-3">{t.gpa.grade}</div>
+                  <div className="col-span-4 md:col-span-3">{t.gpa.grade}</div>
                   <div className="col-span-1"></div>
                 </div>
 
@@ -194,7 +194,7 @@ export default function GPACalculator() {
                     exit={{ opacity: 0, scale: 0.95 }}
                     className="grid grid-cols-12 gap-2 md:gap-4 items-center group"
                   >
-                    <div className="col-span-5 md:col-span-6">
+                    <div className="col-span-4 md:col-span-6">
                       <input
                         type="text"
                         value={course.name}
@@ -213,7 +213,7 @@ export default function GPACalculator() {
                         className="w-full bg-slate-50 dark:bg-[#180A11] border border-rose-900/15 dark:border-rose-900/30 rounded-xl px-2 md:px-4 py-2.5 text-slate-900 dark:text-white text-center focus:outline-none focus:ring-2 focus:ring-[#9F1239] transition-all text-sm font-bold"
                       />
                     </div>
-                    <div className="col-span-3 md:col-span-3">
+                    <div className="col-span-4 md:col-span-3">
                       <select
                         value={course.grade}
                         onChange={(e) => updateCourse(course.id, 'grade', e.target.value as Grade)}

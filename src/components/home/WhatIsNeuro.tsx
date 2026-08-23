@@ -38,7 +38,7 @@ export default function WhatIsNeuro() {
       <div className="absolute right-0 top-1/4 opacity-15 dark:opacity-25 pointer-events-none w-96 h-96 bg-[#9F1239] rounded-full blur-[140px]" />
       
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
           
           {/* Left Text Column */}
           <motion.div 
@@ -47,7 +47,7 @@ export default function WhatIsNeuro() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl md:text-5xl font-poppins font-black mb-6 text-slate-900 dark:text-rose-100" dangerouslySetInnerHTML={{ __html: t.whatIsNeuro.title }} />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-poppins font-black mb-6 text-slate-900 dark:text-rose-100" dangerouslySetInnerHTML={{ __html: t.whatIsNeuro.title }} />
             <p className="text-lg text-slate-600 dark:text-rose-200/70 mb-8 leading-relaxed font-inter">
               {t.whatIsNeuro.description}
             </p>

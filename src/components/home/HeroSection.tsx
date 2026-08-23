@@ -130,7 +130,7 @@ export default function HeroSection() {
 
         {/* Main Brand Title */}
         <motion.h1 
-          className="text-6xl sm:text-7xl md:text-9xl font-poppins font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#9F1239] via-[#E11D48] to-[#FDA4AF] animate-gradient-x py-2 drop-shadow-sm"
+          className="text-4xl sm:text-6xl md:text-7xl lg:text-9xl font-poppins font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#9F1239] via-[#E11D48] to-[#FDA4AF] animate-gradient-x py-2 drop-shadow-sm"
           variants={itemVariants}
         >
           {t.hero.title}

@@ -103,12 +103,12 @@ export default function AnatomyLibraryPage() {
           </div>
 
           {/* Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-2 w-full">
+          <div className="flex overflow-x-auto no-scrollbar pb-2 sm:flex-wrap sm:justify-center gap-2 w-full">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-all duration-200 ${
                   activeCategory === category
                     ? 'bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] text-white shadow-md shadow-rose-900/30'
                     : 'bg-white dark:bg-[#12070D] text-slate-600 dark:text-rose-200/70 border border-rose-900/10 dark:border-rose-900/30 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-slate-900 dark:hover:text-white'

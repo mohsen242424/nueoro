@@ -167,7 +167,7 @@ export default function JoinPage() {
             </div>
 
             {/* Form Steps */}
-            <form onSubmit={handleSubmit} className="p-6 md:p-8">
+            <form onSubmit={handleSubmit} className="p-4 sm:p-6 md:p-8">
               <AnimatePresence mode="wait">
                 {step === 1 && (
                   <motion.div

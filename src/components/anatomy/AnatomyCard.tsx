@@ -39,7 +39,7 @@ export default function AnatomyCard({ model, onOpenModal }: AnatomyCardProps) {
       <div className="relative z-10 flex flex-col h-full rounded-3xl overflow-hidden">
         {/* Header 3D Model Thumbnail Banner */}
         <div 
-          className="relative h-52 w-full bg-[#080406] border-b border-rose-900/10 dark:border-rose-900/30 flex items-center justify-center overflow-hidden cursor-pointer group/thumb" 
+          className="relative h-44 sm:h-52 w-full bg-[#080406] border-b border-rose-900/10 dark:border-rose-900/30 flex items-center justify-center overflow-hidden cursor-pointer group/thumb" 
           onClick={() => onOpenModal(model)}
         >
           {model.thumbnail ? (
@@ -62,9 +62,9 @@ export default function AnatomyCard({ model, onOpenModal }: AnatomyCardProps) {
           {/* Glowing 3D Play Button */}
           <motion.div 
             whileHover={{ scale: 1.15 }}
-            className="w-14 h-14 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover/thumb:bg-[#9F1239] group-hover/thumb:border-[#E11D48] transition-all shadow-2xl z-10"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover/thumb:bg-[#9F1239] group-hover/thumb:border-[#E11D48] transition-all shadow-2xl z-10"
           >
-            <Play className="w-5 h-5 text-white ml-0.5 fill-white" />
+            <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white ml-0.5 fill-white" />
           </motion.div>
 
           {/* Category Badge overlay */}
@@ -76,7 +76,7 @@ export default function AnatomyCard({ model, onOpenModal }: AnatomyCardProps) {
         </div>
 
         {/* Content */}
-        <div className="flex flex-col flex-grow p-6">
+        <div className="flex flex-col flex-grow p-4 sm:p-6">
           <h3 className="text-lg font-bold font-poppins text-slate-900 dark:text-rose-100 mb-2 line-clamp-1 group-hover:text-[#9F1239] dark:group-hover:text-[#FB7185] transition-colors">
             {model.title}
           </h3>
