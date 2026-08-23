@@ -9,7 +9,7 @@ import { useTheme } from "../providers/ThemeProvider";
 import { useLanguage } from "../providers/LanguageProvider";
 import { useAuth } from "../providers/AuthProvider";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
-import { Menu, X, Sun, Moon, User, ShieldCheck, LogIn } from "lucide-react";
+import { Menu, X, Sun, Moon, User, ShieldCheck, LogIn, Globe } from "lucide-react";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -178,11 +178,11 @@ export default function Navbar() {
           </div>
 
           {/* Mobile / Tablet Controls */}
-          <div className="flex items-center gap-2 xl:hidden">
+          <div className="flex items-center gap-1.5 sm:gap-2 xl:hidden shrink-0">
             {currentUser ? (
               <Link
                 href="/profile"
-                className="w-8 h-8 rounded-full bg-[#9F1239] text-white flex items-center justify-center text-xs font-black"
+                className="w-8 h-8 rounded-full bg-[#9F1239] text-white flex items-center justify-center text-xs font-black shadow-sm shrink-0"
                 title="حسابي"
               >
                 {currentUser.name.substring(0, 1)}
@@ -190,19 +190,20 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/login"
-                className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/15 text-slate-700 dark:text-rose-200"
+                className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/15 text-slate-700 dark:text-rose-200 shrink-0"
                 title="تسجيل الدخول"
               >
                 <LogIn className="w-4 h-4" />
               </Link>
             )}
 
-            <LanguageSwitcher variant="segmented" />
+            {/* Compact Globe Switcher for Mobile Header */}
+            <LanguageSwitcher variant="compact-toggle" />
 
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/10 dark:border-rose-900/30 text-slate-700 dark:text-rose-200 focus:outline-none"
+              className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/10 dark:border-rose-900/30 text-slate-700 dark:text-rose-200 focus:outline-none shrink-0"
             >
               {theme === "dark" ? (
                 <Moon className="w-4 h-4 text-rose-400" />
@@ -214,7 +215,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle navigation menu"
-              className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/10 dark:border-rose-900/30 text-slate-700 dark:text-rose-200 hover:text-[#BE123C] dark:hover:text-[#FB7185] focus:outline-none"
+              className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/10 dark:border-rose-900/30 text-slate-700 dark:text-rose-200 hover:text-[#BE123C] dark:hover:text-[#FB7185] focus:outline-none shrink-0"
             >
               {isMobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -237,12 +238,21 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="xl:hidden bg-white/95 dark:bg-[#080406]/95 backdrop-blur-2xl border-b border-rose-900/10 dark:border-rose-900/30 shadow-2xl mt-3 px-4 pt-3 pb-6 max-h-[85vh] overflow-y-auto"
           >
-            <div className="space-y-1 max-w-md mx-auto">
+            <div className="space-y-2 max-w-md mx-auto">
+              {/* Language Selection Bar in Mobile Drawer */}
+              <div className="flex items-center justify-between p-2.5 mb-2 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-900/15">
+                <span className="text-xs font-bold text-slate-700 dark:text-rose-200 flex items-center gap-1.5">
+                  <Globe className="w-3.5 h-3.5 text-[#9F1239] dark:text-[#FB7185]" />
+                  <span>اللغة / Language</span>
+                </span>
+                <LanguageSwitcher variant="segmented" />
+              </div>
+
               {currentUser ? (
                 <Link
                   href="/profile"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between w-full p-3 mb-3 rounded-2xl bg-rose-500/10 border border-rose-900/20 text-[#9F1239] dark:text-rose-200 font-bold text-xs"
+                  className="flex items-center justify-between w-full p-3 mb-2 rounded-2xl bg-rose-500/10 border border-rose-900/20 text-[#9F1239] dark:text-rose-200 font-bold text-xs"
                 >
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4" />
@@ -254,7 +264,7 @@ export default function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-center w-full py-2.5 mb-3 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-900/20 text-[#9F1239] dark:text-rose-200 font-bold text-xs"
+                  className="flex items-center justify-center w-full py-2.5 mb-2 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-900/20 text-[#9F1239] dark:text-rose-200 font-bold text-xs"
                 >
                   <LogIn className="w-4 h-4 mr-1.5" /> تسجيل الدخول بالرقم الجامعي
                 </Link>
