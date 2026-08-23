@@ -70,16 +70,16 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Centered Navigation Bar (Desktop) */}
-          <nav className="hidden xl:flex items-center justify-center flex-1 max-w-fit mx-auto">
-            <div className="flex items-center gap-1 p-1.5 rounded-full bg-slate-100/90 dark:bg-[#150B10]/80 backdrop-blur-md border border-rose-900/10 dark:border-rose-900/30 shadow-inner">
+          {/* Centered Navigation Bar (Desktop) - Scaled to fit seamlessly */}
+          <nav className="hidden 2xl:flex items-center justify-center flex-1 max-w-fit mx-auto">
+            <div className="flex items-center gap-0.5 p-1 rounded-full bg-slate-100/90 dark:bg-[#150B10]/80 backdrop-blur-md border border-rose-900/10 dark:border-rose-900/30 shadow-inner">
               {navLinks.map((link) => {
                 const isActive = pathname === link.path;
                 return (
                   <Link
                     key={link.path}
                     href={link.path}
-                    className={`relative px-3.5 py-1.5 rounded-full text-xs font-semibold font-manrope transition-all duration-200 whitespace-nowrap ${
+                    className={`relative px-2.5 py-1 rounded-full text-[11px] font-semibold font-manrope transition-all duration-200 whitespace-nowrap ${
                       isActive
                         ? "text-white shadow-sm"
                         : "text-slate-700 dark:text-rose-100/80 hover:text-rose-950 dark:hover:text-white hover:bg-rose-50 dark:hover:bg-rose-950/40"
@@ -99,35 +99,64 @@ export default function Navbar() {
             </div>
           </nav>
 
+          {/* Medium/Large Laptop Navigation (Core Links) */}
+          <nav className="hidden lg:flex 2xl:hidden items-center justify-center flex-1 max-w-fit mx-auto">
+            <div className="flex items-center gap-0.5 p-1 rounded-full bg-slate-100/90 dark:bg-[#150B10]/80 backdrop-blur-md border border-rose-900/10 dark:border-rose-900/30 shadow-inner">
+              {navLinks.slice(0, 6).map((link) => {
+                const isActive = pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    className={`relative px-2 py-1 rounded-full text-[11px] font-semibold font-manrope transition-all duration-200 whitespace-nowrap ${
+                      isActive
+                        ? "text-white shadow-sm"
+                        : "text-slate-700 dark:text-rose-100/80 hover:text-rose-950 dark:hover:text-white hover:bg-rose-50 dark:hover:bg-rose-950/40"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNavPillLap"
+                        className="absolute inset-0 bg-gradient-to-r from-[#9F1239] via-[#BE123C] to-[#E11D48] rounded-full z-[-1] shadow-md shadow-rose-900/30"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10">{link.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
+
           {/* Right Controls (Auth + Language + Theme + Join CTA) */}
-          <div className="hidden xl:flex items-center gap-2.5 flex-shrink-0">
+          <div className="hidden lg:flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             
             {/* Student Auth Button / Profile Badge */}
             {currentUser ? (
               <Link
                 href="/profile"
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold font-manrope transition-all duration-200 flex items-center gap-1.5 border ${
+                className={`px-3 py-1 rounded-full text-xs font-bold font-manrope transition-all duration-200 flex items-center gap-1.5 border shrink-0 ${
                   pathname === "/profile"
                     ? "bg-[#9F1239] text-white border-transparent shadow-md shadow-rose-900/30"
                     : "bg-rose-50 dark:bg-rose-950/40 text-[#9F1239] dark:text-rose-200 border-rose-900/15 hover:bg-[#9F1239] hover:text-white hover:border-transparent"
                 }`}
               >
-                <div className="w-5 h-5 rounded-full bg-[#9F1239] text-white flex items-center justify-center text-[10px] font-black">
+                <div className="w-4 h-4 rounded-full bg-[#9F1239] text-white flex items-center justify-center text-[9px] font-black">
                   {currentUser.name.substring(0, 1)}
                 </div>
-                <span className="max-w-[100px] truncate">{currentUser.name.split(' ')[0]}</span>
+                <span className="max-w-[80px] truncate">{currentUser.name.split(' ')[0]}</span>
               </Link>
             ) : (
               <Link
                 href="/login"
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold font-manrope transition-all duration-200 flex items-center gap-1.5 border ${
+                className={`px-2.5 py-1 rounded-full text-xs font-bold font-manrope transition-all duration-200 flex items-center gap-1 border shrink-0 ${
                   pathname === "/login" || pathname === "/register"
                     ? "bg-[#9F1239] text-white border-transparent shadow-md shadow-rose-900/30"
                     : "bg-slate-100 dark:bg-[#150B10] text-slate-700 dark:text-rose-200 border-rose-900/15 hover:bg-rose-50 dark:hover:bg-rose-950/40"
                 }`}
               >
                 <LogIn className="w-3.5 h-3.5" />
-                <span>دخول / حساب</span>
+                <span className="hidden sm:inline">دخول</span>
               </Link>
             )}
 
@@ -135,7 +164,7 @@ export default function Navbar() {
             {isAdmin && (
               <Link
                 href="/admin"
-                className="px-2.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-bold flex items-center gap-1"
+                className="px-2 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-bold flex items-center gap-1 shrink-0"
                 title="لوحة تحكم المشرفين"
               >
                 <ShieldCheck className="w-3.5 h-3.5" />
@@ -146,7 +175,7 @@ export default function Navbar() {
             {/* Join CTA Button */}
             <Link
               href="/join"
-              className={`px-3.5 py-1.5 rounded-full text-xs font-bold font-manrope transition-all duration-200 border ${
+              className={`px-3 py-1 rounded-full text-xs font-bold font-manrope transition-all duration-200 border shrink-0 ${
                 pathname === "/join"
                   ? "bg-gradient-to-r from-[#9F1239] to-[#E11D48] text-white border-transparent shadow-md shadow-rose-900/30"
                   : "bg-rose-900/10 dark:bg-rose-900/25 text-[#9F1239] dark:text-rose-300 border-rose-900/20 dark:border-rose-800/40 hover:bg-gradient-to-r hover:from-[#9F1239] hover:to-[#E11D48] hover:text-white hover:border-transparent"
@@ -156,29 +185,29 @@ export default function Navbar() {
             </Link>
 
             {/* Language Switcher */}
-            <LanguageSwitcher variant="segmented" />
+            <LanguageSwitcher variant="compact-toggle" />
 
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="p-2 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/10 dark:border-rose-900/30 text-slate-700 dark:text-rose-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-all duration-200 focus:outline-none"
+              className="p-1.5 rounded-full bg-slate-100 dark:bg-[#150B10] border border-rose-900/10 dark:border-rose-900/30 text-slate-700 dark:text-rose-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-all duration-200 focus:outline-none shrink-0"
             >
               <motion.div
                 animate={{ rotate: theme === "dark" ? 180 : 0 }}
                 transition={{ duration: 0.4 }}
               >
                 {theme === "dark" ? (
-                  <Moon className="w-4 h-4 text-rose-400" />
+                  <Moon className="w-3.5 h-3.5 text-rose-400" />
                 ) : (
-                  <Sun className="w-4 h-4 text-amber-500" />
+                  <Sun className="w-3.5 h-3.5 text-amber-500" />
                 )}
               </motion.div>
             </button>
           </div>
 
-          {/* Mobile / Tablet Controls */}
-          <div className="flex items-center gap-1.5 sm:gap-2 xl:hidden shrink-0">
+          {/* Mobile Controls (below lg) */}
+          <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden shrink-0">
             {currentUser ? (
               <Link
                 href="/profile"
@@ -236,7 +265,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="xl:hidden bg-white/95 dark:bg-[#080406]/95 backdrop-blur-2xl border-b border-rose-900/10 dark:border-rose-900/30 shadow-2xl mt-3 px-4 pt-3 pb-6 max-h-[85vh] overflow-y-auto"
+            className="lg:hidden bg-white/95 dark:bg-[#080406]/95 backdrop-blur-2xl border-b border-rose-900/10 dark:border-rose-900/30 shadow-2xl mt-3 px-4 pt-3 pb-6 max-h-[85vh] overflow-y-auto"
           >
             <div className="space-y-2 max-w-md mx-auto">
               {/* Language Selection Bar in Mobile Drawer */}
