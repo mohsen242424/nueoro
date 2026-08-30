@@ -1,5 +1,57 @@
 [
   {
+    "id": "placement-tests-hu",
+    "slug": "placement-tests-hu",
+    "title": "امتحانات المستوى - الجامعة الهاشمية (عربي، إنجليزي، حاسوب)",
+    "instructor": "فريق نيورو الأكاديمي",
+    "category": "امتحانات المستوى",
+    "description": "دورة شاملة ومكثفة لاجتياز امتحانات المستوى في الجامعة الهاشمية (اللغة العربية، اللغة الإنجليزية، ومهارات الحاسوب) مع شروحات بالفيديو، بنك أسئلة سنوات، وملفات PDF.",
+    "thumbnail": "/images/courses/study.jpg",
+    "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+    "lessonsCount": 5,
+    "duration": "4 ساعات",
+    "price": "5 د.أ",
+    "priceNumber": 5,
+    "isPaid": true,
+    "lessons": [
+      {
+        "id": 1,
+        "title": "1. مقدمة وتعليمات امتحانات المستوى بالجامعة الهاشمية وطريقة اجتيازها",
+        "type": "drive",
+        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "duration": "20 دقيقة"
+      },
+      {
+        "id": 2,
+        "title": "2. امتحان مستوى اللغة العربية - شرح القواعد الشامل ونماذج الأسئلة المتكررة",
+        "type": "drive",
+        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "duration": "45 دقيقة"
+      },
+      {
+        "id": 3,
+        "title": "3. امتحان مستوى اللغة الإنجليزية - مراجعة القواعد والقطع والأسئلة الوزارية",
+        "type": "drive",
+        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "duration": "50 دقيقة"
+      },
+      {
+        "id": 4,
+        "title": "4. امتحان مستوى مهارات الحاسوب - الشرح العملي والنظري وبرامج الأوفيس",
+        "type": "drive",
+        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "duration": "40 دقيقة"
+      },
+      {
+        "id": 5,
+        "title": "5. بنك أسئلة وتجميعات امتحانات السنوات السابقة والحلول النموذجية",
+        "type": "drive",
+        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "duration": "35 دقيقة"
+      }
+    ]
+  },
+  {
     "id": "anatomy-101",
     "slug": "anatomy-fundamentals",
     "title": "Anatomy Fundamentals - أساسيات التشريح",
