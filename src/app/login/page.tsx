@@ -18,7 +18,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -28,13 +28,17 @@ export default function LoginPage() {
     }
 
     setLoading(true);
-    const res = login(studentId, password);
-    setLoading(false);
-
-    if (res.success) {
-      router.push('/profile');
-    } else {
-      setError(res.error || 'فشل تسجيل الدخول');
+    try {
+      const res = await login(studentId, password);
+      if (res.success) {
+        router.push('/profile');
+      } else {
+        setError(res.error || 'فشل تسجيل الدخول');
+      }
+    } catch (err: any) {
+      setError(err.message || 'فشل الاتصال بقاعدة البيانات');
+    } finally {
+      setLoading(false);
     }
   };
 

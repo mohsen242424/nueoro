@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ShieldCheck, KeyRound, Users, BookOpen, CheckCircle2, XCircle, Search, ToggleLeft, ToggleRight, Trash2, ArrowLeft, RefreshCw, Sparkles, UserPlus } from 'lucide-react';
+import { ShieldCheck, KeyRound, Users, BookOpen, CheckCircle2, XCircle, Search, ToggleLeft, ToggleRight, Trash2, ArrowLeft, RefreshCw, Sparkles, UserPlus, Loader2 } from 'lucide-react';
 import { useAuth, User } from '@/components/providers/AuthProvider';
 import coursesData from '@/data/courses.json';
 
@@ -14,12 +14,31 @@ export default function AdminPage() {
   const [pinError, setPinError] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStudent, setSelectedStudent] = useState<User | null>(null);
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [students, setStudents] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-  // Force re-fetch from storage
-  const students = useMemo(() => {
-    return getAllStudents();
-  }, [getAllStudents, refreshKey]);
+  const loadStudents = async () => {
+    setLoading(true);
+    try {
+      const data = await getAllStudents();
+      setStudents(data);
+      if (selectedStudent) {
+        const found = data.find((s) => s.studentId === selectedStudent.studentId);
+        setSelectedStudent(found || null);
+      }
+    } catch (err) {
+      console.error('Error loading students in admin:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isAdmin) {
+      loadStudents();
+    }
+  }, [isAdmin]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,21 +50,28 @@ export default function AdminPage() {
     }
   };
 
-  const handleToggle = (studentId: string, courseSlug: string) => {
-    toggleUserCourse(studentId, courseSlug);
-    setRefreshKey(prev => prev + 1);
-    if (selectedStudent && selectedStudent.studentId === studentId) {
-      const updated = getAllStudents().find(s => s.studentId === studentId) || null;
-      setSelectedStudent(updated);
+  const handleToggle = async (studentId: string, courseSlug: string) => {
+    const key = `${studentId}-${courseSlug}`;
+    setActionLoading(key);
+    try {
+      await toggleUserCourse(studentId, courseSlug);
+      await loadStudents();
+    } finally {
+      setActionLoading(null);
     }
   };
 
-  const handleDelete = (studentId: string, name: string) => {
+  const handleDelete = async (studentId: string, name: string) => {
     if (confirm(`هل أنت متأكد من حذف حساب الطالب (${name} - ${studentId})؟`)) {
-      deleteStudent(studentId);
-      setRefreshKey(prev => prev + 1);
-      if (selectedStudent?.studentId === studentId) {
-        setSelectedStudent(null);
+      setActionLoading(studentId);
+      try {
+        await deleteStudent(studentId);
+        if (selectedStudent?.studentId === studentId) {
+          setSelectedStudent(null);
+        }
+        await loadStudents();
+      } finally {
+        setActionLoading(null);
       }
     }
   };
@@ -53,11 +79,12 @@ export default function AdminPage() {
   const filteredStudents = useMemo(() => {
     const q = searchTerm.toLowerCase().trim();
     if (!q) return students;
-    return students.filter(s =>
-      s.studentId.toLowerCase().includes(q) ||
-      s.name.toLowerCase().includes(q) ||
-      s.phone.toLowerCase().includes(q) ||
-      s.major.toLowerCase().includes(q)
+    return students.filter(
+      (s) =>
+        s.studentId.toLowerCase().includes(q) ||
+        s.name.toLowerCase().includes(q) ||
+        s.phone.toLowerCase().includes(q) ||
+        s.major.toLowerCase().includes(q)
     );
   }, [students, searchTerm]);
 
@@ -121,7 +148,6 @@ export default function AdminPage() {
     );
   }
 
-  // Admin Dashboard Main View
   return (
     <div className="min-h-screen bg-[#FAF7F5] dark:bg-[#080406] pt-24 pb-20 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
@@ -131,23 +157,24 @@ export default function AdminPage() {
           <div>
             <div className="flex items-center gap-2.5 mb-1">
               <span className="px-3 py-0.5 rounded-full bg-[#9F1239] text-white text-[11px] font-bold">
-                Admin Portal
+                Cloud Admin Portal
               </span>
               <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-rose-100">
-                لوحة تحكم تفعيل الدورات والطلاب
+                لوحة تحكم تفعيل الدورات والطلاب (Supabase)
               </h1>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-rose-200/60">
-              ابحث بالرقم الجامعي للطلاب وقم بتفعيل أو إلغاء تفعيل أي دورة بنقرة زر واحدة فور استلام الحوالة
+              ابحث بالرقم الجامعي للطلاب وقم بتفعيل أو إلغاء تفعيل أي دورة بنقرة زر واحدة متزامنة سحابياً
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <button
-              onClick={() => setRefreshKey(prev => prev + 1)}
+              onClick={loadStudents}
+              disabled={loading}
               className="px-4 py-2 rounded-xl bg-white dark:bg-[#12070D] border border-rose-900/15 text-slate-700 dark:text-rose-200 text-xs font-bold hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors flex items-center gap-1.5"
             >
-              <RefreshCw className="w-3.5 h-3.5" /> تحديث القائمة
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} /> تحديث القائمة
             </button>
             <button
               onClick={adminLogout}
@@ -165,7 +192,9 @@ export default function AdminPage() {
               <span className="text-xs font-bold text-slate-500 dark:text-rose-200/60">الطلاب المسجلين</span>
               <Users className="w-5 h-5 text-[#9F1239] dark:text-[#FB7185]" />
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-rose-100">{students.length}</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-rose-100">
+              {loading ? '...' : students.length}
+            </p>
           </div>
 
           <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-5 shadow-sm">
@@ -173,7 +202,9 @@ export default function AdminPage() {
               <span className="text-xs font-bold text-slate-500 dark:text-rose-200/60">إجمالي الاشتراكات المفعلة</span>
               <CheckCircle2 className="w-5 h-5 text-emerald-500" />
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-rose-100">{totalEnrollments}</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-rose-100">
+              {loading ? '...' : totalEnrollments}
+            </p>
           </div>
 
           <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-5 shadow-sm">
@@ -253,10 +284,15 @@ export default function AdminPage() {
                               </button>
                               <button
                                 onClick={() => handleDelete(s.studentId, s.name)}
-                                className="p-1 text-slate-400 hover:text-rose-600 rounded-lg"
+                                disabled={actionLoading === s.studentId}
+                                className="p-1 text-slate-400 hover:text-rose-600 rounded-lg disabled:opacity-50"
                                 title="حذف الطالب"
                               >
-                                <Trash2 className="w-3.5 h-3.5" />
+                                {actionLoading === s.studentId ? (
+                                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                ) : (
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                )}
                               </button>
                             </div>
                           </td>
@@ -264,10 +300,21 @@ export default function AdminPage() {
                       );
                     })}
 
-                    {filteredStudents.length === 0 && (
+                    {filteredStudents.length === 0 && !loading && (
                       <tr>
                         <td colSpan={5} className="py-12 text-center text-slate-400">
                           لم يتم العثور على طلاب يطابقون البحث
+                        </td>
+                      </tr>
+                    )}
+
+                    {loading && (
+                      <tr>
+                        <td colSpan={5} className="py-12 text-center text-slate-400">
+                          <div className="flex items-center justify-center gap-2">
+                            <Loader2 className="w-4 h-4 animate-spin text-[#9F1239]" />
+                            <span>جاري تحميل الطلاب من Supabase...</span>
+                          </div>
                         </td>
                       </tr>
                     )}
@@ -297,6 +344,9 @@ export default function AdminPage() {
                   <div className="space-y-3">
                     {coursesData.map((course) => {
                       const isEnrolled = selectedStudent.enrolledCourses?.includes(course.slug);
+                      const key = `${selectedStudent.studentId}-${course.slug}`;
+                      const isToggling = actionLoading === key;
+
                       return (
                         <div
                           key={course.id}
@@ -317,16 +367,23 @@ export default function AdminPage() {
 
                           <button
                             onClick={() => handleToggle(selectedStudent.studentId, course.slug)}
+                            disabled={isToggling}
                             className={`px-3 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 shrink-0 transition-all ${
                               isEnrolled
-                                ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm'
-                                : 'bg-rose-50 dark:bg-rose-950/40 text-[#9F1239] dark:text-rose-200 border border-rose-900/20 hover:bg-[#9F1239] hover:text-white'
+                                ? 'bg-emerald-600 text-white shadow-sm hover:bg-emerald-700'
+                                : 'bg-slate-200 dark:bg-rose-950/50 text-slate-700 dark:text-rose-200 hover:bg-[#9F1239] hover:text-white'
                             }`}
                           >
-                            {isEnrolled ? (
-                              <><CheckCircle2 className="w-3.5 h-3.5" /> مفعلة (إلغاء)</>
+                            {isToggling ? (
+                              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            ) : isEnrolled ? (
+                              <>
+                                <CheckCircle2 className="w-3.5 h-3.5" /> مفعل
+                              </>
                             ) : (
-                              <><ToggleRight className="w-3.5 h-3.5" /> تفعيل الدورة</>
+                              <>
+                                <ToggleRight className="w-3.5 h-3.5" /> تفعيل
+                              </>
                             )}
                           </button>
                         </div>
@@ -335,14 +392,14 @@ export default function AdminPage() {
                   </div>
                 </div>
               ) : (
-                <div className="py-16 text-center text-slate-400 dark:text-rose-200/40">
-                  <Users className="w-12 h-12 mx-auto mb-2 opacity-30" />
-                  <p className="text-xs font-bold">اختر طالباً من القائمة على اليمين</p>
-                  <p className="text-[11px] mt-1">لتفعيل أو إلغاء دوراته بنقرة واحدة</p>
+                <div className="text-center py-12 text-slate-400 dark:text-rose-200/50">
+                  <UserPlus className="w-12 h-12 mx-auto mb-3 opacity-30 text-[#9F1239]" />
+                  <p className="text-xs font-bold">حدد طالباً من القائمة لإدارة وتفعيل دوراته</p>
                 </div>
               )}
             </div>
           </div>
+
         </div>
       </div>
     </div>

@@ -33,7 +33,7 @@ export default function RegisterPage() {
     'تخصص طبي آخر / سنة أولى',
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -53,22 +53,27 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
-    const res = register({
-      name: formData.name,
-      studentId: formData.studentId,
-      phone: formData.phone,
-      major: formData.major,
-      password: formData.password,
-    });
-    setLoading(false);
+    try {
+      const res = await register({
+        name: formData.name,
+        studentId: formData.studentId,
+        phone: formData.phone,
+        major: formData.major,
+        password: formData.password,
+      });
 
-    if (res.success) {
-      setSuccess(true);
-      setTimeout(() => {
-        router.push('/profile');
-      }, 1500);
-    } else {
-      setError(res.error || 'حدث خطأ أثناء التسجيل');
+      if (res.success) {
+        setSuccess(true);
+        setTimeout(() => {
+          router.push('/profile');
+        }, 1200);
+      } else {
+        setError(res.error || 'حدث خطأ أثناء التسجيل');
+      }
+    } catch (err: any) {
+      setError(err.message || 'فشل الاتصال بقاعدة البيانات');
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -1,6 +1,14 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import {
+  registerStudentInDb,
+  loginStudentInDb,
+  fetchStudentEnrollments,
+  fetchAllStudentsWithEnrollments,
+  toggleCourseActivationInDb,
+  deleteStudentFromDb,
+} from '@/lib/supabase';
 
 export interface User {
   studentId: string;
@@ -9,83 +17,53 @@ export interface User {
   major: string;
   password?: string;
   enrolledCourses: string[]; // array of course slugs e.g. ['anatomy-fundamentals', 'nursing-essentials']
-  registeredAt: string;
+  registeredAt?: string;
 }
 
 interface AuthContextType {
   currentUser: User | null;
   isAdmin: boolean;
-  login: (studentId: string, password: string) => { success: boolean; error?: string };
-  register: (userData: Omit<User, 'enrolledCourses' | 'registeredAt'> & { password: string }) => { success: boolean; error?: string };
+  login: (studentId: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  register: (userData: Omit<User, 'enrolledCourses' | 'registeredAt'> & { password: string }) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   adminLogin: (pin: string) => boolean;
   adminLogout: () => void;
   isCourseUnlocked: (courseSlug: string) => boolean;
-  getAllStudents: () => User[];
-  toggleUserCourse: (studentId: string, courseSlug: string) => boolean;
-  deleteStudent: (studentId: string) => boolean;
+  getAllStudents: () => Promise<User[]>;
+  toggleUserCourse: (studentId: string, courseSlug: string) => Promise<boolean>;
+  deleteStudent: (studentId: string) => Promise<boolean>;
+  refreshCurrentUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const USERS_STORAGE_KEY = 'neuro_users_db';
 const CURRENT_USER_KEY = 'neuro_active_user';
 const ADMIN_SESSION_KEY = 'neuro_admin_auth';
 const ADMIN_PIN = 'neuro2026';
-
-// Default initial demo students for realistic dashboard testing
-const INITIAL_STUDENTS: User[] = [
-  {
-    studentId: '2134567',
-    name: 'أحمد خالد الزعبي',
-    phone: '0791234567',
-    major: 'العلوم الطبية المخبرية',
-    password: 'password123',
-    enrolledCourses: ['anatomy-fundamentals', 'physiology-crash-course'],
-    registeredAt: '2026-08-01',
-  },
-  {
-    studentId: '2039812',
-    name: 'سارة محمد العمري',
-    phone: '0789876543',
-    major: 'العلاج الطبيعي',
-    password: 'password123',
-    enrolledCourses: ['anatomy-fundamentals'],
-    registeredAt: '2026-08-05',
-  },
-  {
-    studentId: '2210455',
-    name: 'عمر ياسين القضاة',
-    phone: '0775551234',
-    major: 'التصوير الطبي',
-    password: 'password123',
-    enrolledCourses: [],
-    registeredAt: '2026-08-10',
-  },
-];
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
 
-  // Initialize from LocalStorage
+  // Initialize from LocalStorage for immediate UI response
   useEffect(() => {
     setMounted(true);
     try {
-      // Ensure database exists
-      const storedUsers = localStorage.getItem(USERS_STORAGE_KEY);
-      if (!storedUsers) {
-        localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(INITIAL_STUDENTS));
-      }
-
-      // Check logged in user
       const activeUser = localStorage.getItem(CURRENT_USER_KEY);
       if (activeUser) {
-        setCurrentUser(JSON.parse(activeUser));
+        const userObj: User = JSON.parse(activeUser);
+        setCurrentUser(userObj);
+        // Refresh enrolled courses in background from Supabase
+        fetchStudentEnrollments(userObj.studentId).then((courses) => {
+          if (courses && courses.length >= 0) {
+            const updated = { ...userObj, enrolledCourses: courses };
+            setCurrentUser(updated);
+            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updated));
+          }
+        });
       }
 
-      // Check admin status
       const adminAuth = localStorage.getItem(ADMIN_SESSION_KEY);
       if (adminAuth === 'true') {
         setIsAdmin(true);
@@ -95,77 +73,98 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const getStoredUsers = (): User[] => {
-    if (typeof window === 'undefined') return INITIAL_STUDENTS;
+  const refreshCurrentUser = async () => {
+    if (!currentUser) return;
     try {
-      const data = localStorage.getItem(USERS_STORAGE_KEY);
-      return data ? JSON.parse(data) : INITIAL_STUDENTS;
-    } catch (e) {
-      return INITIAL_STUDENTS;
+      const courses = await fetchStudentEnrollments(currentUser.studentId);
+      const updated = { ...currentUser, enrolledCourses: courses };
+      setCurrentUser(updated);
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updated));
+    } catch (err) {
+      console.error('Failed to refresh user', err);
     }
   };
 
-  const saveUsers = (users: User[]) => {
-    if (typeof window === 'undefined') return;
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+  const register = async (
+    userData: Omit<User, 'enrolledCourses' | 'registeredAt'> & { password: string }
+  ): Promise<{ success: boolean; error?: string }> => {
+    try {
+      // 1. Save to Supabase Cloud Database
+      const res = await registerStudentInDb({
+        studentId: userData.studentId,
+        name: userData.name,
+        phone: userData.phone,
+        major: userData.major,
+        password: userData.password,
+      });
+
+      if (!res.success) {
+        return { success: false, error: res.error || 'فشل إنشاء الحساب' };
+      }
+
+      const newUser: User = {
+        studentId: userData.studentId.trim(),
+        name: userData.name.trim(),
+        phone: userData.phone.trim(),
+        major: userData.major,
+        enrolledCourses: [],
+        registeredAt: new Date().toISOString(),
+      };
+
+      setCurrentUser(newUser);
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
+
+      return { success: true };
+    } catch (e: any) {
+      console.error('Register error:', e);
+      return { success: false, error: e.message || 'حدث خطأ غير متوقع' };
+    }
   };
 
-  // Register student
-  const register = (userData: Omit<User, 'enrolledCourses' | 'registeredAt'> & { password: string }) => {
-    const cleanStudentId = userData.studentId.trim();
-    if (!cleanStudentId) {
-      return { success: false, error: 'الرجاء إدخال الرقم الجامعي' };
-    }
-    if (!userData.password || userData.password.length < 6) {
-      return { success: false, error: 'كلمة السر يجب أن تكون 6 خانات على الأقل' };
-    }
+  const login = async (
+    studentId: string,
+    password: string
+  ): Promise<{ success: boolean; error?: string }> => {
+    try {
+      // 1. Attempt login with Supabase Cloud Database
+      const res = await loginStudentInDb(studentId, password);
 
-    const users = getStoredUsers();
-    const existing = users.find(u => u.studentId === cleanStudentId);
-    if (existing) {
-      return { success: false, error: 'هذا الرقم الجامعي مسجل مسبقاً! يمكنك تسجيل الدخول.' };
+      if (!res.success || !res.student) {
+        return { success: false, error: res.error || 'بيانات الدخول غير صحيحة' };
+      }
+
+      const user: User = {
+        studentId: res.student.student_id,
+        name: res.student.name,
+        phone: res.student.phone,
+        major: res.student.major,
+        enrolledCourses: res.student.enrolled_courses || [],
+        registeredAt: res.student.created_at,
+      };
+
+      setCurrentUser(user);
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+
+      return { success: true };
+    } catch (e: any) {
+      console.error('Login error:', e);
+      return { success: false, error: e.message || 'فشل الاتصال بقاعدة البيانات' };
     }
-
-    const newUser: User = {
-      ...userData,
-      studentId: cleanStudentId,
-      enrolledCourses: [],
-      registeredAt: new Date().toISOString().split('T')[0],
-    };
-
-    const updated = [newUser, ...users];
-    saveUsers(updated);
-    setCurrentUser(newUser);
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
-    return { success: true };
   };
 
-  // Login student
-  const login = (studentId: string, password: string) => {
-    const cleanId = studentId.trim();
-    const users = getStoredUsers();
-    const user = users.find(u => u.studentId === cleanId && u.password === password);
-
-    if (!user) {
-      return { success: false, error: 'الرقم الجامعي أو كلمة المرور غير صحيحة.' };
-    }
-
-    setCurrentUser(user);
-    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
-    return { success: true };
-  };
-
-  // Logout student
   const logout = () => {
     setCurrentUser(null);
-    localStorage.removeItem(CURRENT_USER_KEY);
+    try {
+      localStorage.removeItem(CURRENT_USER_KEY);
+    } catch (e) {}
   };
 
-  // Admin login
-  const adminLogin = (pin: string) => {
-    if (pin.trim() === ADMIN_PIN) {
+  const adminLogin = (pin: string): boolean => {
+    if (pin === ADMIN_PIN) {
       setIsAdmin(true);
-      localStorage.setItem(ADMIN_SESSION_KEY, 'true');
+      try {
+        localStorage.setItem(ADMIN_SESSION_KEY, 'true');
+      } catch (e) {}
       return true;
     }
     return false;
@@ -173,66 +172,75 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const adminLogout = () => {
     setIsAdmin(false);
-    localStorage.removeItem(ADMIN_SESSION_KEY);
+    try {
+      localStorage.removeItem(ADMIN_SESSION_KEY);
+    } catch (e) {}
   };
 
-  // Check if a course is unlocked for current logged-in user (or admin)
   const isCourseUnlocked = (courseSlug: string): boolean => {
-    if (isAdmin) return true; // Admins have master access
+    if (isAdmin) return true; // Admin has master access
     if (!currentUser) return false;
-    
-    // Check fresh DB in case admin updated it in another tab or just now
-    const users = getStoredUsers();
-    const freshUser = users.find(u => u.studentId === currentUser.studentId);
-    if (freshUser) {
-      return freshUser.enrolledCourses?.includes(courseSlug) || false;
-    }
-    return currentUser.enrolledCourses?.includes(courseSlug) || false;
+    return currentUser.enrolledCourses.includes(courseSlug);
   };
 
-  // Admin: Get all students
-  const getAllStudents = (): User[] => {
-    return getStoredUsers();
+  const getAllStudents = async (): Promise<User[]> => {
+    try {
+      const records = await fetchAllStudentsWithEnrollments();
+      return records.map((r) => ({
+        studentId: r.student_id,
+        name: r.name,
+        phone: r.phone,
+        major: r.major,
+        enrolledCourses: r.enrolled_courses || [],
+        registeredAt: r.created_at || '',
+      }));
+    } catch (err) {
+      console.error('Get all students error:', err);
+      return [];
+    }
   };
 
-  // Admin: Toggle course activation for a specific student ID
-  const toggleUserCourse = (studentId: string, courseSlug: string): boolean => {
-    const users = getStoredUsers();
-    const userIndex = users.findIndex(u => u.studentId === studentId);
-    if (userIndex === -1) return false;
+  const toggleUserCourse = async (studentId: string, courseSlug: string): Promise<boolean> => {
+    try {
+      // Check current state from Supabase
+      const currentCourses = await fetchStudentEnrollments(studentId);
+      const isEnrolled = currentCourses.includes(courseSlug);
 
-    const user = users[userIndex];
-    const isEnrolled = user.enrolledCourses?.includes(courseSlug);
+      const res = await toggleCourseActivationInDb(studentId, courseSlug, !isEnrolled);
 
-    let updatedCourses: string[];
-    if (isEnrolled) {
-      updatedCourses = user.enrolledCourses.filter(slug => slug !== courseSlug);
-    } else {
-      updatedCourses = [...(user.enrolledCourses || []), courseSlug];
+      if (res.success) {
+        // If the student is the currently logged in user on this device, update state
+        if (currentUser && currentUser.studentId === studentId) {
+          const updatedCourses = !isEnrolled
+            ? [...currentUser.enrolledCourses, courseSlug]
+            : currentUser.enrolledCourses.filter((s) => s !== courseSlug);
+          const updatedUser = { ...currentUser, enrolledCourses: updatedCourses };
+          setCurrentUser(updatedUser);
+          localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
+        }
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error('Toggle error:', err);
+      return false;
     }
-
-    const updatedUser = { ...user, enrolledCourses: updatedCourses };
-    users[userIndex] = updatedUser;
-    saveUsers(users);
-
-    // If current logged-in user is this student, update state
-    if (currentUser && currentUser.studentId === studentId) {
-      setCurrentUser(updatedUser);
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(updatedUser));
-    }
-
-    return !isEnrolled;
   };
 
-  // Admin: Delete student
-  const deleteStudent = (studentId: string): boolean => {
-    const users = getStoredUsers();
-    const updated = users.filter(u => u.studentId !== studentId);
-    saveUsers(updated);
-    if (currentUser && currentUser.studentId === studentId) {
-      logout();
+  const deleteStudent = async (studentId: string): Promise<boolean> => {
+    try {
+      const res = await deleteStudentFromDb(studentId);
+      if (res.success) {
+        if (currentUser && currentUser.studentId === studentId) {
+          logout();
+        }
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error('Delete student error:', err);
+      return false;
     }
-    return true;
   };
 
   return (
@@ -249,6 +257,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         getAllStudents,
         toggleUserCourse,
         deleteStudent,
+        refreshCurrentUser,
       }}
     >
       {children}

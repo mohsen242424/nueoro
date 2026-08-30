@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { Sparkles, Send, CheckCircle2, User, Hash, GraduationCap, Calendar, MessageCircle } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
+import { saveJoinRequestToDb } from '@/lib/supabase';
+
 const WHATSAPP_NUMBER = '962772855708';
 
 const MAJORS = [
@@ -40,6 +42,14 @@ export default function JoinPage() {
     if (!fullName.trim() || !studentId.trim() || !major || !year) {
       return;
     }
+
+    // Save to database in background
+    saveJoinRequestToDb({
+      fullName: fullName.trim(),
+      studentId: studentId.trim(),
+      major,
+      year,
+    });
 
     const message = `مرحباً فريق نيورو (NEURO)، أود الانضمام إلى الفريق والمجتمع الطلابي. تفاصيل طلبي:\n\n` +
       `👤 الاسم الكامل: ${fullName.trim()}\n` +
