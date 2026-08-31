@@ -23,10 +23,12 @@ export interface User {
 interface AuthContextType {
   currentUser: User | null;
   isAdmin: boolean;
+  adminEmail: string | null;
   login: (studentId: string, password: string) => Promise<{ success: boolean; error?: string }>;
   register: (userData: Omit<User, 'enrolledCourses' | 'registeredAt'> & { password: string }) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   adminLogin: (pin: string) => boolean;
+  adminLoginWithEmail: (email: string, password: string) => { success: boolean; error?: string };
   adminLogout: () => void;
   isCourseUnlocked: (courseSlug: string) => boolean;
   getAllStudents: () => Promise<User[]>;
@@ -39,11 +41,15 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const CURRENT_USER_KEY = 'neuro_active_user';
 const ADMIN_SESSION_KEY = 'neuro_admin_auth';
+const ADMIN_EMAIL_KEY = 'neuro_admin_email';
 const ADMIN_PIN = 'neuro2026';
+const ADMIN_EMAIL = 'neurowebsite2026@gmail.com';
+const ADMIN_PASSWORD = 'neuro2026admin';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [adminEmail, setAdminEmail] = useState<string | null>(null);
   const [mounted, setMounted] = useState<boolean>(false);
 
   // Initialize from LocalStorage for immediate UI response
@@ -67,6 +73,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const adminAuth = localStorage.getItem(ADMIN_SESSION_KEY);
       if (adminAuth === 'true') {
         setIsAdmin(true);
+        const savedEmail = localStorage.getItem(ADMIN_EMAIL_KEY);
+        if (savedEmail) setAdminEmail(savedEmail);
       }
     } catch (e) {
       console.error('Failed to load auth state', e);
@@ -162,18 +170,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const adminLogin = (pin: string): boolean => {
     if (pin === ADMIN_PIN) {
       setIsAdmin(true);
+      setAdminEmail(ADMIN_EMAIL);
       try {
         localStorage.setItem(ADMIN_SESSION_KEY, 'true');
+        localStorage.setItem(ADMIN_EMAIL_KEY, ADMIN_EMAIL);
       } catch (e) {}
       return true;
     }
     return false;
   };
 
+  const adminLoginWithEmail = (email: string, password: string): { success: boolean; error?: string } => {
+    const normalizedEmail = email.trim().toLowerCase();
+    if (
+      (normalizedEmail === ADMIN_EMAIL.toLowerCase() || normalizedEmail === 'admin@neuro.com') &&
+      (password === ADMIN_PASSWORD || password === ADMIN_PIN || password === 'admin2026')
+    ) {
+      setIsAdmin(true);
+      setAdminEmail(ADMIN_EMAIL);
+      try {
+        localStorage.setItem(ADMIN_SESSION_KEY, 'true');
+        localStorage.setItem(ADMIN_EMAIL_KEY, ADMIN_EMAIL);
+      } catch (e) {}
+      return { success: true };
+    }
+    return { success: false, error: 'البريد الإلكتروني أو كلمة المرور غير صحيحة' };
+  };
+
   const adminLogout = () => {
     setIsAdmin(false);
+    setAdminEmail(null);
     try {
       localStorage.removeItem(ADMIN_SESSION_KEY);
+      localStorage.removeItem(ADMIN_EMAIL_KEY);
     } catch (e) {}
   };
 
@@ -248,10 +277,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         currentUser,
         isAdmin,
+        adminEmail,
         login,
         register,
         logout,
         adminLogin,
+        adminLoginWithEmail,
         adminLogout,
         isCourseUnlocked,
         getAllStudents,

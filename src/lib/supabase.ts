@@ -294,3 +294,26 @@ export async function saveJoinRequestToDb(request: {
     return { success: false, error: err.message };
   }
 }
+
+/**
+ * Fetch all join requests (for Admin Dashboard)
+ */
+export async function fetchAllJoinRequests(): Promise<JoinRequestRecord[]> {
+  try {
+    const { data, error } = await supabase
+      .from('join_requests')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error || !data) {
+      console.error('Fetch join requests error:', error);
+      return [];
+    }
+
+    return data;
+  } catch (err) {
+    console.error('Error fetching join requests:', err);
+    return [];
+  }
+}
+
