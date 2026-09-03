@@ -50,7 +50,7 @@ export default function CoursesPage() {
               <GraduationCap className="w-7 h-7 text-[#9F1239] dark:text-[#FB7185]" />
             </div>
             <h1 className="font-poppins text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-rose-100 tracking-tight">
-              الدورات والشروحات الأكاديمية
+              الدورات والمحاضرات المجانية
             </h1>
           </motion.div>
           <motion.p
@@ -59,7 +59,7 @@ export default function CoursesPage() {
             transition={{ delay: 0.1 }}
             className="text-slate-600 dark:text-rose-200/70 text-base md:text-lg max-w-2xl mx-auto font-inter"
           >
-            شروحات مسجلة، امتحانات المستوى، ومواد متميزة لطلبة كلية العلوم الطبية التطبيقية بالجامعة الهاشمية
+            جميع الدورات مجانية بالكامل لطلبة كلية العلوم الطبية التطبيقية بالجامعة الهاشمية - مشاهدة فيديو مباشرة داخل الموقع والتفعيل بالرقم الجامعي
           </motion.p>
         </div>
 

@@ -39,7 +39,9 @@ import { useAuth, User } from '@/components/providers/AuthProvider';
 import { fetchAllJoinRequests, JoinRequestRecord } from '@/lib/supabase';
 import coursesData from '@/data/courses.json';
 
+const ADMIN_PRIMARY_ID = '2437109';
 const ADMIN_PRIMARY_EMAIL = 'neurowebsite2026@gmail.com';
+const INSTAGRAM_URL = 'https://www.instagram.com/neuro_medical?igsi=MXU4Yng2dmdpdzdnMA==';
 
 export default function AdminPage() {
   const {
@@ -54,8 +56,8 @@ export default function AdminPage() {
   } = useAuth();
 
   // Auth form state
-  const [authMethod, setAuthMethod] = useState<'email' | 'pin'>('email');
-  const [emailInput, setEmailInput] = useState(ADMIN_PRIMARY_EMAIL);
+  const [authMethod, setAuthMethod] = useState<'id' | 'pin'>('id');
+  const [emailInput, setEmailInput] = useState(ADMIN_PRIMARY_ID);
   const [passwordInput, setPasswordInput] = useState('');
   const [pinInput, setPinInput] = useState('');
   const [loginError, setLoginError] = useState('');
@@ -107,19 +109,23 @@ export default function AdminPage() {
     }
   }, [isAdmin]);
 
-  const handleEmailLogin = (e: React.FormEvent) => {
+  const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
     setIsLoggingIn(true);
 
-    const res = adminLoginWithEmail(emailInput, passwordInput);
-    setIsLoggingIn(false);
-
-    if (res.success) {
-      setLoginError('');
-      setPasswordInput('');
-    } else {
-      setLoginError(res.error || 'بيانات الدخول غير صحيحة');
+    try {
+      const res = await adminLoginWithEmail(emailInput, passwordInput);
+      if (res.success) {
+        setLoginError('');
+        setPasswordInput('');
+      } else {
+        setLoginError(res.error || 'الرقم الجامعي أو كلمة المرور غير صحيحة');
+      }
+    } catch (err: any) {
+      setLoginError(err.message || 'حدث خطأ في الاتصال بقاعدة البيانات');
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -132,7 +138,7 @@ export default function AdminPage() {
       setLoginError('');
       setPinInput('');
     } else {
-      setLoginError('رمز المرور PIN غير صحيح (الرمز الافتراضي: neuro2026)');
+      setLoginError('رمز PIN غير صحيح (الرمز الافتراضي: 2437109)');
     }
     setIsLoggingIn(false);
   };
@@ -277,16 +283,16 @@ export default function AdminPage() {
             <button
               type="button"
               onClick={() => {
-                setAuthMethod('email');
+                setAuthMethod('id');
                 setLoginError('');
               }}
               className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                authMethod === 'email'
+                authMethod === 'id'
                   ? 'bg-white dark:bg-[#1C0B14] text-[#9F1239] dark:text-rose-200 shadow-sm'
                   : 'text-slate-500 dark:text-rose-200/60 hover:text-slate-900'
               }`}
             >
-              <Mail className="w-3.5 h-3.5" /> البريد الإلكتروني
+              <Users className="w-3.5 h-3.5" /> بالرقم الجامعي / الإيميل
             </button>
             <button
               type="button"
@@ -310,20 +316,20 @@ export default function AdminPage() {
             </div>
           )}
 
-          {authMethod === 'email' ? (
+          {authMethod === 'id' ? (
             <form onSubmit={handleEmailLogin} className="space-y-4 text-right">
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 dark:text-rose-200/80 mb-1.5">
-                  البريد الإلكتروني للمشرف
+                  الرقم الجامعي أو البريد الإلكتروني للمشرف
                 </label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Users className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
-                    type="email"
+                    type="text"
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
                     required
-                    placeholder="neurowebsite2026@gmail.com"
+                    placeholder="2437109 أو neurowebsite2026@gmail.com"
                     className="w-full bg-slate-50 dark:bg-[#180A11] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl py-3 pl-10 pr-4 text-xs font-semibold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#9F1239]"
                     dir="ltr"
                   />
@@ -332,7 +338,7 @@ export default function AdminPage() {
 
               <div>
                 <label className="block text-[11px] font-bold text-slate-700 dark:text-rose-200/80 mb-1.5">
-                  كلمة المرور
+                  كلمة المرور (Password)
                 </label>
                 <div className="relative">
                   <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -341,14 +347,15 @@ export default function AdminPage() {
                     value={passwordInput}
                     onChange={(e) => setPasswordInput(e.target.value)}
                     required
-                    placeholder="••••••••••••"
+                    placeholder="NeuroAdmin2026!#"
                     className="w-full bg-slate-50 dark:bg-[#180A11] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl py-3 pl-10 pr-4 text-xs font-semibold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#9F1239]"
                     dir="ltr"
                   />
                 </div>
-                <p className="text-[10px] text-slate-400 dark:text-rose-200/50 mt-1 text-center">
-                  كلمة المرور الافتراضية: <code>neuro2026admin</code> أو <code>neuro2026</code>
-                </p>
+                <div className="p-2.5 mt-2 rounded-xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-900/10 text-[11px] text-slate-600 dark:text-rose-200/70 text-right">
+                  <p>🔑 كلمة المرور: <code className="font-bold text-[#9F1239] dark:text-[#FB7185]">NeuroAdmin2026!#</code></p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">(أو استخدام الرقم الجامعي نفسه 2437109)</p>
+                </div>
               </div>
 
               <button
@@ -357,7 +364,7 @@ export default function AdminPage() {
                 className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] hover:from-[#9F1239] hover:to-[#E11D48] text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2"
               >
                 {isLoggingIn ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
-                <span>دخول لوحة تحكم المشرف</span>
+                <span>دخول لوحة تحكم المشرف (Online Supabase)</span>
               </button>
             </form>
           ) : (
@@ -366,7 +373,7 @@ export default function AdminPage() {
                 <KeyRound className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
-                  placeholder="أدخل رمز PIN الافتراضي..."
+                  placeholder="أدخل الرقم الجامعي 2437109..."
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value)}
                   className="w-full bg-slate-50 dark:bg-[#180A11] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl py-3 pl-10 pr-4 text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#9F1239] text-center tracking-widest"
@@ -374,6 +381,7 @@ export default function AdminPage() {
                   autoFocus
                 />
               </div>
+              <p className="text-[11px] text-slate-400">رمز PIN السريع: <strong>2437109</strong></p>
               <button
                 type="submit"
                 className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] hover:from-[#9F1239] hover:to-[#E11D48] text-white font-bold text-xs shadow-md transition-all"
@@ -432,7 +440,7 @@ export default function AdminPage() {
               لوحة التحكم والإدارة المركزية
             </h1>
             <p className="text-xs text-slate-500 dark:text-rose-200/60 font-mono mt-0.5">
-              الحساب النشط: <strong className="text-slate-800 dark:text-white">{adminEmail || ADMIN_PRIMARY_EMAIL}</strong>
+              الحساب النشط: <strong className="text-slate-800 dark:text-white">المشرف العام (الرقم الجامعي: 2437109 | {adminEmail || ADMIN_PRIMARY_EMAIL})</strong>
             </p>
           </div>
 
@@ -1014,28 +1022,41 @@ export default function AdminPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#180A11] border border-rose-900/10 space-y-1">
-                <span className="text-[11px] font-bold text-slate-400">حساب المشرف المسجل</span>
-                <p className="text-xs font-mono font-bold text-slate-900 dark:text-white">
-                  {ADMIN_PRIMARY_EMAIL}
+                <span className="text-[11px] font-bold text-slate-400">الرقم الجامعي للمشرف</span>
+                <p className="text-xs font-mono font-bold text-[#9F1239] dark:text-[#FB7185]">
+                  2437109
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#180A11] border border-rose-900/10 space-y-1">
-                <span className="text-[11px] font-bold text-slate-400">مشروع Supabase URL</span>
+                <span className="text-[11px] font-bold text-slate-400">البريد الإلكتروني للمشرف</span>
                 <p className="text-xs font-mono font-bold text-slate-900 dark:text-white">
-                  https://xrsfsrvhyzzrpiedueqg.supabase.co
+                  neurowebsite2026@gmail.com
                 </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#180A11] border border-rose-900/10 space-y-1">
+                <span className="text-[11px] font-bold text-slate-400">حساب Instagram المربوط للتفعيل</span>
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono font-bold text-[#E1306C] hover:underline flex items-center gap-1"
+                >
+                  <span>@neuro_medical</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
             </div>
 
             <div className="p-4 rounded-2xl bg-rose-50/60 dark:bg-rose-950/30 border border-rose-900/15 space-y-2">
               <h4 className="text-xs font-bold text-[#9F1239] dark:text-[#FB7185] flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4" /> تعليمات إدارة الدورات والتحويلات
+                <ShieldCheck className="w-4 h-4" /> آلية تفعيل الدورات المجانية للطلاب
               </h4>
               <p className="text-xs text-slate-600 dark:text-rose-200/80 leading-relaxed">
-                عند استلام إشعار التحويل البنكي من الطالب على واتساب (`0798107289`)، ابحث عن الطالب برقمه الجامعي في تبويب «إدارة الطلاب»، ثم اضغط «إدارة الدورات» واضغط «تفعيل» للدورة المطلوبة. سيتم فتح الفيديوهات بحسابه فوراً وتلقائياً على هاتفه أو لابتوبه!
+                جميع دورات المنصة مجانية بالكامل. عندما يرسل لك الطالب رسالة على حساب إنستغرام (<a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="font-bold text-[#E1306C] underline">@neuro_medical</a>) تحتوي رقمه الجامعي واسم الدورة، ابحث عن رقمه الجامعي في جدول «إدارة الطلاب» واضغط «إدارة الدورات» ثم انقر على «تفعيل». سيتم فتح الفيديوهات بحسابه فوراً وتلقائياً على الموقع!
               </p>
             </div>
           </div>

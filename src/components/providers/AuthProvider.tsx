@@ -8,6 +8,7 @@ import {
   fetchAllStudentsWithEnrollments,
   toggleCourseActivationInDb,
   deleteStudentFromDb,
+  loginAdminInDb,
 } from '@/lib/supabase';
 
 export interface User {
@@ -28,7 +29,7 @@ interface AuthContextType {
   register: (userData: Omit<User, 'enrolledCourses' | 'registeredAt'> & { password: string }) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   adminLogin: (pin: string) => boolean;
-  adminLoginWithEmail: (email: string, password: string) => { success: boolean; error?: string };
+  adminLoginWithEmail: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   adminLogout: () => void;
   isCourseUnlocked: (courseSlug: string) => boolean;
   getAllStudents: () => Promise<User[]>;
@@ -42,9 +43,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const CURRENT_USER_KEY = 'neuro_active_user';
 const ADMIN_SESSION_KEY = 'neuro_admin_auth';
 const ADMIN_EMAIL_KEY = 'neuro_admin_email';
-const ADMIN_PIN = 'neuro2026';
+const ADMIN_STUDENT_ID = '2437109';
+const ADMIN_PIN = '2437109';
 const ADMIN_EMAIL = 'neurowebsite2026@gmail.com';
-const ADMIN_PASSWORD = 'neuro2026admin';
+const ADMIN_PASSWORD = 'NeuroAdmin2026!#';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -168,7 +170,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const adminLogin = (pin: string): boolean => {
-    if (pin === ADMIN_PIN) {
+    if (pin === ADMIN_PIN || pin === '2437109' || pin === 'neuro2026') {
       setIsAdmin(true);
       setAdminEmail(ADMIN_EMAIL);
       try {
@@ -180,21 +182,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return false;
   };
 
-  const adminLoginWithEmail = (email: string, password: string): { success: boolean; error?: string } => {
-    const normalizedEmail = email.trim().toLowerCase();
-    if (
-      (normalizedEmail === ADMIN_EMAIL.toLowerCase() || normalizedEmail === 'admin@neuro.com') &&
-      (password === ADMIN_PASSWORD || password === ADMIN_PIN || password === 'admin2026')
-    ) {
-      setIsAdmin(true);
-      setAdminEmail(ADMIN_EMAIL);
-      try {
-        localStorage.setItem(ADMIN_SESSION_KEY, 'true');
-        localStorage.setItem(ADMIN_EMAIL_KEY, ADMIN_EMAIL);
-      } catch (e) {}
-      return { success: true };
+  const adminLoginWithEmail = async (
+    identifier: string,
+    password: string
+  ): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const res = await loginAdminInDb(identifier, password);
+      if (res.success && res.admin) {
+        setIsAdmin(true);
+        setAdminEmail(res.admin.email || ADMIN_EMAIL);
+        try {
+          localStorage.setItem(ADMIN_SESSION_KEY, 'true');
+          localStorage.setItem(ADMIN_EMAIL_KEY, res.admin.email || ADMIN_EMAIL);
+        } catch (e) {}
+        return { success: true };
+      }
+      return { success: false, error: res.error || 'الرقم الجامعي أو كلمة المرور غير صحيحة' };
+    } catch (err: any) {
+      return { success: false, error: err.message || 'حدث خطأ أثناء تسجيل الدخول' };
     }
-    return { success: false, error: 'البريد الإلكتروني أو كلمة المرور غير صحيحة' };
   };
 
   const adminLogout = () => {

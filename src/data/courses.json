@@ -5,48 +5,48 @@
     "title": "امتحانات المستوى - الجامعة الهاشمية (عربي، إنجليزي، حاسوب)",
     "instructor": "فريق نيورو الأكاديمي",
     "category": "امتحانات المستوى",
-    "description": "دورة شاملة ومكثفة لاجتياز امتحانات المستوى في الجامعة الهاشمية (اللغة العربية، اللغة الإنجليزية، ومهارات الحاسوب) مع شروحات بالفيديو، بنك أسئلة سنوات، وملفات PDF.",
+    "description": "دورة شاملة ومكثفة ومجانية بالكامل لاجتياز امتحانات المستوى في الجامعة الهاشمية (اللغة العربية، اللغة الإنجليزية، ومهارات الحاسوب) مع شروحات بالفيديو داخل الموقع وبنك أسئلة سنوات.",
     "thumbnail": "/images/courses/study.jpg",
-    "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
     "lessonsCount": 5,
     "duration": "4 ساعات",
-    "price": "5 د.أ",
-    "priceNumber": 5,
-    "isPaid": true,
+    "price": "مجانية بالكامل",
+    "priceNumber": 0,
+    "isPaid": false,
+    "requiresActivation": true,
     "lessons": [
       {
         "id": 1,
         "title": "1. مقدمة وتعليمات امتحانات المستوى بالجامعة الهاشمية وطريقة اجتيازها",
-        "type": "drive",
-        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "videoId": "9bZkp7q19f0",
+        "embedUrl": "https://www.youtube.com/embed/9bZkp7q19f0",
         "duration": "20 دقيقة"
       },
       {
         "id": 2,
         "title": "2. امتحان مستوى اللغة العربية - شرح القواعد الشامل ونماذج الأسئلة المتكررة",
-        "type": "drive",
-        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "videoId": "jNQXAC9IVRw",
+        "embedUrl": "https://www.youtube.com/embed/jNQXAC9IVRw",
         "duration": "45 دقيقة"
       },
       {
         "id": 3,
-        "title": "3. امتحان مستوى اللغة الإنجليزية - مراجعة القواعد والقطع والأسئلة الوزارية",
-        "type": "drive",
-        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "title": "3. امتحان مستوى اللغة الإنجليزية - مراجعة القواعد والقطع وأهم التمارين",
+        "videoId": "kJQP7kiw5Fk",
+        "embedUrl": "https://www.youtube.com/embed/kJQP7kiw5Fk",
         "duration": "50 دقيقة"
       },
       {
         "id": 4,
-        "title": "4. امتحان مستوى مهارات الحاسوب - الشرح العملي والنظري وبرامج الأوفيس",
-        "type": "drive",
-        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "title": "4. امتحان مستوى مهارات الحاسوب - الشرح العملي والنظري ومفاهيم IT",
+        "videoId": "fJ9rUzIMcZQ",
+        "embedUrl": "https://www.youtube.com/embed/fJ9rUzIMcZQ",
         "duration": "40 دقيقة"
       },
       {
         "id": 5,
         "title": "5. بنك أسئلة وتجميعات امتحانات السنوات السابقة والحلول النموذجية",
-        "type": "drive",
-        "driveUrl": "https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4",
+        "videoId": "L_LUpnjgPso",
+        "embedUrl": "https://www.youtube.com/embed/L_LUpnjgPso",
         "duration": "35 دقيقة"
       }
     ]
@@ -57,20 +57,21 @@
     "title": "Anatomy Fundamentals - أساسيات التشريح",
     "instructor": "Dr. Ahmad Nasser",
     "category": "Anatomy",
-    "description": "دورة شاملة ومكثفة تغطي أساسيات علم التشريح البشري، أجهزة الجسم المختلفة، والمصطلحات التشريحية الضرورية مع شروحات ثلاثية الأبعاد ونماذج تفاعلية.",
+    "description": "دورة مجانية شاملة تغطي أساسيات علم التشريح البشري، أجهزة الجسم المختلفة، والمصطلحات التشريحية الضرورية لطلبة كلية العلوم الطبية التطبيقية.",
     "thumbnail": "/images/courses/anatomy.jpg",
-    "lessonsCount": 12,
+    "lessonsCount": 6,
     "duration": "6 hours",
-    "price": "10 د.أ",
-    "priceNumber": 10,
-    "isPaid": true,
+    "price": "مجانية بالكامل",
+    "priceNumber": 0,
+    "isPaid": false,
+    "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Introduction to Anatomy & Anatomical Position", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
-      { "id": 2, "title": "Anatomical Terminology & Planes", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
-      { "id": 3, "title": "Skeletal System & Bone Markings", "videoId": "dQw4w9WgXcQ", "duration": "35 min" },
-      { "id": 4, "title": "Muscular System & Attachments", "videoId": "dQw4w9WgXcQ", "duration": "32 min" },
-      { "id": 5, "title": "Nervous System Architecture", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
-      { "id": 6, "title": "Cardiovascular & Circulatory System", "videoId": "dQw4w9WgXcQ", "duration": "28 min" }
+      { "id": 1, "title": "Introduction to Anatomy & Anatomical Position", "videoId": "uBGl2BujkPQ", "embedUrl": "https://www.youtube.com/embed/uBGl2BujkPQ", "duration": "30 min" },
+      { "id": 2, "title": "Anatomical Terminology & Body Planes", "videoId": "kvZXnPptgK8", "embedUrl": "https://www.youtube.com/embed/kvZXnPptgK8", "duration": "28 min" },
+      { "id": 3, "title": "Skeletal System & Bone Markings", "videoId": "rDGqkMHPDqE", "embedUrl": "https://www.youtube.com/embed/rDGqkMHPDqE", "duration": "35 min" },
+      { "id": 4, "title": "Muscular System & Muscle Attachments", "videoId": "Vvl6m_024b0", "embedUrl": "https://www.youtube.com/embed/Vvl6m_024b0", "duration": "32 min" },
+      { "id": 5, "title": "Nervous System Architecture & Divisions", "videoId": "qPix_X-9t7E", "embedUrl": "https://www.youtube.com/embed/qPix_X-9t7E", "duration": "30 min" },
+      { "id": 6, "title": "Cardiovascular & Circulatory System", "videoId": "_qmNCJxpsr0", "embedUrl": "https://www.youtube.com/embed/_qmNCJxpsr0", "duration": "28 min" }
     ]
   },
   {
@@ -81,16 +82,17 @@
     "category": "Nursing",
     "description": "مبادئ الرعاية التمريضية والسريرية لطلاب العلوم الطبية، تشمل تقييم العلامات الحيوية، الإجراءات السريرية، والتعامل مع الحالات الطبية باحترافية.",
     "thumbnail": "/images/courses/nursing.jpg",
-    "lessonsCount": 8,
+    "lessonsCount": 4,
     "duration": "4 hours",
-    "price": "10 د.أ",
-    "priceNumber": 10,
-    "isPaid": true,
+    "price": "مجانية بالكامل",
+    "priceNumber": 0,
+    "isPaid": false,
+    "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Patient Assessment Fundamentals", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
-      { "id": 2, "title": "Vital Signs Monitoring & Clinical Interpretation", "videoId": "dQw4w9WgXcQ", "duration": "25 min" },
-      { "id": 3, "title": "Wound Care & Aseptic Techniques", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
-      { "id": 4, "title": "Medication Administration & Safety", "videoId": "dQw4w9WgXcQ", "duration": "32 min" }
+      { "id": 1, "title": "Patient Assessment Fundamentals", "videoId": "O7O_7mQk4_4", "embedUrl": "https://www.youtube.com/embed/O7O_7mQk4_4", "duration": "30 min" },
+      { "id": 2, "title": "Vital Signs Monitoring & Clinical Interpretation", "videoId": "3j0xQ6xYy_Y", "embedUrl": "https://www.youtube.com/embed/3j0xQ6xYy_Y", "duration": "25 min" },
+      { "id": 3, "title": "Wound Care & Aseptic Techniques", "videoId": "rWk7d6g6e_U", "embedUrl": "https://www.youtube.com/embed/rWk7d6g6e_U", "duration": "28 min" },
+      { "id": 4, "title": "Medication Administration & Clinical Safety", "videoId": "7q7x_Y8yZ_U", "embedUrl": "https://www.youtube.com/embed/7q7x_Y8yZ_U", "duration": "32 min" }
     ]
   },
   {
@@ -101,17 +103,18 @@
     "category": "Physiology",
     "description": "استكشف المبادئ الأساسية للفسيولوجيا البشرية، وكيف تعمل أجهزة الجسم المختلفة بتناغم للحفاظ على الاتزان الداخلي (Homeostasis).",
     "thumbnail": "/images/courses/physiology.jpg",
-    "lessonsCount": 10,
+    "lessonsCount": 5,
     "duration": "5 hours",
-    "price": "12 د.أ",
-    "priceNumber": 12,
-    "isPaid": true,
+    "price": "مجانية بالكامل",
+    "priceNumber": 0,
+    "isPaid": false,
+    "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Cell Physiology & Transport Mechanisms", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
-      { "id": 2, "title": "Membrane Potential & Action Potential", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
-      { "id": 3, "title": "Nerve Conduction & Synaptic Transmission", "videoId": "dQw4w9WgXcQ", "duration": "35 min" },
-      { "id": 4, "title": "Skeletal & Smooth Muscle Physiology", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
-      { "id": 5, "title": "Cardiac Electrophysiology & Mechanics", "videoId": "dQw4w9WgXcQ", "duration": "32 min" }
+      { "id": 1, "title": "Cell Physiology & Transport Mechanisms", "videoId": "PRi6t-a1v-g", "embedUrl": "https://www.youtube.com/embed/PRi6t-a1v-g", "duration": "30 min" },
+      { "id": 2, "title": "Membrane Potential & Action Potential", "videoId": "oa6rvUJlg7o", "embedUrl": "https://www.youtube.com/embed/oa6rvUJlg7o", "duration": "28 min" },
+      { "id": 3, "title": "Nerve Conduction & Synaptic Transmission", "videoId": "WhowH0kb7n0", "embedUrl": "https://www.youtube.com/embed/WhowH0kb7n0", "duration": "35 min" },
+      { "id": 4, "title": "Skeletal & Smooth Muscle Physiology", "videoId": "Ktv-CaOt6UQ", "embedUrl": "https://www.youtube.com/embed/Ktv-CaOt6UQ", "duration": "30 min" },
+      { "id": 5, "title": "Cardiac Electrophysiology & Mechanics", "videoId": "ryIGnz4UEyk", "embedUrl": "https://www.youtube.com/embed/ryIGnz4UEyk", "duration": "32 min" }
     ]
   },
   {
@@ -122,16 +125,17 @@
     "category": "Pharmacology",
     "description": "مقدمة شاملة في علم الأدوية تغطي تصنيفات الأدوية، آليات العمل الحيوية، حركية وديناميكية الدواء، والتداخلات الدوائية المهمة.",
     "thumbnail": "/images/courses/pharmacology.jpg",
-    "lessonsCount": 10,
+    "lessonsCount": 4,
     "duration": "5 hours",
-    "price": "12 د.أ",
-    "priceNumber": 12,
-    "isPaid": true,
+    "price": "مجانية بالكامل",
+    "priceNumber": 0,
+    "isPaid": false,
+    "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Drug Classification & Receptor Targets", "videoId": "dQw4w9WgXcQ", "duration": "30 min" },
-      { "id": 2, "title": "Pharmacokinetics: Absorption & Metabolism", "videoId": "dQw4w9WgXcQ", "duration": "35 min" },
-      { "id": 3, "title": "Pharmacodynamics: Dose-Response Relationship", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
-      { "id": 4, "title": "Adverse Drug Reactions & Interactions", "videoId": "dQw4w9WgXcQ", "duration": "30 min" }
+      { "id": 1, "title": "Drug Classification & Receptor Targets", "videoId": "fE3f6F_Wv_o", "embedUrl": "https://www.youtube.com/embed/fE3f6F_Wv_o", "duration": "30 min" },
+      { "id": 2, "title": "Pharmacokinetics: Absorption & Metabolism", "videoId": "sJk8t6Xy_wA", "embedUrl": "https://www.youtube.com/embed/sJk8t6Xy_wA", "duration": "35 min" },
+      { "id": 3, "title": "Pharmacodynamics: Dose-Response Relationship", "videoId": "dF_9q7mK5wE", "embedUrl": "https://www.youtube.com/embed/dF_9q7mK5wE", "duration": "28 min" },
+      { "id": 4, "title": "Adverse Drug Reactions & Critical Interactions", "videoId": "xL_q7w9e2rT", "embedUrl": "https://www.youtube.com/embed/xL_q7w9e2rT", "duration": "30 min" }
     ]
   },
   {
@@ -142,16 +146,17 @@
     "category": "Study Skills",
     "description": "طرق واستراتيجيات المذاكرة الفعالة والمثبتة علمياً لطلاب الكليات الطبية لرفع المعدل التراكمي وإدارة الوقت وحفظ كميات المعلومات الضخمة.",
     "thumbnail": "/images/courses/study.jpg",
-    "lessonsCount": 6,
+    "lessonsCount": 4,
     "duration": "3 hours",
-    "price": "5 د.أ",
-    "priceNumber": 5,
-    "isPaid": true,
+    "price": "مجانية بالكامل",
+    "priceNumber": 0,
+    "isPaid": false,
+    "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Active Recall & Spaced Repetition for Medicine", "videoId": "dQw4w9WgXcQ", "duration": "25 min" },
-      { "id": 2, "title": "High-Yield Mind Mapping for Medical Subjects", "videoId": "dQw4w9WgXcQ", "duration": "22 min" },
-      { "id": 3, "title": "Anki Mastery for Medical Sciences", "videoId": "dQw4w9WgXcQ", "duration": "28 min" },
-      { "id": 4, "title": "First & Final Exam Preparation Strategies", "videoId": "dQw4w9WgXcQ", "duration": "30 min" }
+      { "id": 1, "title": "Active Recall & Spaced Repetition for Medicine", "videoId": "Z-zNHHpXoMM", "embedUrl": "https://www.youtube.com/embed/Z-zNHHpXoMM", "duration": "25 min" },
+      { "id": 2, "title": "High-Yield Mind Mapping for Medical Subjects", "videoId": "5zT_xH-f_eM", "embedUrl": "https://www.youtube.com/embed/5zT_xH-f_eM", "duration": "22 min" },
+      { "id": 3, "title": "Anki Mastery for Medical Sciences", "videoId": "7wZj2F6Zqg0", "embedUrl": "https://www.youtube.com/embed/7wZj2F6Zqg0", "duration": "28 min" },
+      { "id": 4, "title": "First & Final Exam Preparation Strategies", "videoId": "p60rN9JEapg", "embedUrl": "https://www.youtube.com/embed/p60rN9JEapg", "duration": "30 min" }
     ]
   }
 ]

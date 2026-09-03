@@ -3,11 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { BookOpen, Clock, User, ArrowRight, Lock, Unlock, CheckCircle2, MessageCircle } from 'lucide-react';
+import { BookOpen, Clock, User, ArrowRight, Lock, Unlock, CheckCircle2, Instagram, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 import { useAuth } from '@/components/providers/AuthProvider';
 
-const WHATSAPP_NUMBER = '962798107289';
+const INSTAGRAM_URL = 'https://www.instagram.com/neuro_medical?igsi=MXU4Yng2dmdpdzdnMA==';
 
 interface Course {
   id: string;
@@ -27,13 +27,21 @@ export default function CourseCard({ course }: { course: Course }) {
 
   const isUnlocked = isCourseUnlocked(course.slug);
 
-  const handleWhatsAppPayment = (e: React.MouseEvent) => {
+  const handleInstagramActivation = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const studentInfo = currentUser ? `رقمي الجامعي: (${currentUser.studentId}) واسمي: (${currentUser.name})` : 'سأقوم بالتسجيل بالرقم الجامعي';
-    const text = `مرحباً فريق نيورو، أود الاشتراك وتفعيل دورة: (${course.title} - بسعر ${course.price || '10 د.أ'}). ${studentInfo}. مرفق إشعار التحويل البنكي للتفعيل.`;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
+
+    const studentInfo = currentUser 
+      ? `رقمي الجامعي: (${currentUser.studentId}) واسمي: (${currentUser.name})` 
+      : 'سأقوم بإرسال رقمي الجامعي';
+
+    const textToCopy = `مرحباً فريق نيورو، أود تفعيل دورة (${course.title}) مجاناً. ${studentInfo}.`;
+    
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(textToCopy).catch(() => {});
+    }
+
+    window.open(INSTAGRAM_URL, '_blank');
   };
 
   return (
@@ -51,18 +59,18 @@ export default function CourseCard({ course }: { course: Course }) {
             <div className="flex items-center gap-1.5">
               {isUnlocked ? (
                 <span className="rounded-full bg-emerald-600/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-white flex items-center gap-1 shadow-sm">
-                  <Unlock className="w-3.5 h-3.5" /> مفعلة
+                  <Unlock className="w-3.5 h-3.5" /> مفعلة بحسابك
                 </span>
               ) : (
-                <span className="rounded-full bg-amber-500/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-white flex items-center gap-1 shadow-sm">
-                  <Lock className="w-3.5 h-3.5" /> {course.price || '10 د.أ'}
+                <span className="rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 backdrop-blur-md px-3 py-1 text-xs font-bold text-white flex items-center gap-1 shadow-sm">
+                  <Sparkles className="w-3.5 h-3.5" /> مجانية 100%
                 </span>
               )}
             </div>
           </div>
           
           <div className="flex items-center gap-4 text-xs font-semibold text-rose-100/90 z-10">
-            <span className="flex items-center"><BookOpen className="w-4 h-4 mr-1 text-rose-300" /> {course.lessonsCount} دروس</span>
+            <span className="flex items-center"><BookOpen className="w-4 h-4 mr-1 text-rose-300" /> {course.lessonsCount} محاضرات</span>
             <span className="flex items-center"><Clock className="w-4 h-4 mr-1 text-rose-300" /> {course.duration}</span>
           </div>
 
@@ -82,6 +90,11 @@ export default function CourseCard({ course }: { course: Course }) {
           <p className="text-xs text-slate-600 dark:text-rose-200/70 line-clamp-2 leading-relaxed font-inter mb-4">
             {course.description}
           </p>
+
+          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-xl">
+            <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+            <span>فيديوهات مباشرة داخل الموقع وتفعيل برقمك الجامعي</span>
+          </div>
         </div>
       </div>
 
@@ -96,18 +109,19 @@ export default function CourseCard({ course }: { course: Course }) {
           }`}
         >
           {isUnlocked ? (
-            <>مشاهدة المحاضرات <ArrowRight className="h-4 w-4" /></>
+            <>مشاهدة المحاضرات بالفيديو <ArrowRight className="h-4 w-4" /></>
           ) : (
-            <>استعراض تفاصيل الدورة والدروس <ArrowRight className="h-4 w-4" /></>
+            <>عرض تفاصيل الدورة والدروس <ArrowRight className="h-4 w-4" /></>
           )}
         </Link>
 
         {!isUnlocked && (
           <button
-            onClick={handleWhatsAppPayment}
-            className="w-full py-2.5 rounded-2xl bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+            onClick={handleInstagramActivation}
+            className="w-full py-2.5 rounded-2xl bg-gradient-to-r from-[#833ab4]/15 via-[#fd1d1d]/15 to-[#fcb045]/15 hover:from-[#833ab4]/25 hover:to-[#fcb045]/25 text-[#9F1239] dark:text-rose-300 border border-rose-900/20 text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
           >
-            <MessageCircle className="w-3.5 h-3.5" /> تفعيل عبر واتساب ({course.price || '10 د.أ'})
+            <Instagram className="w-4 h-4 text-[#E1306C]" />
+            <span>طلب التفعيل المجاني عبر Instagram</span>
           </button>
         )}
       </div>
