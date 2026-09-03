@@ -561,7 +561,7 @@ export default function AdminPage() {
             }`}
           >
             <Layers className="w-4 h-4" />
-            <span>الدورات وروابط Drive ({coursesData.length})</span>
+            <span>الدورات والمحاضرات ({coursesData.length})</span>
           </button>
 
           <button
@@ -935,16 +935,15 @@ export default function AdminPage() {
           <div className="space-y-4">
             <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-5 shadow-sm">
               <h2 className="text-lg font-black text-slate-900 dark:text-rose-100 mb-1">
-                نظرة عامة على دورات المنصة والروابط السحابية
+                نظرة عامة على الدورات والمشغل المدمج
               </h2>
               <p className="text-xs text-slate-500">
-                استعرض الدورات، عدد الدروس، الأسعار، ومجلدات الـ Google Drive المربوطة
+                استعرض الدورات، عدد الدروس، والمحاضرات التي يشاهدها الطلاب داخل الموقع
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {coursesData.map((c) => {
-                const driveUrl = (c as any).driveUrl || 'https://drive.google.com/drive/folders/1Smgl1zXzD7ofi9JV5fZbhPBRIg-xDgd4';
                 return (
                   <div
                     key={c.id}
@@ -955,7 +954,7 @@ export default function AdminPage() {
                         <span className="px-2.5 py-0.5 rounded-full bg-[#9F1239]/10 text-[#9F1239] dark:text-[#FDA4AF] text-[11px] font-bold">
                           {c.category}
                         </span>
-                        <span className="font-bold text-xs text-amber-600 dark:text-amber-400 font-mono">
+                        <span className="font-bold text-xs text-emerald-600 dark:text-emerald-400 font-mono">
                           {c.price}
                         </span>
                       </div>
@@ -984,22 +983,13 @@ export default function AdminPage() {
                       </div>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div>
                       <Link
                         href={`/courses/${c.slug}`}
-                        className="flex-1 py-2 rounded-xl bg-slate-100 dark:bg-rose-950/40 text-slate-800 dark:text-rose-200 hover:bg-rose-50 text-xs font-bold text-center transition-colors"
+                        className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#881337] to-[#9F1239] text-white hover:from-[#9F1239] hover:to-[#E11D48] text-xs font-bold text-center transition-all shadow-sm block"
                       >
-                        معاينة المشغل
+                        معاينة مشغل الدورة بالموقع
                       </Link>
-                      <a
-                        href={driveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-xl bg-[#9F1239] text-white hover:bg-[#881337] transition-colors"
-                        title="فتح المجلد السحابي على Google Drive"
-                      >
-                        <FolderOpen className="w-4 h-4" />
-                      </a>
                     </div>
                   </div>
                 );

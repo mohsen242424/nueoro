@@ -173,8 +173,32 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
             
             {isUnlocked ? (
               <>
-                {/* Direct In-Site Video Player (No Drive Redirects) */}
-                <div className="relative aspect-video w-full rounded-3xl overflow-hidden bg-black shadow-2xl border border-rose-900/30">
+                {/* Protected In-Site Video Player (Drive Shield & Anti-Leak Watermark) */}
+                <div 
+                  onContextMenu={(e) => e.preventDefault()}
+                  className="relative aspect-video w-full rounded-3xl overflow-hidden bg-black shadow-2xl border border-rose-900/30 select-none"
+                >
+                  {/* Security Shield covering top bar to completely block Drive pop-out icon */}
+                  <div 
+                    className="absolute top-0 left-0 right-0 h-14 bg-gradient-to-b from-black/95 via-black/70 to-transparent z-20 flex items-center justify-between px-4 text-white pointer-events-auto"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#E11D48] animate-pulse"></span>
+                      <span className="text-[11px] font-bold tracking-wide text-rose-200">مشغل نيورو الأكاديمي المباشر</span>
+                    </div>
+                    <div className="text-[11px] font-mono text-white/80 bg-black/60 px-3 py-1 rounded-xl border border-white/15 shadow-sm">
+                      الطالب: {currentUser?.name || 'طالب نيورو'} ({currentUser?.studentId || '2437109'})
+                    </div>
+                  </div>
+
+                  {/* Invisible Shield specifically over the top-right corner to block the Pop-Out / Drive link */}
+                  <div 
+                    className="absolute top-0 right-0 w-32 h-16 z-30 cursor-default bg-transparent" 
+                    title="مشغل نيورو المدمج"
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                  />
+
                   <iframe
                     src={videoSrc}
                     className="w-full h-full border-0"
