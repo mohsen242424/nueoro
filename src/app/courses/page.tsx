@@ -14,12 +14,10 @@ export default function CoursesPage() {
 
   const categories = [
     { id: 'All', label: 'جميع الدورات' },
-    { id: 'امتحانات المستوى', label: 'امتحانات المستوى' },
-    { id: 'Anatomy', label: 'علم التشريح' },
-    { id: 'Nursing', label: 'التمريض' },
-    { id: 'Physiology', label: 'علم وظائف الأعضاء' },
-    { id: 'Pharmacology', label: 'علم الأدوية' },
-    { id: 'Study Skills', label: 'مهارات التفوق' },
+    ...Array.from(new Set(coursesData.map((c) => c.category))).map((cat) => ({
+      id: cat,
+      label: cat,
+    })),
   ];
 
   const filteredCourses = coursesData.filter((course) => {
