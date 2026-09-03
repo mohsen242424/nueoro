@@ -160,17 +160,6 @@ export default function Navbar() {
               </Link>
             )}
 
-            {/* Admin Portal Link if Admin */}
-            {isAdmin && (
-              <Link
-                href="/admin"
-                className="px-2 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-bold flex items-center gap-1 shrink-0"
-                title="لوحة تحكم المشرفين"
-              >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Admin</span>
-              </Link>
-            )}
 
             {/* Join CTA Button */}
             <Link

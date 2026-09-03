@@ -120,19 +120,13 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-rose-900/10 dark:border-rose-900/20 text-center space-y-3">
+        <div className="mt-8 pt-6 border-t border-rose-900/10 dark:border-rose-900/20 text-center">
           <p className="text-xs font-semibold text-slate-600 dark:text-rose-200/70">
             ليس لديك حساب بعد؟{' '}
             <Link href="/register" className="text-[#9F1239] dark:text-[#FB7185] font-bold hover:underline">
               إنشاء حساب جديد بالرقم الجامعي
             </Link>
           </p>
-
-          <div className="pt-2">
-            <Link href="/admin" className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 dark:text-rose-200/40 hover:text-[#9F1239] dark:hover:text-rose-200 transition-colors">
-              <ShieldCheck className="w-3.5 h-3.5" /> دخول المشرفين (Admin Portal)
-            </Link>
-          </div>
         </div>
       </motion.div>
     </div>
