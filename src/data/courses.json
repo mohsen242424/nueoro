@@ -5,9 +5,9 @@
     "title": "امتحانات المستوى - الجامعة الهاشمية (عربي، إنجليزي، حاسوب)",
     "instructor": "فريق نيورو الأكاديمي",
     "category": "امتحانات المستوى",
-    "description": "دورة شاملة ومكثفة ومجانية بالكامل لاجتياز امتحانات المستوى في الجامعة الهاشمية (اللغة العربية، اللغة الإنجليزية، ومهارات الحاسوب) مع شروحات بالفيديو داخل الموقع وبنك أسئلة سنوات.",
+    "description": "دورة شاملة ومكثفة ومجانية بالكامل لاجتياز امتحانات المستوى في الجامعة الهاشمية (اللغة العربية، اللغة الإنجليزية، ومهارات الحاسوب). الفيديوهات الأصلية تعمل مباشرة داخل مشغل الموقع وتتطلب التفعيل بالرقم الجامعي.",
     "thumbnail": "/images/courses/study.jpg",
-    "lessonsCount": 5,
+    "lessonsCount": 4,
     "duration": "4 ساعات",
     "price": "مجانية بالكامل",
     "priceNumber": 0,
@@ -16,38 +16,31 @@
     "lessons": [
       {
         "id": 1,
-        "title": "1. مقدمة وتعليمات امتحانات المستوى بالجامعة الهاشمية وطريقة اجتيازها",
-        "videoId": "9bZkp7q19f0",
-        "embedUrl": "https://www.youtube.com/embed/9bZkp7q19f0",
-        "duration": "20 دقيقة"
+        "title": "1. امتحان المستوى - المقدمة والتعليمات العامة",
+        "fileId": "1a2m8BsboeMRFlYqGf6D01UxeSXK9kcG9",
+        "embedUrl": "https://drive.google.com/file/d/1a2m8BsboeMRFlYqGf6D01UxeSXK9kcG9/preview",
+        "duration": "فيديو مسجل"
       },
       {
         "id": 2,
-        "title": "2. امتحان مستوى اللغة العربية - شرح القواعد الشامل ونماذج الأسئلة المتكررة",
-        "videoId": "jNQXAC9IVRw",
-        "embedUrl": "https://www.youtube.com/embed/jNQXAC9IVRw",
-        "duration": "45 دقيقة"
+        "title": "2. امتحان المستوى العربي - الشرح وحل الأسئلة",
+        "fileId": "1oBI7-NsGX4KASzOGvfJ3FnEaL24xNX0Y",
+        "embedUrl": "https://drive.google.com/file/d/1oBI7-NsGX4KASzOGvfJ3FnEaL24xNX0Y/preview",
+        "duration": "فيديو مسجل"
       },
       {
         "id": 3,
-        "title": "3. امتحان مستوى اللغة الإنجليزية - مراجعة القواعد والقطع وأهم التمارين",
-        "videoId": "kJQP7kiw5Fk",
-        "embedUrl": "https://www.youtube.com/embed/kJQP7kiw5Fk",
-        "duration": "50 دقيقة"
+        "title": "3. امتحان المستوى الانجليزي - القواعد والقطع والتمارين",
+        "fileId": "175C8Ehg12YKI_ooWp5R1gRePpcBXiRud",
+        "embedUrl": "https://drive.google.com/file/d/175C8Ehg12YKI_ooWp5R1gRePpcBXiRud/preview",
+        "duration": "فيديو مسجل"
       },
       {
         "id": 4,
-        "title": "4. امتحان مستوى مهارات الحاسوب - الشرح العملي والنظري ومفاهيم IT",
-        "videoId": "fJ9rUzIMcZQ",
-        "embedUrl": "https://www.youtube.com/embed/fJ9rUzIMcZQ",
-        "duration": "40 دقيقة"
-      },
-      {
-        "id": 5,
-        "title": "5. بنك أسئلة وتجميعات امتحانات السنوات السابقة والحلول النموذجية",
-        "videoId": "L_LUpnjgPso",
-        "embedUrl": "https://www.youtube.com/embed/L_LUpnjgPso",
-        "duration": "35 دقيقة"
+        "title": "4. امتحان المستوى الحاسوب - المفاهيم والأسئلة الشاملة",
+        "fileId": "16t_z1KABxT8-pxsPYIqXt0VtTaiLVP6p",
+        "embedUrl": "https://drive.google.com/file/d/16t_z1KABxT8-pxsPYIqXt0VtTaiLVP6p/preview",
+        "duration": "فيديو مسجل"
       }
     ]
   },
@@ -66,12 +59,12 @@
     "isPaid": false,
     "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Introduction to Anatomy & Anatomical Position", "videoId": "uBGl2BujkPQ", "embedUrl": "https://www.youtube.com/embed/uBGl2BujkPQ", "duration": "30 min" },
-      { "id": 2, "title": "Anatomical Terminology & Body Planes", "videoId": "kvZXnPptgK8", "embedUrl": "https://www.youtube.com/embed/kvZXnPptgK8", "duration": "28 min" },
-      { "id": 3, "title": "Skeletal System & Bone Markings", "videoId": "rDGqkMHPDqE", "embedUrl": "https://www.youtube.com/embed/rDGqkMHPDqE", "duration": "35 min" },
-      { "id": 4, "title": "Muscular System & Muscle Attachments", "videoId": "Vvl6m_024b0", "embedUrl": "https://www.youtube.com/embed/Vvl6m_024b0", "duration": "32 min" },
-      { "id": 5, "title": "Nervous System Architecture & Divisions", "videoId": "qPix_X-9t7E", "embedUrl": "https://www.youtube.com/embed/qPix_X-9t7E", "duration": "30 min" },
-      { "id": 6, "title": "Cardiovascular & Circulatory System", "videoId": "_qmNCJxpsr0", "embedUrl": "https://www.youtube.com/embed/_qmNCJxpsr0", "duration": "28 min" }
+      { "id": 1, "title": "Introduction to Anatomy & Anatomical Position", "embedUrl": "https://www.youtube.com/embed/uBGl2BujkPQ", "duration": "30 min" },
+      { "id": 2, "title": "Anatomical Terminology & Body Planes", "embedUrl": "https://www.youtube.com/embed/kvZXnPptgK8", "duration": "28 min" },
+      { "id": 3, "title": "Skeletal System & Bone Markings", "embedUrl": "https://www.youtube.com/embed/rDGqkMHPDqE", "duration": "35 min" },
+      { "id": 4, "title": "Muscular System & Muscle Attachments", "embedUrl": "https://www.youtube.com/embed/Vvl6m_024b0", "duration": "32 min" },
+      { "id": 5, "title": "Nervous System Architecture & Divisions", "embedUrl": "https://www.youtube.com/embed/qPix_X-9t7E", "duration": "30 min" },
+      { "id": 6, "title": "Cardiovascular & Circulatory System", "embedUrl": "https://www.youtube.com/embed/_qmNCJxpsr0", "duration": "28 min" }
     ]
   },
   {
@@ -89,10 +82,10 @@
     "isPaid": false,
     "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Patient Assessment Fundamentals", "videoId": "O7O_7mQk4_4", "embedUrl": "https://www.youtube.com/embed/O7O_7mQk4_4", "duration": "30 min" },
-      { "id": 2, "title": "Vital Signs Monitoring & Clinical Interpretation", "videoId": "3j0xQ6xYy_Y", "embedUrl": "https://www.youtube.com/embed/3j0xQ6xYy_Y", "duration": "25 min" },
-      { "id": 3, "title": "Wound Care & Aseptic Techniques", "videoId": "rWk7d6g6e_U", "embedUrl": "https://www.youtube.com/embed/rWk7d6g6e_U", "duration": "28 min" },
-      { "id": 4, "title": "Medication Administration & Clinical Safety", "videoId": "7q7x_Y8yZ_U", "embedUrl": "https://www.youtube.com/embed/7q7x_Y8yZ_U", "duration": "32 min" }
+      { "id": 1, "title": "Patient Assessment Fundamentals", "embedUrl": "https://www.youtube.com/embed/O7O_7mQk4_4", "duration": "30 min" },
+      { "id": 2, "title": "Vital Signs Monitoring & Clinical Interpretation", "embedUrl": "https://www.youtube.com/embed/3j0xQ6xYy_Y", "duration": "25 min" },
+      { "id": 3, "title": "Wound Care & Aseptic Techniques", "embedUrl": "https://www.youtube.com/embed/rWk7d6g6e_U", "duration": "28 min" },
+      { "id": 4, "title": "Medication Administration & Clinical Safety", "embedUrl": "https://www.youtube.com/embed/7q7x_Y8yZ_U", "duration": "32 min" }
     ]
   },
   {
@@ -110,11 +103,11 @@
     "isPaid": false,
     "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Cell Physiology & Transport Mechanisms", "videoId": "PRi6t-a1v-g", "embedUrl": "https://www.youtube.com/embed/PRi6t-a1v-g", "duration": "30 min" },
-      { "id": 2, "title": "Membrane Potential & Action Potential", "videoId": "oa6rvUJlg7o", "embedUrl": "https://www.youtube.com/embed/oa6rvUJlg7o", "duration": "28 min" },
-      { "id": 3, "title": "Nerve Conduction & Synaptic Transmission", "videoId": "WhowH0kb7n0", "embedUrl": "https://www.youtube.com/embed/WhowH0kb7n0", "duration": "35 min" },
-      { "id": 4, "title": "Skeletal & Smooth Muscle Physiology", "videoId": "Ktv-CaOt6UQ", "embedUrl": "https://www.youtube.com/embed/Ktv-CaOt6UQ", "duration": "30 min" },
-      { "id": 5, "title": "Cardiac Electrophysiology & Mechanics", "videoId": "ryIGnz4UEyk", "embedUrl": "https://www.youtube.com/embed/ryIGnz4UEyk", "duration": "32 min" }
+      { "id": 1, "title": "Cell Physiology & Transport Mechanisms", "embedUrl": "https://www.youtube.com/embed/PRi6t-a1v-g", "duration": "30 min" },
+      { "id": 2, "title": "Membrane Potential & Action Potential", "embedUrl": "https://www.youtube.com/embed/oa6rvUJlg7o", "duration": "28 min" },
+      { "id": 3, "title": "Nerve Conduction & Synaptic Transmission", "embedUrl": "https://www.youtube.com/embed/WhowH0kb7n0", "duration": "35 min" },
+      { "id": 4, "title": "Skeletal & Smooth Muscle Physiology", "embedUrl": "https://www.youtube.com/embed/Ktv-CaOt6UQ", "duration": "30 min" },
+      { "id": 5, "title": "Cardiac Electrophysiology & Mechanics", "embedUrl": "https://www.youtube.com/embed/ryIGnz4UEyk", "duration": "32 min" }
     ]
   },
   {
@@ -132,10 +125,10 @@
     "isPaid": false,
     "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Drug Classification & Receptor Targets", "videoId": "fE3f6F_Wv_o", "embedUrl": "https://www.youtube.com/embed/fE3f6F_Wv_o", "duration": "30 min" },
-      { "id": 2, "title": "Pharmacokinetics: Absorption & Metabolism", "videoId": "sJk8t6Xy_wA", "embedUrl": "https://www.youtube.com/embed/sJk8t6Xy_wA", "duration": "35 min" },
-      { "id": 3, "title": "Pharmacodynamics: Dose-Response Relationship", "videoId": "dF_9q7mK5wE", "embedUrl": "https://www.youtube.com/embed/dF_9q7mK5wE", "duration": "28 min" },
-      { "id": 4, "title": "Adverse Drug Reactions & Critical Interactions", "videoId": "xL_q7w9e2rT", "embedUrl": "https://www.youtube.com/embed/xL_q7w9e2rT", "duration": "30 min" }
+      { "id": 1, "title": "Drug Classification & Receptor Targets", "embedUrl": "https://www.youtube.com/embed/fE3f6F_Wv_o", "duration": "30 min" },
+      { "id": 2, "title": "Pharmacokinetics: Absorption & Metabolism", "embedUrl": "https://www.youtube.com/embed/sJk8t6Xy_wA", "duration": "35 min" },
+      { "id": 3, "title": "Pharmacodynamics: Dose-Response Relationship", "embedUrl": "https://www.youtube.com/embed/dF_9q7mK5wE", "duration": "28 min" },
+      { "id": 4, "title": "Adverse Drug Reactions & Critical Interactions", "embedUrl": "https://www.youtube.com/embed/xL_q7w9e2rT", "duration": "30 min" }
     ]
   },
   {
@@ -153,10 +146,10 @@
     "isPaid": false,
     "requiresActivation": true,
     "lessons": [
-      { "id": 1, "title": "Active Recall & Spaced Repetition for Medicine", "videoId": "Z-zNHHpXoMM", "embedUrl": "https://www.youtube.com/embed/Z-zNHHpXoMM", "duration": "25 min" },
-      { "id": 2, "title": "High-Yield Mind Mapping for Medical Subjects", "videoId": "5zT_xH-f_eM", "embedUrl": "https://www.youtube.com/embed/5zT_xH-f_eM", "duration": "22 min" },
-      { "id": 3, "title": "Anki Mastery for Medical Sciences", "videoId": "7wZj2F6Zqg0", "embedUrl": "https://www.youtube.com/embed/7wZj2F6Zqg0", "duration": "28 min" },
-      { "id": 4, "title": "First & Final Exam Preparation Strategies", "videoId": "p60rN9JEapg", "embedUrl": "https://www.youtube.com/embed/p60rN9JEapg", "duration": "30 min" }
+      { "id": 1, "title": "Active Recall & Spaced Repetition for Medicine", "embedUrl": "https://www.youtube.com/embed/Z-zNHHpXoMM", "duration": "25 min" },
+      { "id": 2, "title": "High-Yield Mind Mapping for Medical Subjects", "embedUrl": "https://www.youtube.com/embed/5zT_xH-f_eM", "duration": "22 min" },
+      { "id": 3, "title": "Anki Mastery for Medical Sciences", "embedUrl": "https://www.youtube.com/embed/7wZj2F6Zqg0", "duration": "28 min" },
+      { "id": 4, "title": "First & Final Exam Preparation Strategies", "embedUrl": "https://www.youtube.com/embed/p60rN9JEapg", "duration": "30 min" }
     ]
   }
 ]
