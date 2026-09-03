@@ -1,16 +1,24 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, GraduationCap, Sparkles } from 'lucide-react';
 import CourseCard from '@/components/courses/CourseCard';
 import coursesData from '@/data/courses.json';
 import { useLanguage } from '@/components/providers/LanguageProvider';
+import { useAuth } from '@/components/providers/AuthProvider';
 
 export default function CoursesPage() {
   const { t } = useLanguage();
+  const { currentUser, refreshCurrentUser } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+
+  useEffect(() => {
+    if (currentUser) {
+      refreshCurrentUser();
+    }
+  }, [currentUser?.studentId]);
 
   const categories = [
     { id: 'All', label: 'جميع الدورات' },

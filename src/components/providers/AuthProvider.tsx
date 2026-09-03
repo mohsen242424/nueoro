@@ -33,7 +33,7 @@ interface AuthContextType {
   adminLogout: () => void;
   isCourseUnlocked: (courseSlug: string) => boolean;
   getAllStudents: () => Promise<User[]>;
-  toggleUserCourse: (studentId: string, courseSlug: string) => Promise<boolean>;
+  toggleUserCourse: (studentId: string, courseSlug: string, targetState?: boolean) => Promise<boolean>;
   deleteStudent: (studentId: string) => Promise<boolean>;
   refreshCurrentUser: () => Promise<void>;
 }
@@ -213,9 +213,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const isCourseUnlocked = (courseSlug: string): boolean => {
-    if (isAdmin) return true; // Admin has master access
-    if (!currentUser) return false;
-    return currentUser.enrolledCourses.includes(courseSlug);
+    // If student is logged in, strictly reflect their enrollment state!
+    if (currentUser) {
+      return (currentUser.enrolledCourses || []).includes(courseSlug);
+    }
+    // If admin is browsing without a student account, allow preview
+    if (isAdmin) return true;
+    return false;
   };
 
   const getAllStudents = async (): Promise<User[]> => {
@@ -235,19 +239,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const toggleUserCourse = async (studentId: string, courseSlug: string): Promise<boolean> => {
+  const toggleUserCourse = async (
+    studentId: string, 
+    courseSlug: string, 
+    targetState?: boolean
+  ): Promise<boolean> => {
     try {
-      // Check current state from Supabase
-      const currentCourses = await fetchStudentEnrollments(studentId);
-      const isEnrolled = currentCourses.includes(courseSlug);
+      let shouldEnable: boolean;
+      if (typeof targetState === 'boolean') {
+        shouldEnable = targetState;
+      } else {
+        const currentCourses = await fetchStudentEnrollments(studentId);
+        shouldEnable = !currentCourses.includes(courseSlug);
+      }
 
-      const res = await toggleCourseActivationInDb(studentId, courseSlug, !isEnrolled);
+      const res = await toggleCourseActivationInDb(studentId, courseSlug, shouldEnable);
 
       if (res.success) {
         // If the student is the currently logged in user on this device, update state
         if (currentUser && currentUser.studentId === studentId) {
-          const updatedCourses = !isEnrolled
-            ? [...currentUser.enrolledCourses, courseSlug]
+          const updatedCourses = shouldEnable
+            ? Array.from(new Set([...currentUser.enrolledCourses, courseSlug]))
             : currentUser.enrolledCourses.filter((s) => s !== courseSlug);
           const updatedUser = { ...currentUser, enrolledCourses: updatedCourses };
           setCurrentUser(updatedUser);

@@ -33,7 +33,7 @@ const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/neuro_medical?igsi=MXU4
 
 export default function CourseDetailPage({ params }: { params: { slug: string } }) {
   const { t, isRTL } = useLanguage();
-  const { currentUser, isCourseUnlocked, isAdmin } = useAuth();
+  const { currentUser, isCourseUnlocked, isAdmin, refreshCurrentUser } = useAuth();
   const course = coursesData.find((c) => c.slug === params.slug);
 
   if (!course) {
@@ -50,6 +50,13 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
   const currentIndex = course.lessons.findIndex((l) => l.id === activeLessonId);
 
   const isUnlocked = isCourseUnlocked(course.slug);
+
+  // Live synchronisation: refresh student's actual enrolled courses directly from database
+  useEffect(() => {
+    if (currentUser) {
+      refreshCurrentUser();
+    }
+  }, [course.slug, currentUser?.studentId]);
 
   useEffect(() => {
     setMounted(true);

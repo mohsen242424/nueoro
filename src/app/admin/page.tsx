@@ -180,12 +180,14 @@ export default function AdminPage() {
   };
 
   const handleToggle = async (studentId: string, courseSlug: string) => {
+    const isEnrolled = selectedStudent?.enrolledCourses?.includes(courseSlug) ?? false;
+    const targetState = !isEnrolled;
     const key = `${studentId}-${courseSlug}`;
     setActionLoading(key);
     try {
-      await toggleUserCourse(studentId, courseSlug);
+      await toggleUserCourse(studentId, courseSlug, targetState);
       await loadData();
-      showToast('تم تحديث وتثبيت حالة الدورة بنجاح');
+      showToast(targetState ? 'تم تفعيل الدورة للطالب بنجاح' : 'تم إلغاء تفعيل الدورة للطالب بنجاح');
     } catch (err) {
       showToast('حدث خطأ أثناء التحديث');
     } finally {
@@ -197,9 +199,7 @@ export default function AdminPage() {
     setActionLoading(`all-${studentId}`);
     try {
       for (const course of coursesData) {
-        if (!selectedStudent?.enrolledCourses.includes(course.slug)) {
-          await toggleUserCourse(studentId, course.slug);
-        }
+        await toggleUserCourse(studentId, course.slug, true);
       }
       await loadData();
       showToast('تم تفعيل كافة الدورات للطالب بنجاح');
@@ -213,12 +213,10 @@ export default function AdminPage() {
     setActionLoading(`none-${studentId}`);
     try {
       for (const course of coursesData) {
-        if (selectedStudent?.enrolledCourses.includes(course.slug)) {
-          await toggleUserCourse(studentId, course.slug);
-        }
+        await toggleUserCourse(studentId, course.slug, false);
       }
       await loadData();
-      showToast('تم إلغاء تفعيل كافة الدورات للطالب');
+      showToast('تم إلغاء تفعيل كافة الدورات للطالب بنجاح');
     } finally {
       setActionLoading(null);
     }
