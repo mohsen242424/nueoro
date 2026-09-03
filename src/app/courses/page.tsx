@@ -57,7 +57,7 @@ export default function CoursesPage() {
             transition={{ delay: 0.1 }}
             className="text-slate-600 dark:text-rose-200/70 text-base md:text-lg max-w-2xl mx-auto font-inter"
           >
-            جميع الدورات مجانية بالكامل لطلبة كلية العلوم الطبية التطبيقية بالجامعة الهاشمية - مشاهدة فيديو مباشرة داخل الموقع والتفعيل بالرقم الجامعي
+            جميع الدورات مجانية بالكامل لكافة طلبة الجامعات - مشاهدة فيديو مباشرة داخل الموقع والتفعيل بالرقم الجامعي
           </motion.p>
         </div>
 

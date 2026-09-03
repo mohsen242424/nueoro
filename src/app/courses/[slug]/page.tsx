@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   PlayCircle,
   CheckCircle2,
-  Circle,
   ArrowLeft,
   ArrowRight,
   BookOpen,
@@ -17,10 +16,11 @@ import {
   Instagram,
   Copy,
   Check,
-  ShieldCheck,
   ExternalLink,
   GraduationCap,
-  FileText
+  LogIn,
+  AlertCircle,
+  MessageSquareQuote
 } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -28,7 +28,8 @@ import coursesData from '@/data/courses.json';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 import { useAuth } from '@/components/providers/AuthProvider';
 
-const INSTAGRAM_URL = 'https://www.instagram.com/neuro_medical?igsi=MXU4Yng2dmdpdzdnMA==';
+const INSTAGRAM_DM_URL = 'https://ig.me/m/neuro_medical';
+const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/neuro_medical?igsi=MXU4Yng2dmdpdzdnMA==';
 
 export default function CourseDetailPage({ params }: { params: { slug: string } }) {
   const { t, isRTL } = useLanguage();
@@ -43,6 +44,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
   const [completedLessons, setCompletedLessons] = useState<number[]>([]);
   const [mounted, setMounted] = useState(false);
   const [copiedText, setCopiedText] = useState(false);
+  const [showCopyNotice, setShowCopyNotice] = useState(false);
 
   const activeLesson = course.lessons.find((l) => l.id === activeLessonId) || course.lessons[0];
   const currentIndex = course.lessons.findIndex((l) => l.id === activeLessonId);
@@ -86,9 +88,10 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
   };
 
   const getActivationMessage = () => {
-    const idStr = currentUser ? currentUser.studentId : '[أدخل رقمك الجامعي هنا]';
-    const nameStr = currentUser ? currentUser.name : '[أدخل اسمك هنا]';
-    return `مرحباً فريق نيورو (NEURO)، أود تفعيل دورة (${course.title}) مجاناً بحسابي.\n\n👤 الاسم: ${nameStr}\n🔢 الرقم الجامعي: ${idStr}\n🎓 الدورة: ${course.title}`;
+    if (!currentUser) {
+      return `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${course.title}) مجاناً بحسابي على المنصة.\n\n[يرجى تسجيل الدخول بالرقم الجامعي أولاً ليتم تجهيز بياناتك تلقائياً]`;
+    }
+    return `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${course.title}) مجاناً بحسابي على المنصة.\n\n📋 بيانات الطالب للتفعيل:\n• الاسم الكامل: ${currentUser.name}\n• الرقم الجامعي: ${currentUser.studentId}\n• الجامعة والتخصص: ${currentUser.major}\n• رقم الهاتف: ${currentUser.phone}\n\nشاكراً ومقدراً جهودكم الكريمة في خدمة ودعم طلبة الجامعات! 🌟`;
   };
 
   const copyActivationMessage = () => {
@@ -96,21 +99,45 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(text);
       setCopiedText(true);
-      setTimeout(() => setCopiedText(false), 2500);
+      setShowCopyNotice(true);
+      setTimeout(() => setCopiedText(false), 3000);
+      setTimeout(() => setShowCopyNotice(false), 5000);
     }
   };
 
   const handleInstagramRedirect = () => {
+    if (!currentUser) {
+      alert('⚠️ تنبيه: يجب تسجيل الدخول برقمك الجامعي أولاً لتتمكن من إرسال طلب التفعيل باسمك ورقمك الجامعي!');
+      return;
+    }
+
     copyActivationMessage();
-    window.open(INSTAGRAM_URL, '_blank');
+    // Open Instagram DM directly (or profile as fallback)
+    window.open(INSTAGRAM_DM_URL, '_blank');
   };
 
   // Video embed URL (plays directly inside the site)
   const videoSrc = (activeLesson as any).embedUrl || 
-    `https://www.youtube.com/embed/${(activeLesson as any).videoId || 'dQw4w9WgXcQ'}?rel=0&modestbranding=1&autoplay=0`;
+    `https://drive.google.com/file/d/${(activeLesson as any).fileId || '1a2m8BsboeMRFlYqGf6D01UxeSXK9kcG9'}/preview`;
 
   return (
     <div className="min-h-screen bg-[#FAF7F5] dark:bg-[#080406] pt-24 pb-20 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+      
+      {/* Floating Notice when message is copied */}
+      <AnimatePresence>
+        {showCopyNotice && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-2xl bg-slate-900 text-white text-xs font-bold shadow-2xl flex items-center gap-2 border border-rose-500/30 max-w-md text-center"
+          >
+            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+            <span>تم نسخ رسالة التفعيل بنجاح! الصق الرسالة (Paste) في محادثة إنستغرام واضغط إرسال 🚀</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-7xl mx-auto">
         
         {/* Navigation Breadcrumb */}
@@ -265,33 +292,61 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
 
                 <div>
                   <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-xs font-bold mb-3 border border-emerald-500/20">
-                    <Sparkles className="w-3.5 h-3.5" /> الدورة مجانية 100% لجميع طلبة الجامعة الهاشمية
+                    <Sparkles className="w-3.5 h-3.5" /> الدورة مجانية 100% لكافة طلبة الجامعات
                   </span>
 
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-rose-100 mt-2 mb-3">
-                    تفعيل الدورة مجاناً عبر حساب إنستغرام الفريق
+                    تفعيل الدورة مجاناً عبر إنستغرام
                   </h2>
 
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-rose-200/70 max-w-xl mx-auto leading-relaxed">
-                    لمشاهدة فيديوهات هذه الدورة مباشرة داخل الموقع، أرسل رسالة إلى حساب فريق نيورو على Instagram تتضمن رقمك الجامعي واسم الدورة، وسيقوم المشرف بتفعيلها لك فوراً ومجاناً!
+                    لمشاهدة فيديوهات هذه الدورة مباشرة داخل الموقع، أرسل رسالة إلى حساب فريق نيورو على Instagram برقمك الجامعي واسم الدورة، وسيقوم المشرف بتفعيلها لك فوراً ومجاناً!
                   </p>
                 </div>
 
-                {/* Steps summary box */}
-                <div className="max-w-md mx-auto bg-rose-50/60 dark:bg-rose-950/30 border border-rose-900/15 rounded-2xl p-4 text-right space-y-2 text-xs">
-                  <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-rose-200">
-                    <span className="w-5 h-5 rounded-full bg-[#9F1239] text-white flex items-center justify-center text-[10px]">1</span>
-                    <span>اضغط زر التفعيل لفتح حساب Instagram لفريق نيورو (@neuro_medical)</span>
+                {/* If user is NOT logged in: Show prominent warning */}
+                {!currentUser ? (
+                  <div className="max-w-md mx-auto p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-right space-y-3 shadow-sm">
+                    <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-xs sm:text-sm">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>تنبيه مهم: يجب تسجيل الدخول برقمك الجامعي أولاً</span>
+                    </div>
+                    <p className="text-xs text-slate-600 dark:text-rose-200/80 leading-relaxed">
+                      لتتمكن من إرسال طلب التفعيل باسمك ورقمك الجامعي وليقوم المشرف بتفعيل الدورة على حسابك في المنصة، يرجى تسجيل الدخول أو إنشاء حساب جديد مجاناً أولاً.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                      <Link
+                        href={`/login?redirect=/courses/${course.slug}`}
+                        className="flex-1 py-2.5 rounded-xl bg-[#9F1239] hover:bg-[#881337] text-white text-xs font-bold text-center transition-all shadow-sm"
+                      >
+                        تسجيل الدخول بالرقم الجامعي
+                      </Link>
+                      <Link
+                        href={`/register?redirect=/courses/${course.slug}`}
+                        className="flex-1 py-2.5 rounded-xl bg-white dark:bg-[#180A11] border border-rose-900/20 text-slate-800 dark:text-rose-200 text-xs font-bold text-center hover:bg-rose-50 transition-all"
+                      >
+                        إنشاء حساب جديد مجاناً
+                      </Link>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-rose-200">
-                    <span className="w-5 h-5 rounded-full bg-[#9F1239] text-white flex items-center justify-center text-[10px]">2</span>
-                    <span>أرسل رسالة تحتوي رقمك الجامعي واسم الدورة ({course.title})</span>
+                ) : (
+                  /* If logged in: Show the formatted ready message box */
+                  <div className="max-w-md mx-auto text-right space-y-3">
+                    <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-rose-200">
+                      <span className="flex items-center gap-1.5">
+                        <MessageSquareQuote className="w-4 h-4 text-[#9F1239]" />
+                        <span>رسالة التفعيل الجاهزة للإرسال:</span>
+                      </span>
+                      <span className="text-[11px] text-emerald-600 font-normal">
+                        جاهزة ومجهزة ببياناتك الجامعية
+                      </span>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-900/15 text-xs font-mono text-slate-700 dark:text-rose-100 whitespace-pre-line leading-relaxed shadow-inner">
+                      {getActivationMessage()}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-rose-200">
-                    <span className="w-5 h-5 rounded-full bg-[#9F1239] text-white flex items-center justify-center text-[10px]">3</span>
-                    <span>يقوم المشرف بتفعيل الدورة لتفتح لك الفيديوهات داخل الموقع فوراً</span>
-                  </div>
-                </div>
+                )}
 
                 {/* Action Buttons */}
                 <div className="max-w-md mx-auto space-y-3">
@@ -300,39 +355,30 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                     className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white font-bold text-xs sm:text-sm shadow-lg shadow-rose-950/20 hover:shadow-xl transition-all flex items-center justify-center gap-2.5"
                   >
                     <Instagram className="w-5 h-5" />
-                    <span>طلب التفعيل عبر Instagram (@neuro_medical)</span>
+                    <span>إرسال طلب التفعيل عبر Instagram Direct (@neuro_medical)</span>
                     <ExternalLink className="w-4 h-4" />
                   </button>
 
-                  <button
-                    onClick={copyActivationMessage}
-                    className="w-full py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-rose-950/40 hover:bg-slate-200 text-slate-700 dark:text-rose-200 text-xs font-bold border border-rose-900/15 flex items-center justify-center gap-2 transition-colors"
-                  >
-                    {copiedText ? (
-                      <>
-                        <Check className="w-4 h-4 text-emerald-500" />
-                        <span className="text-emerald-600">تم نسخ نص الرسالة إلى الحافظة!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-4 h-4 text-slate-400" />
-                        <span>نسخ نص طلب التفعيل لإرساله بالرسائل</span>
-                      </>
-                    )}
-                  </button>
+                  {currentUser && (
+                    <button
+                      onClick={copyActivationMessage}
+                      className="w-full py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-rose-950/40 hover:bg-slate-200 text-slate-700 dark:text-rose-200 text-xs font-bold border border-rose-900/15 flex items-center justify-center gap-2 transition-colors"
+                    >
+                      {copiedText ? (
+                        <>
+                          <Check className="w-4 h-4 text-emerald-500" />
+                          <span className="text-emerald-600">تم نسخ نص الرسالة بنجاح!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4 text-slate-400" />
+                          <span>نسخ نص الرسالة الجاهزة فقط</span>
+                        </>
+                      )}
+                    </button>
+                  )}
                 </div>
 
-                {!currentUser && (
-                  <div className="pt-4 border-t border-rose-900/10 flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-slate-500">
-                    <span>لم تقم بإنشاء حساب بعد؟</span>
-                    <Link
-                      href="/register"
-                      className="font-bold text-[#9F1239] dark:text-[#FB7185] underline hover:no-underline"
-                    >
-                      سجل الآن برقمك الجامعي مجاناً
-                    </Link>
-                  </div>
-                )}
               </div>
             )}
           </div>

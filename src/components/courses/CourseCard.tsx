@@ -31,17 +31,20 @@ export default function CourseCard({ course }: { course: Course }) {
     e.preventDefault();
     e.stopPropagation();
 
-    const studentInfo = currentUser 
-      ? `رقمي الجامعي: (${currentUser.studentId}) واسمي: (${currentUser.name})` 
-      : 'سأقوم بإرسال رقمي الجامعي';
+    if (!currentUser) {
+      alert('⚠️ يرجى تسجيل الدخول برقمك الجامعي أولاً لتتمكن من إرسال طلب التفعيل باسمك ورقمك الجامعي!');
+      window.location.href = `/login?redirect=/courses/${course.slug}`;
+      return;
+    }
 
-    const textToCopy = `مرحباً فريق نيورو، أود تفعيل دورة (${course.title}) مجاناً. ${studentInfo}.`;
-    
+    const textToCopy = `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${course.title}) مجاناً بحسابي على المنصة.\n\n📋 بيانات الطالب للتفعيل:\n• الاسم: ${currentUser.name}\n• الرقم الجامعي: ${currentUser.studentId}\n• التخصص: ${currentUser.major}\n• الهاتف: ${currentUser.phone}\n\nشاكراً ومقدراً جهودكم الكريمة في خدمة ودعم طلبة الجامعات! 🌟`;
+
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(textToCopy).catch(() => {});
     }
 
-    window.open(INSTAGRAM_URL, '_blank');
+    alert('✅ تم نسخ رسالة التفعيل المجهزة ببياناتك ورقمك الجامعي بنجاح! سيتم فتح محادثة إنستغرام الآن، الصق الرسالة (Paste) واضغط إرسال.');
+    window.open('https://ig.me/m/neuro_medical', '_blank');
   };
 
   return (
