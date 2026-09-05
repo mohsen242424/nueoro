@@ -61,7 +61,6 @@ interface CourseRow {
   grade: Grade | '';
   repeat: boolean;
   oldGrade: Grade | '';
-  excluded: boolean;
 }
 
 interface CalcResult {
@@ -91,7 +90,7 @@ function makeId() {
 }
 
 function emptyRow(): CourseRow {
-  return { id: makeId(), name: '', hours: 3, grade: '', repeat: false, oldGrade: '', excluded: false };
+  return { id: makeId(), name: '', hours: 3, grade: '', repeat: false, oldGrade: '' };
 }
 
 // ── Component ─────────────────────────────────────────────────────────
@@ -135,12 +134,11 @@ export default function GPACalculator() {
     if (prevHours !== '' && pH < 0) errs.push('الساعات المقطوعة يجب أن تكون عدداً موجباً');
 
     // Filter out active rows (not excluded and have a grade)
-    const activeRows = rows.filter(r => !r.excluded && r.grade);
+    const activeRows = rows.filter(r => r.grade);
     if (activeRows.length === 0) { errs.push('أدخل مادة واحدة على الأقل مع رمز العلامة'); }
 
     // Validate each row
     for (const r of rows) {
-      if (r.excluded) continue;
       if (!r.grade && (r.name || r.hours)) continue; // partially filled, skip
       if (r.grade && r.hours <= 0) errs.push(`المادة "${r.name || '—'}" يجب أن تحتوي على ساعات أكبر من صفر`);
       if (r.repeat && !r.oldGrade) errs.push(`المادة "${r.name || '—'}" معادة ولكن لم تختر العلامة السابقة`);
@@ -235,21 +233,6 @@ export default function GPACalculator() {
         qualityPoints: +(effectivePoints * r.hours).toFixed(2),
         note,
       });
-    }
-
-    // Add excluded rows for info
-    for (const r of rows) {
-      if (r.excluded && r.grade) {
-        details.push({
-          name: r.name || 'مادة مستثناة',
-          hours: r.hours,
-          grade: r.grade as Grade,
-          gradeAr: ARABIC[r.grade as Grade],
-          points: POINTS[r.grade as Grade],
-          qualityPoints: 0,
-          note: 'لا تدخل في المعدل — مستثناة',
-        });
-      }
     }
 
     setResult({
@@ -398,12 +381,11 @@ export default function GPACalculator() {
 
           {/* Column Headers */}
           <div className="hidden sm:grid grid-cols-12 gap-2 text-[11px] font-bold text-slate-500 dark:text-rose-200/60 px-1 mb-2 uppercase tracking-wider">
-            <div className="col-span-3">اسم المادة</div>
+            <div className="col-span-4">اسم المادة</div>
             <div className="col-span-1 text-center">الساعات</div>
             <div className="col-span-2">الرمز</div>
             <div className="col-span-1 text-center">معادة؟</div>
-            <div className="col-span-2">العلامة السابقة</div>
-            <div className="col-span-2 text-center">لا تدخل بالمعدل</div>
+            <div className="col-span-3">العلامة السابقة</div>
             <div className="col-span-1"></div>
           </div>
 
@@ -413,17 +395,13 @@ export default function GPACalculator() {
               <motion.div
                 key={row.id} layout
                 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
-                className={`grid grid-cols-1 sm:grid-cols-12 gap-2 items-center p-2.5 rounded-2xl border transition-all ${
-                  row.excluded
-                    ? 'bg-slate-50/50 dark:bg-[#180A11]/50 border-slate-200 dark:border-rose-900/15 opacity-60'
-                    : 'bg-white dark:bg-[#12070D] border-rose-900/10 dark:border-rose-900/20'
-                }`}
+                className="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center p-2.5 rounded-2xl border transition-all bg-white dark:bg-[#12070D] border-rose-900/10 dark:border-rose-900/20"
               >
                 {/* Mobile label */}
                 <span className="sm:hidden text-[10px] font-bold text-[#9F1239] col-span-1">مادة {idx + 1}</span>
 
                 {/* Name */}
-                <div className="col-span-1 sm:col-span-3">
+                <div className="col-span-1 sm:col-span-4">
                   <input
                     type="text" value={row.name}
                     onChange={(e) => updateRow(row.id, 'name', e.target.value)}
@@ -469,7 +447,7 @@ export default function GPACalculator() {
                 </div>
 
                 {/* Old Grade (only if repeat) */}
-                <div className="col-span-1 sm:col-span-2">
+                <div className="col-span-1 sm:col-span-3">
                   {row.repeat ? (
                     <select
                       value={row.oldGrade}
@@ -484,18 +462,6 @@ export default function GPACalculator() {
                   ) : (
                     <div className="text-[10px] text-slate-300 dark:text-rose-200/30 text-center">—</div>
                   )}
-                </div>
-
-                {/* Excluded checkbox */}
-                <div className="col-span-1 sm:col-span-2 flex items-center justify-center">
-                  <label className="flex items-center gap-1 cursor-pointer">
-                    <input
-                      type="checkbox" checked={row.excluded}
-                      onChange={(e) => updateRow(row.id, 'excluded', e.target.checked)}
-                      className="w-3.5 h-3.5 rounded border-rose-900/20 text-slate-500 focus:ring-slate-400 cursor-pointer"
-                    />
-                    <span className="text-[10px] text-slate-500 sm:hidden">لا تدخل</span>
-                  </label>
                 </div>
 
                 {/* Delete */}
@@ -618,7 +584,7 @@ export default function GPACalculator() {
                     </thead>
                     <tbody className="divide-y divide-rose-900/5 dark:divide-rose-900/15">
                       {result.details.map((d, i) => (
-                        <tr key={i} className={d.note.includes('مستثناة') ? 'opacity-50' : ''}>
+                        <tr key={i}>
                           <td className="py-3 px-4 font-bold text-slate-900 dark:text-rose-100">{d.name}</td>
                           <td className="py-3 px-3 text-center font-mono">{d.hours}</td>
                           <td className="py-3 px-3 text-center font-bold">
