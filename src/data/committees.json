@@ -1,65 +1,38 @@
 [
   {
-    "id": "academic",
-    "name": "Academic Committee",
-    "icon": "GraduationCap",
-    "color": "from-blue-500 to-blue-700",
-    "description": "Focused on enhancing academic performance through tutoring sessions, study groups, and educational resources for medical sciences students.",
-    "responsibilities": ["Organize study sessions", "Create educational materials", "Peer tutoring programs", "Exam preparation workshops"],
-    "members": 15
-  },
-  {
     "id": "media",
-    "name": "Media Committee",
+    "name": "لجنة الإعلام",
     "icon": "Camera",
     "color": "from-purple-500 to-purple-700",
-    "description": "Creating compelling visual content, managing social media presence, and documenting NEURO events and achievements.",
-    "responsibilities": ["Social media management", "Photography & videography", "Graphic design", "Content creation"],
+    "description": "تُعنى لجنة الإعلام في فريق نيورو ميدكل بإدارة وتعزيز الحضور الإعلامي للفريق عبر مختلف منصات التواصل الاجتماعي والقنوات الرقمية، من خلال إعداد ونشر المحتوى الذي يعكس هوية الفريق وأنشطته وإنجازاته. كما تعمل اللجنة على توثيق فعاليات الفريق وأنشطته، وإنتاج محتوى إعلامي متنوع بطريقة إبداعية ومنظمة.",
+    "responsibilities": ["إدارة منصات التواصل الاجتماعي", "إنتاج المحتوى الإعلامي", "التصوير والتوثيق", "التصميم الجرافيكي", "إيصال رسالة الفريق والتعريف بمبادراته"],
     "members": 12
   },
   {
-    "id": "ai",
-    "name": "AI Committee",
-    "icon": "Brain",
-    "color": "from-cyan-500 to-cyan-700",
-    "description": "Developing and maintaining AI-powered tools and chatbots to assist students with their medical sciences studies.",
-    "responsibilities": ["AI chatbot development", "Machine learning research", "Tool development", "Technical support"],
-    "members": 10
-  },
-  {
-    "id": "research",
-    "name": "Research Committee",
-    "icon": "Microscope",
-    "color": "from-green-500 to-green-700",
-    "description": "Promoting scientific research culture among students and supporting research projects in applied medical sciences.",
-    "responsibilities": ["Research mentorship", "Journal clubs", "Conference organization", "Publication support"],
-    "members": 8
+    "id": "academic",
+    "name": "لجنة التطوير الأكاديمي",
+    "icon": "GraduationCap",
+    "color": "from-blue-500 to-blue-700",
+    "description": "تُعنى لجنة التطوير الأكاديمي في فريق نيورو ميدكل بتوفير الدعم والمصادر التي تساعد الطلبة على تطوير مستواهم الأكاديمي وتحسين تجربتهم الدراسية. وتعمل اللجنة على إعداد وتوفير تفاريغ وملاحظات دراسية، وأسئلة تدريبية ومراجعات للمواد، إلى جانب مجموعة من الملفات والمصادر الأكاديمية التي تسهّل على الطلبة دراسة المواد والاستعداد للامتحانات.",
+    "responsibilities": ["إعداد التفاريغ والملاحظات الدراسية", "إعداد أسئلة تدريبية ومراجعات", "توفير الملفات والمصادر الأكاديمية", "دعم الطلبة في الاستعداد للامتحانات"],
+    "members": 15
   },
   {
     "id": "events",
-    "name": "Events Committee",
+    "name": "لجنة الميداني والفعاليات",
     "icon": "Calendar",
     "color": "from-orange-500 to-orange-700",
-    "description": "Planning and executing workshops, seminars, competitions, and social events that bring the student community together.",
-    "responsibilities": ["Event planning", "Workshop coordination", "Competition management", "Speaker invitations"],
+    "description": "تُعنى لجنة الفعاليات في فريق نيورو ميدكل بتنظيم وتنفيذ الأنشطة والفعاليات التي يقدّمها الفريق، والمساهمة في خلق تجارب تعليمية وتفاعلية مميزة للطلبة. كما تعمل اللجنة على التخطيط للفعاليات وتنظيمها والإشراف على تفاصيلها الميدانية، بما يضمن تنفيذها بصورة منظمة وفعّالة.",
+    "responsibilities": ["تنظيم وتنفيذ الأنشطة والفعاليات", "التخطيط والإشراف الميداني", "خلق تجارب تعليمية وتفاعلية", "تعزيز تفاعل الطلبة ومشاركتهم"],
     "members": 14
   },
   {
-    "id": "volunteer",
-    "name": "Volunteer Committee",
+    "id": "mentorship",
+    "name": "لجنة ارشد وبادر",
     "icon": "Heart",
-    "color": "from-red-500 to-red-700",
-    "description": "Coordinating volunteer activities and community service projects that make a positive impact on campus and beyond.",
-    "responsibilities": ["Community service", "Health awareness campaigns", "Blood donation drives", "Campus clean-up"],
-    "members": 20
-  },
-  {
-    "id": "pr",
-    "name": "Public Relations",
-    "icon": "Users",
-    "color": "from-pink-500 to-pink-700",
-    "description": "Building and maintaining relationships with university administration, other student organizations, and external partners.",
-    "responsibilities": ["External communications", "Partnership development", "Brand management", "Networking events"],
-    "members": 11
+    "color": "from-green-500 to-green-700",
+    "description": "تُعنى لجنة ارشد وبادر في فريق نيورو ميدكل بدعم الطلبة وتوجيههم، ومساعدتهم على الاستفادة من خبرات وتجارب زملائهم في مختلف المراحل الأكاديمية. كما تهدف اللجنة إلى تعزيز روح المبادرة والتعاون بين الطلبة، من خلال توفير مساحة لتبادل الخبرات والنصائح.",
+    "responsibilities": ["دعم وتوجيه الطلبة الجدد", "تبادل الخبرات والنصائح الأكاديمية", "تعزيز روح المبادرة والتعاون", "تشجيع الطلبة على المشاركة والتفاعل"],
+    "members": 10
   }
 ]

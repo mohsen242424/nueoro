@@ -28,7 +28,7 @@ export default function AboutPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-500/10 dark:bg-rose-950/40 text-[#9F1239] dark:text-[#FDA4AF] font-bold text-xs mb-6 border border-rose-900/15 dark:border-rose-900/30">
               <Zap className="w-3.5 h-3.5" />
-              Empowering Medical Students
+              Neuro Medical | فريق طلابي
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-black font-poppins text-slate-900 dark:text-rose-100 mb-6 leading-tight tracking-tight">
               {t.about.title}
@@ -123,10 +123,10 @@ export default function AboutPage() {
 
           <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-rose-900/20 dark:before:via-rose-900/40 before:to-transparent">
             {[
-              { year: "2021", title: "The Beginning", desc: "NEURO was founded by passionate medical students aiming to bridge the gap between theoretical knowledge and clinical practical skills." },
-              { year: "2022", title: "Rapid Growth", desc: "Expanded our committees, launched our first major university-wide academic workshops, and reached hundreds of active medical students." },
-              { year: "2023", title: "Digital Transformation", desc: "Introduced interactive 3D Anatomy tools, AI assistance for medical courses, and specialized academic materials." },
-              { year: "2024", title: "Leading the Future", desc: "Recognized as the premier medical student initiative at The Hashemite University, Faculty of Applied Medical Sciences." }
+              { year: "البداية", title: "الإيمان بالفكرة", desc: "بدأت Neuro Medical بإيمان بسيط: أن الطالب قادر على أن يصنع فرقاً حين يجد من يؤمن بقدراته. انطلقت المبادرة من الطلاب إلى الطلاب." },
+              { year: "النمو", title: "بناء المجتمع الطلابي", desc: "كبرت الفكرة واتسع أثرها، فأصبح Neuro Medical مجتمعاً طلابياً يجمع طلبة التخصصات الصحية من كلية العلوم الطبية التطبيقية وكلية التمريض." },
+              { year: "التأثير", title: "مبادرات وفعاليات", desc: "تحوّلت الطاقات الشبابية إلى مبادرات وفعاليات وتجارب تُثري الحياة الجامعية، باعتماد عمادة شؤون الطلبة ومنصة «نحن»." },
+              { year: "الطموح", title: "من الجامعة إلى الوطن 🇯🇴", desc: "نحمل في عملنا قيم الانتماء والعطاء والمسؤولية وخدمة المجتمع، ونطمح أن يكون أثرنا امتداداً لدور الشباب الأردني في صناعة مستقبل أفضل." }
             ].map((item, i) => (
               <motion.div 
                 key={i}

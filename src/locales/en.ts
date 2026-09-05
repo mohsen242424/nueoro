@@ -16,8 +16,8 @@ export const en = {
   // Hero Section
   hero: {
     title: 'NEURO',
-    subtitle: 'Learn Smarter. Visualize Better. Grow Together.',
-    university: 'The Hashemite University | Faculty of Applied Medical Sciences',
+    subtitle: 'From Students, To Students, From University… To the Nation 🇯🇴',
+    university: 'The Hashemite University | Faculty of Applied Medical Sciences & Faculty of Nursing',
     explore: 'Explore',
     useAI: 'Use AI',
     anatomy3D: '3D Anatomy',
@@ -32,14 +32,14 @@ export const en = {
   },
   // What is NEURO
   whatIsNeuro: {
-    title: 'What is NEURO?',
-    description: 'NEURO is a student initiative dedicated to helping students of the Faculty of Applied Medical Sciences at The Hashemite University. We provide educational tools, AI assistance, anatomy resources, academic utilities, and student community services.',
-    educationFirst: 'Education First',
-    educationFirstDesc: 'Providing high-quality educational resources, study materials, and tutoring sessions to help students excel in their academic journey.',
-    aiPowered: 'AI-Powered Learning',
-    aiPoweredDesc: 'Leveraging artificial intelligence to provide instant answers, generate quizzes, summarize lectures, and explain complex medical concepts.',
-    community: 'Community Driven',
-    communityDesc: 'Building a strong community of medical sciences students who support each other through collaboration, mentorship, and shared resources.',
+    title: 'What is Neuro Medical?',
+    description: 'Neuro Medical is a student team at The Hashemite University, comprising students from the Faculty of Applied Medical Sciences and the Faculty of Nursing. It operates within the framework of student activities at the university, under the supervision of the Deanship of Student Affairs, and within the "Nahno" platform affiliated with the Crown Prince Foundation.',
+    educationFirst: 'Academic Development',
+    educationFirstDesc: 'Providing support and resources to help students develop their academic level through transcripts, study notes, practice questions, and course reviews.',
+    aiPowered: 'Student Empowerment',
+    aiPoweredDesc: 'Enabling students to develop their leadership, organizational, and communication skills, transforming academic knowledge into practical experiences.',
+    community: 'Teamwork & Giving',
+    communityDesc: 'Building an active and supportive student community that combines academic and professional development with organizing activities that enrich the student experience.',
   },
   // Features Grid
   features: {
@@ -63,8 +63,8 @@ export const en = {
   },
   // CTA Section
   cta: {
-    title: 'Ready to Join NEURO?',
-    subtitle: 'Be part of the most innovative student initiative at The Hashemite University. Together, we learn smarter and grow stronger.',
+    title: 'Be Part of Neuro Medical',
+    subtitle: 'Join a meaningful and sustainable student community that develops you academically, professionally, and personally, giving you a real space to learn, take initiative, and give back.',
     joinNow: 'Join Now',
     learnMore: 'Learn More',
   },
@@ -226,22 +226,22 @@ export const en = {
   },
   // About Page
   about: {
-    title: 'About NEURO',
-    subtitle: 'Empowering medical sciences students through innovation and community',
+    title: 'About Neuro Medical',
+    subtitle: 'A student team at The Hashemite University combining academic development, professional growth, and community service',
     missionTitle: 'Our Mission',
-    mission: 'To empower students of the Faculty of Applied Medical Sciences at The Hashemite University by providing innovative educational tools, AI-powered assistance, and a supportive community that fosters academic excellence and professional growth.',
+    mission: 'At Neuro Medical, we work to empower students and develop their academic, professional, and leadership capabilities through a student environment built on learning, collaboration, initiative, and voluntary work. We believe that students are partners in making change, not just recipients of knowledge.',
     visionTitle: 'Our Vision',
-    vision: 'To become the leading student initiative in the region, setting the standard for how technology and community can transform medical education.',
+    vision: 'To make Neuro Medical a pioneering youth student model in creating impact, an environment that embraces Jordanian youth energies and transforms their ideas into initiatives and achievements that serve the university and community.',
     valuesTitle: 'Our Values',
     innovation: 'Innovation',
-    innovationDesc: 'We embrace cutting-edge technology to create tools that make learning more effective and engaging.',
+    innovationDesc: 'We believe innovation is the path to creating impact. We encourage students to think outside the box and turn new ideas into initiatives, solutions, and real experiences that serve students and the community.',
     community: 'Community',
     communityValue: 'Community',
-    communityDesc: 'We believe in the power of collaboration and mutual support among students.',
-    excellence: 'Excellence',
-    excellenceDesc: 'We strive for the highest standards in everything we do, from our educational content to our technology.',
-    storyTitle: 'Our Story',
-    story: 'NEURO was founded by a group of passionate medical sciences students who saw the potential of technology to transform how students learn and study. What started as a small study group has grown into a comprehensive digital platform serving hundreds of students.',
+    communityDesc: 'Our role extends beyond the university to the community we belong to. We foster a culture of social responsibility, voluntary work, and build bridges of cooperation between students, the university, and society. 🇯🇴',
+    excellence: 'Giving & Community Service',
+    excellenceDesc: 'True knowledge is complete when it transforms into beneficial work and tangible impact. We ensure every initiative and effort has a positive lasting effect on students and the community.',
+    storyTitle: 'Our Story | From Students to Students',
+    story: 'Neuro Medical did not start with a grand idea, but with a simple belief: that a student can make a difference when they find someone who believes in their abilities. The initiative launched from students to students, and over time, Neuro Medical became a student community that brings together health sciences students and transforms youth energy into initiatives and experiences that enrich university life. 🇯🇴',
     timelineTitle: 'Our Journey',
   },
   // Map Page
@@ -255,17 +255,17 @@ export const en = {
   },
   // Footer
   footer: {
-    description: 'Empowering medical students at The Hashemite University through innovation, AI, and collaborative learning.',
+    description: 'A student team at The Hashemite University combining academic and professional development, skill building, and community service.',
     quickLinks: 'Quick Links',
     features: 'Features',
     stayConnected: 'Stay Connected',
-    newsletter: 'Join our newsletter for updates on events and new features.',
-    newsletterDesc: 'Join our newsletter for updates on events and new features.',
+    newsletter: 'Join our newsletter for updates on events and new activities.',
+    newsletterDesc: 'Join our newsletter for updates on events and new activities.',
     emailPlaceholder: 'Your email address',
     subscribe: 'Subscribe',
     privacy: 'Privacy Policy',
     terms: 'Terms of Service',
-    copyright: '© {year} NEURO. All rights reserved. The Hashemite University.',
+    copyright: '© {year} Neuro Medical. All rights reserved. The Hashemite University.',
   },
   // Common
   common: {

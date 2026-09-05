@@ -97,7 +97,7 @@ export default function WhatIsNeuro() {
                   NEURO
                 </span>
                 <span className="text-xs font-semibold text-rose-950/60 dark:text-rose-200/50 mt-1">
-                  The Hashemite University
+                  الجامعة الهاشمية
                 </span>
               </div>
             </div>
