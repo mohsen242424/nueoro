@@ -86,7 +86,7 @@ const products: Product[] = [
       'تُستخدم لإظهار اسم الشخص وتخصصه',
       'متوفر باللون الفضي والذهبي والأبيض',
     ],
-    image: '',
+    image: '/products/nametag.jpg',
     category: 'إكسسوارات',
   },
 ];
