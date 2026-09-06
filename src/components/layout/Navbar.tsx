@@ -27,6 +27,7 @@ export default function Navbar() {
     { name: t.nav.doctors, path: "/doctors" },
     { name: t.nav.map, path: "/map" },
     { name: t.nav.gpa, path: "/gpa" },
+    { name: t.nav.majors, path: "/majors" },
     { name: t.nav.committees, path: "/committees" },
     { name: t.nav.about, path: "/about" },
     { name: t.nav.store, path: "/store" },

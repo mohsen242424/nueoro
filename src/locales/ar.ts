@@ -7,6 +7,7 @@ export const ar = {
     doctors: 'معلومات الدكاترة',
     map: 'خريطة الجامعة',
     gpa: 'حاسبة المعدل',
+    majors: 'دليل التخصصات',
     committees: 'اللجان',
     join: 'انضم لنيورو',
     about: 'عن نيورو',

@@ -8,6 +8,7 @@ export const en = {
     doctors: 'Faculty Directory',
     map: 'Campus Map',
     gpa: 'GPA Calculator',
+    majors: 'Majors Guide',
     committees: 'Committees',
     join: 'Join Neuro',
     about: 'About',
