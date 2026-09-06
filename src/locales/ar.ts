@@ -10,6 +10,7 @@ export const ar = {
     committees: 'اللجان',
     join: 'انضم لنيورو',
     about: 'عن نيورو',
+    store: 'متجر نيورو',
     contact: 'تواصل معنا',
   },
   hero: {

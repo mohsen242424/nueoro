@@ -11,6 +11,7 @@ export const en = {
     committees: 'Committees',
     join: 'Join Neuro',
     about: 'About',
+    store: 'Neuro Store',
     contact: 'Contact',
   },
   // Hero Section
