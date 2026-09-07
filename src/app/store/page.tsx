@@ -91,6 +91,9 @@ const products: Product[] = [
   },
 ];
 
+const STORE_INSTAGRAM_URL = 'https://www.instagram.com/neuro__store?stkn=MTgxdnkycmhneTlzeQ==';
+const STORE_INSTAGRAM_DM = 'https://ig.me/m/neuro__store';
+
 export default function StorePage() {
   const { currentUser } = useAuth();
   const [showLoginAlert, setShowLoginAlert] = useState(false);
@@ -105,7 +108,7 @@ export default function StorePage() {
     const message = [
       `السلام عليكم 👋`,
       ``,
-      `أرغب بطلب المنتج التالي من متجر Neuro Medical:`,
+      `أرغب بطلب المنتج التالي من متجر نيورو (Neuro Store):`,
       ``,
       `📦 المنتج: ${product.name}`,
       ``,
@@ -119,7 +122,7 @@ export default function StorePage() {
     ].join('\n');
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://ig.me/m/neuro_medical?text=${encoded}`, '_blank');
+    window.open(`${STORE_INSTAGRAM_DM}?text=${encoded}`, '_blank');
   };
 
   return (
@@ -274,7 +277,18 @@ export default function StorePage() {
         >
           <div className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white/60 dark:bg-[#12070D]/60 border border-rose-900/10 dark:border-rose-900/20 text-xs text-slate-500 dark:text-rose-200/50 backdrop-blur-md">
             <Send className="w-3.5 h-3.5 text-[#9F1239]" />
-            <span>جميع الطلبات تتم عبر رسائل الإنستغرام مباشرة — سيتم التواصل معك لتأكيد الطلب والتفاصيل</span>
+            <span>
+              جميع الطلبات تتم عبر رسائل إنستغرام متجر نيورو (
+              <a
+                href={STORE_INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-[#9F1239] dark:text-[#FB7185] hover:underline"
+              >
+                @neuro__store
+              </a>
+              ) مباشرة — سيتم التواصل معك لتأكيد الطلب والتفاصيل
+            </span>
           </div>
         </motion.div>
       </div>
