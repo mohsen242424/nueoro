@@ -13,6 +13,7 @@ export const en = {
     join: 'Join Neuro',
     about: 'About',
     store: 'Neuro Store',
+    suggest: 'Suggest to Neuro',
     contact: 'Contact',
   },
   // Hero Section

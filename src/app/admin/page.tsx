@@ -29,9 +29,18 @@ import {
   ShieldAlert,
   Server,
   Activity,
+  Lightbulb,
+  Copy,
+  MessageSquare,
 } from 'lucide-react';
 import { useAuth, User } from '@/components/providers/AuthProvider';
-import { fetchAllJoinRequests, JoinRequestRecord } from '@/lib/supabase';
+import {
+  fetchAllJoinRequests,
+  JoinRequestRecord,
+  fetchAllSuggestions,
+  deleteSuggestionFromDb,
+  SuggestionRecord,
+} from '@/lib/supabase';
 import coursesData from '@/data/courses.json';
 
 const INSTAGRAM_URL = 'https://www.instagram.com/neuro_medical?igsi=MXU4Yng2dmdpdzdnMA==';
@@ -64,9 +73,13 @@ export default function AdminPage() {
   const [lockoutRemaining, setLockoutRemaining] = useState(0);
 
   // Dashboard state
-  const [activeTab, setActiveTab] = useState<'students' | 'requests' | 'courses' | 'system'>('students');
+  const [activeTab, setActiveTab] = useState<'students' | 'requests' | 'suggestions' | 'courses' | 'system'>('students');
   const [students, setStudents] = useState<User[]>([]);
   const [joinRequests, setJoinRequests] = useState<JoinRequestRecord[]>([]);
+  const [suggestions, setSuggestions] = useState<SuggestionRecord[]>([]);
+  const [suggestionCategoryFilter, setSuggestionCategoryFilter] = useState<string>('all');
+  const [suggestionSearch, setSuggestionSearch] = useState<string>('');
+  const [copiedSuggestionId, setCopiedSuggestionId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
@@ -100,12 +113,14 @@ export default function AdminPage() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [studentsData, requestsData] = await Promise.all([
+      const [studentsData, requestsData, suggestionsData] = await Promise.all([
         getAllStudents(),
         fetchAllJoinRequests(),
+        fetchAllSuggestions(),
       ]);
       setStudents(studentsData);
       setJoinRequests(requestsData);
+      setSuggestions(suggestionsData);
 
       if (selectedStudent) {
         const found = studentsData.find((s) => s.studentId === selectedStudent.studentId);
@@ -116,6 +131,31 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDeleteSuggestion = async (id: string) => {
+    if (!window.confirm('هل أنت متأكد من رغبتك في حذف هذا الاقتراح؟')) return;
+    setActionLoading(id);
+    try {
+      const ok = await deleteSuggestionFromDb(id);
+      if (ok) {
+        setSuggestions((prev) => prev.filter((s) => s.id !== id));
+        showToast('تم حذف الاقتراح بنجاح');
+      } else {
+        showToast('تعذر حذف الاقتراح، يرجى المحاولة مجدداً');
+      }
+    } catch {
+      showToast('حدث خطأ أثناء الحذف');
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handleCopySuggestion = (id: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedSuggestionId(id);
+    showToast('تم نسخ نص الاقتراح إلى الحافظة');
+    setTimeout(() => setCopiedSuggestionId(null), 2000);
   };
 
   useEffect(() => {
@@ -286,6 +326,20 @@ export default function AdminPage() {
     const set = new Set(students.map((s) => s.major).filter(Boolean));
     return ['All', ...Array.from(set)];
   }, [students]);
+
+  // Filtered Suggestions list
+  const filteredSuggestions = useMemo(() => {
+    return suggestions.filter((s) => {
+      const matchesCategory =
+        suggestionCategoryFilter === 'all' || s.category === suggestionCategoryFilter;
+      const q = suggestionSearch.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        s.content.toLowerCase().includes(q) ||
+        s.category.toLowerCase().includes(q);
+      return matchesCategory && matchesSearch;
+    });
+  }, [suggestions, suggestionCategoryFilter, suggestionSearch]);
 
   // -------------------------------------------------------------
   // Professional Secure Admin Login Screen (Zero Exposed Hints)
@@ -527,7 +581,7 @@ export default function AdminPage() {
         </div>
 
         {/* Analytics KPIs */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
           <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-5 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold text-slate-500 dark:text-rose-200/60">إجمالي الطلاب</span>
@@ -567,10 +621,26 @@ export default function AdminPage() {
             <span className="text-[10px] text-slate-400 mt-1 block">طلبات عضوية الفريق</span>
           </div>
 
+          <div
+            onClick={() => setActiveTab('suggestions')}
+            className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-5 shadow-sm cursor-pointer hover:border-[#9F1239] transition-all"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-bold text-slate-500 dark:text-rose-200/60">اقتراحات الطلاب</span>
+              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-500">
+                <Lightbulb className="w-4 h-4" />
+              </div>
+            </div>
+            <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-rose-100">
+              {loading ? '...' : suggestions.length}
+            </p>
+            <span className="text-[10px] text-amber-600 dark:text-amber-400 mt-1 block">اقترح على نيورو</span>
+          </div>
+
           <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-5 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold text-slate-500 dark:text-rose-200/60">الدورات المعتمدة</span>
-              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600">
+              <div className="p-2 rounded-xl bg-purple-500/10 text-purple-600">
                 <BookOpen className="w-4 h-4" />
               </div>
             </div>
@@ -603,6 +673,18 @@ export default function AdminPage() {
           >
             <UserPlus className="w-4 h-4" />
             <span>طلبات الانضمام للفريق ({joinRequests.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('suggestions')}
+            className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 ${
+              activeTab === 'suggestions'
+                ? 'bg-gradient-to-r from-[#881337] to-[#9F1239] text-white shadow-md'
+                : 'text-slate-600 dark:text-rose-200/70 hover:text-slate-900'
+            }`}
+          >
+            <Lightbulb className="w-4 h-4" />
+            <span>اقتراحات الطلاب ({suggestions.length})</span>
           </button>
 
           <button
@@ -981,7 +1063,148 @@ export default function AdminPage() {
         )}
 
         {/* ========================================================= */}
-        {/* TAB 3: Courses Overview                                   */}
+        {/* TAB 3: Anonymous Student Suggestions (اقترح على نيورو)     */}
+        {/* ========================================================= */}
+        {activeTab === 'suggestions' && (
+          <div className="space-y-4">
+            {/* Header Box */}
+            <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                    <Lightbulb className="w-5 h-5" />
+                  </div>
+                  <h2 className="text-lg font-black text-slate-900 dark:text-rose-100">
+                    بنك اقتراحات وأفكار الطلاب (اقترح على نيورو)
+                  </h2>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-rose-200/60 pr-9">
+                  جميع الملاحظات والاقتراحات الواردة من الطلاب بخصوص المنصة، المواد، الفعاليات، والمتجر وبسرية تامة 100%
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+                <button
+                  onClick={loadData}
+                  disabled={loading}
+                  className="px-3.5 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-xs font-bold text-[#9F1239] dark:text-[#FDA4AF] border border-rose-900/15 hover:bg-rose-100 transition-all flex items-center gap-1.5 cursor-pointer"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+                  <span>تحديث</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Filter and Search Bar */}
+            <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-4 shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
+              <div className="relative w-full sm:w-80">
+                <Search className="w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  value={suggestionSearch}
+                  onChange={(e) => setSuggestionSearch(e.target.value)}
+                  placeholder="ابحث في نص الاقتراح..."
+                  className="w-full pl-3 pr-10 py-2 rounded-xl bg-rose-50/40 dark:bg-rose-950/20 border border-rose-900/15 text-xs text-slate-900 dark:text-rose-100 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#9F1239]"
+                />
+              </div>
+
+              <div className="flex overflow-x-auto no-scrollbar gap-1.5 w-full sm:w-auto">
+                {[
+                  { id: 'all', label: 'الكل' },
+                  { id: 'فكرة أو مبادرة جديدة', label: '💡 أفكار جديدة' },
+                  { id: 'المواد والمصادر الأكاديمية', label: '📚 أكاديمي' },
+                  { id: 'تحسين الموقع والمنصة', label: '💻 الموقع' },
+                  { id: 'فعاليات وأنشطة طلابية', label: '🎪 فعاليات' },
+                  { id: 'مستلزمات ومتجر نيورو', label: '🩺 المتجر' },
+                  { id: 'عام', label: '💬 عام' },
+                ].map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSuggestionCategoryFilter(cat.id)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                      suggestionCategoryFilter === cat.id
+                        ? 'bg-[#9F1239] text-white shadow-sm'
+                        : 'bg-rose-50/50 dark:bg-rose-950/20 text-slate-600 dark:text-rose-200/70 hover:bg-rose-100'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Suggestions Cards List */}
+            <div className="space-y-3">
+              {filteredSuggestions.map((sug, idx) => (
+                <div
+                  key={sug.id || idx}
+                  className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-5 shadow-sm hover:border-rose-900/30 transition-all space-y-3"
+                >
+                  {/* Card Header */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-rose-900/10 dark:border-rose-900/20 pb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
+                        {sug.category}
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400 dark:text-rose-200/40 bg-slate-100 dark:bg-rose-950/30 px-2.5 py-0.5 rounded-full">
+                        <EyeOff className="w-3 h-3" /> مجهول الهوية 100%
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-slate-400 font-mono">
+                        {sug.created_at ? new Date(sug.created_at).toLocaleString('ar-JO') : 'حديثاً'}
+                      </span>
+
+                      <button
+                        onClick={() => handleCopySuggestion(sug.id, sug.content)}
+                        className="p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/40 text-slate-600 dark:text-rose-200 hover:text-[#9F1239] transition-colors text-xs flex items-center gap-1 cursor-pointer"
+                        title="نسخ نص الاقتراح"
+                      >
+                        {copiedSuggestionId === sug.id ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+
+                      <button
+                        onClick={() => handleDeleteSuggestion(sug.id)}
+                        disabled={actionLoading === sug.id}
+                        className="p-1.5 rounded-lg bg-rose-500/10 text-rose-600 hover:bg-rose-500/20 transition-colors text-xs disabled:opacity-50 cursor-pointer"
+                        title="حذف الاقتراح"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="text-sm font-medium text-slate-800 dark:text-rose-100 leading-relaxed whitespace-pre-wrap font-inter">
+                    {sug.content}
+                  </div>
+                </div>
+              ))}
+
+              {filteredSuggestions.length === 0 && (
+                <div className="bg-white/80 dark:bg-[#12070D]/80 border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-12 text-center shadow-sm">
+                  <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                    <Lightbulb className="w-7 h-7" />
+                  </div>
+                  <h3 className="text-base font-bold text-slate-800 dark:text-rose-100 mb-1">
+                    لا توجد اقتراحات حالياً
+                  </h3>
+                  <p className="text-xs text-slate-400 max-w-sm mx-auto">
+                    أي اقتراح يرسله الطلاب عبر خانة أو صفحة &quot;اقترح على نيورو&quot; سيظهر هنا فوراً ومباشرة للمشرفين.
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* TAB 4: Courses Overview                                   */}
         {/* ========================================================= */}
         {activeTab === 'courses' && (
           <div className="space-y-4">

@@ -30,6 +30,13 @@ export interface JoinRequestRecord {
   created_at?: string;
 }
 
+export interface SuggestionRecord {
+  id: string;
+  content: string;
+  category: string;
+  created_at?: string;
+}
+
 // -------------------------------------------------------------
 // Database Operations (with automatic cloud & fallback handling)
 // -------------------------------------------------------------
@@ -297,12 +304,14 @@ export async function saveJoinRequestToDb(request: {
 
 /**
  * Fetch all join requests (for Admin Dashboard)
+ * Excludes anonymous suggestions
  */
 export async function fetchAllJoinRequests(): Promise<JoinRequestRecord[]> {
   try {
     const { data, error } = await supabase
       .from('join_requests')
       .select('*')
+      .neq('student_id', 'SUGGESTION')
       .order('created_at', { ascending: false });
 
     if (error || !data) {
@@ -314,6 +323,85 @@ export async function fetchAllJoinRequests(): Promise<JoinRequestRecord[]> {
   } catch (err) {
     console.error('Error fetching join requests:', err);
     return [];
+  }
+}
+
+/**
+ * Save Anonymous Suggestion to Supabase Cloud Database
+ * Completely anonymous: no personal identification, no name, no student ID
+ */
+export async function saveSuggestionToDb(suggestion: {
+  content: string;
+  category?: string;
+}): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { error } = await supabase.from('join_requests').insert([
+      {
+        full_name: 'اقتراح مجهول الهوية',
+        student_id: 'SUGGESTION',
+        major: suggestion.content.trim(),
+        year: suggestion.category || 'عام',
+      },
+    ]);
+
+    if (error) {
+      console.warn('Save suggestion warning:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err: any) {
+    console.warn('Suggestion exception:', err);
+    return { success: false, error: err.message };
+  }
+}
+
+/**
+ * Fetch all anonymous suggestions (for Admin Dashboard)
+ */
+export async function fetchAllSuggestions(): Promise<SuggestionRecord[]> {
+  try {
+    const { data, error } = await supabase
+      .from('join_requests')
+      .select('*')
+      .eq('student_id', 'SUGGESTION')
+      .order('created_at', { ascending: false });
+
+    if (error || !data) {
+      console.error('Fetch suggestions error:', error);
+      return [];
+    }
+
+    return data.map((d) => ({
+      id: d.id,
+      content: d.major,
+      category: d.year || 'عام',
+      created_at: d.created_at,
+    }));
+  } catch (err) {
+    console.error('Error fetching suggestions:', err);
+    return [];
+  }
+}
+
+/**
+ * Delete an anonymous suggestion by ID (for Admin Dashboard)
+ */
+export async function deleteSuggestionFromDb(id: string): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from('join_requests')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Delete suggestion error:', error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error('Exception deleting suggestion:', err);
+    return false;
   }
 }
 

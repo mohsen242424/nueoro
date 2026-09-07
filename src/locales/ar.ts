@@ -12,6 +12,7 @@ export const ar = {
     join: 'انضم لنيورو',
     about: 'عن نيورو',
     store: 'متجر نيورو',
+    suggest: 'اقترح على نيورو',
     contact: 'تواصل معنا',
   },
   hero: {

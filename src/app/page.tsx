@@ -4,6 +4,7 @@ import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import WhatIsNeuro from '@/components/home/WhatIsNeuro';
 import FeaturesGrid from '@/components/home/FeaturesGrid';
+import SuggestionSection from '@/components/home/SuggestionSection';
 import CTASection from '@/components/home/CTASection';
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
       <HeroSection />
       <WhatIsNeuro />
       <FeaturesGrid />
+      <SuggestionSection />
       <CTASection />
     </main>
   );

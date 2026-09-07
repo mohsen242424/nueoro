@@ -31,6 +31,7 @@ export default function Navbar() {
     { name: t.nav.committees, path: "/committees" },
     { name: t.nav.about, path: "/about" },
     { name: t.nav.store, path: "/store" },
+    { name: t.nav.suggest, path: "/suggest" },
     { name: t.nav.contact, path: "/contact" },
   ];
 

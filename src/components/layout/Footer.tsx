@@ -50,7 +50,7 @@ export default function Footer() {
           <div>
             <h3 className="font-poppins font-bold text-slate-900 dark:text-rose-100 mb-6">{t.footer.quickLinks}</h3>
             <ul className="space-y-3">
-              {[{name: t.nav.home, path: '/'}, {name: t.nav.about, path: '/about'}, {name: t.nav.committees, path: '/committees'}, {name: t.nav.join, path: '/join'}].map((item) => (
+              {[{name: t.nav.home, path: '/'}, {name: t.nav.about, path: '/about'}, {name: t.nav.committees, path: '/committees'}, {name: t.nav.suggest, path: '/suggest'}, {name: t.nav.join, path: '/join'}].map((item) => (
                 <li key={item.name}>
                   <Link href={item.path} className="text-slate-600 dark:text-rose-200/70 hover:text-[#9F1239] dark:hover:text-[#FB7185] transition-colors font-inter text-sm group flex items-center">
                     <span className={`w-0 group-hover:w-2 h-[1px] bg-[#9F1239] dark:bg-[#FB7185] ${isRTL ? "ml-0 group-hover:ml-2" : "mr-0 group-hover:mr-2"} transition-all duration-300`}></span>
