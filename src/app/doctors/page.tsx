@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Search, GraduationCap, Users } from 'lucide-react';
+import { Search, GraduationCap, Users, Building2, Filter } from 'lucide-react';
 import DoctorCard from '@/components/doctors/DoctorCard';
 import doctorsData from '@/data/doctors.json';
 import { useLanguage } from '@/components/providers/LanguageProvider';
@@ -10,35 +10,37 @@ import { useLanguage } from '@/components/providers/LanguageProvider';
 export default function DoctorsPage() {
   const { t, isRTL } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeDept, setActiveDept] = useState('All');
+  const [activeCollege, setActiveCollege] = useState('All');
 
-  const departments = [
-    { id: 'All', label: t.doctors.all },
-    { id: 'العلوم الطبية المخبرية', label: isRTL ? 'العلوم الطبية المخبرية' : 'Medical Lab Sciences' },
-    { id: 'التغذية السريرية و الحميات', label: isRTL ? 'التغذية السريرية والحميات' : 'Clinical Nutrition' },
-    { id: 'العلاج الطبيعي', label: isRTL ? 'العلاج الطبيعي' : 'Physical Therapy' },
-    { id: 'التصوير الطبي', label: isRTL ? 'التصوير الطبي' : 'Medical Imaging' },
-    { id: 'العلاج الوظيفي', label: isRTL ? 'العلاج الوظيفي' : 'Occupational Therapy' },
-    { id: 'العلوم الطبية المساندة', label: isRTL ? 'العلوم الطبية المساندة' : 'Basic Medical Sciences' },
-    { id: 'الديوان والإدارة', label: isRTL ? 'الديوان والإدارة' : 'Administration' },
-  ];
+  // Extract all unique colleges from data
+  const colleges = useMemo(() => {
+    const set = new Set<string>();
+    doctorsData.forEach((doc) => {
+      const col = (doc as any).college || 'كلية العلوم الطبية التطبيقية';
+      set.add(col);
+    });
+    return ['All', ...Array.from(set)];
+  }, []);
 
   const filteredDoctors = useMemo(() => {
-    return doctorsData.filter(doctor => {
-      const q = searchTerm.toLowerCase().trim();
-      const matchesSearch = 
+    const q = searchTerm.toLowerCase().trim();
+    return doctorsData.filter((doctor) => {
+      const docCollege = (doctor as any).college || 'كلية العلوم الطبية التطبيقية';
+
+      const matchesSearch =
         !q ||
-        doctor.name.toLowerCase().includes(q) || 
+        doctor.name.toLowerCase().includes(q) ||
         (doctor.nameEn && doctor.nameEn.toLowerCase().includes(q)) ||
         doctor.department.toLowerCase().includes(q) ||
         (doctor.role && doctor.role.toLowerCase().includes(q)) ||
         doctor.office.toLowerCase().includes(q) ||
-        doctor.email.toLowerCase().includes(q);
+        doctor.email.toLowerCase().includes(q) ||
+        docCollege.toLowerCase().includes(q);
 
-      const matchesDept = activeDept === 'All' || doctor.department === activeDept;
-      return matchesSearch && matchesDept;
+      const matchesCollege = activeCollege === 'All' || docCollege === activeCollege;
+      return matchesSearch && matchesCollege;
     });
-  }, [searchTerm, activeDept]);
+  }, [searchTerm, activeCollege]);
 
   return (
     <div className="min-h-screen bg-[#FAF7F5] dark:bg-[#080406] pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300">
@@ -50,7 +52,7 @@ export default function DoctorsPage() {
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -67,39 +69,46 @@ export default function DoctorsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-slate-600 dark:text-rose-200/70 text-base md:text-lg max-w-3xl mx-auto font-inter"
+            className="text-slate-600 dark:text-rose-200/70 text-sm sm:text-base max-w-3xl mx-auto font-inter leading-relaxed"
           >
-            {t.doctors.subtitle}
+            دليل الكادر الأكاديمي والتدريسي في الجامعة الهاشمية — ابحث عن الدكاترة والمدرسين، أرقام الهواتف الداخلية، والبريد الإلكتروني الرسمي للتواصل عبر Microsoft Teams.
           </motion.p>
         </div>
 
-        {/* Search & Department Filters */}
-        <div className="mb-10 flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="relative w-full md:w-96">
+        {/* Search Bar & College Filters */}
+        <div className="mb-8 space-y-4">
+          <div className="relative max-w-2xl mx-auto">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-rose-300/40" />
             <input
               type="text"
-              placeholder={t.doctors.searchPlaceholder}
+              placeholder="ابحث باسم المدرس، الكلية، القسم، البريد، أو رقم الهاتف الداخلي..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white dark:bg-[#12070D] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl py-3 pl-11 pr-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-rose-300/40 focus:outline-none focus:ring-2 focus:ring-[#9F1239] transition-all text-sm font-medium shadow-sm"
+              className="w-full bg-white dark:bg-[#12070D] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl py-3.5 pl-11 pr-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-rose-300/40 focus:outline-none focus:ring-2 focus:ring-[#9F1239] transition-all text-sm font-medium shadow-md shadow-rose-950/5"
             />
           </div>
 
-          <div className="flex overflow-x-auto no-scrollbar pb-2 sm:flex-wrap sm:justify-center gap-1.5 w-full md:w-auto">
-            {departments.map((dept) => (
-              <button
-                key={dept.id}
-                onClick={() => setActiveDept(dept.id)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-all ${
-                  activeDept === dept.id
-                    ? 'bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] text-white shadow-md shadow-rose-900/30'
-                    : 'bg-white dark:bg-[#12070D] text-slate-600 dark:text-rose-200/70 hover:text-slate-900 dark:hover:text-white hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-rose-900/10 dark:border-rose-900/30'
-                }`}
-              >
-                {dept.label}
-              </button>
-            ))}
+          {/* College Filter Buttons */}
+          <div className="flex overflow-x-auto no-scrollbar pb-2 sm:flex-wrap sm:justify-center gap-1.5 w-full">
+            {colleges.map((college) => {
+              const isAll = college === 'All';
+              const label = isAll ? 'جميع الكليات' : college.replace('كلية ', '');
+              const isSelected = activeCollege === college;
+
+              return (
+                <button
+                  key={college}
+                  onClick={() => setActiveCollege(college)}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] text-white shadow-md shadow-rose-900/30'
+                      : 'bg-white dark:bg-[#12070D] text-slate-600 dark:text-rose-200/70 hover:text-slate-900 dark:hover:text-white hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-rose-900/10 dark:border-rose-900/30'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -107,12 +116,25 @@ export default function DoctorsPage() {
         <div className="mb-6 flex items-center justify-between px-2 text-xs font-semibold text-slate-500 dark:text-rose-200/60">
           <div className="flex items-center gap-1.5">
             <Users className="w-4 h-4 text-[#9F1239] dark:text-[#FB7185]" />
-            <span>عدد الأعضاء المعروضين: <strong className="text-slate-900 dark:text-rose-100">{filteredDoctors.length}</strong></span>
+            <span>
+              عدد المدرسين المعروضين:{' '}
+              <strong className="text-slate-900 dark:text-rose-100">{filteredDoctors.length}</strong> من أصل{' '}
+              <strong className="text-slate-900 dark:text-rose-100">{doctorsData.length}</strong>
+            </span>
           </div>
+
+          {activeCollege !== 'All' && (
+            <button
+              onClick={() => setActiveCollege('All')}
+              className="text-[11px] text-[#9F1239] dark:text-[#FB7185] hover:underline cursor-pointer"
+            >
+              إلغاء تصفية الكلية
+            </button>
+          )}
         </div>
 
         {/* Doctors Cards Grid */}
-        <motion.div 
+        <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
         >
@@ -122,8 +144,8 @@ export default function DoctorsPage() {
 
           {filteredDoctors.length === 0 && (
             <div className="col-span-full py-20 text-center text-slate-500 dark:text-rose-200/50 bg-white/50 dark:bg-[#12070D]/40 rounded-3xl border border-rose-900/10">
-              <p className="text-lg font-bold">{t.common.noResults}</p>
-              <p className="text-xs mt-1">جرّب البحث بكلمات أخرى أو اختر قسماً آخر</p>
+              <p className="text-lg font-bold">لا توجد نتائج مطابقة</p>
+              <p className="text-xs mt-1">جرّب البحث بكلمات أخرى أو اختر كلية أخرى</p>
             </div>
           )}
         </motion.div>

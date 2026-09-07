@@ -10,6 +10,7 @@ interface Doctor {
   name: string;
   nameEn?: string;
   role?: string;
+  college?: string;
   department: string;
   office: string;
   officeHours?: string;
@@ -37,6 +38,7 @@ export default function DoctorCard({ doctor }: { doctor: Doctor }) {
   };
 
   const isProfessor = doctor.role?.includes('استاذ') || doctor.role?.includes('أستاذ');
+  const isPhone = doctor.office?.includes('هاتف');
 
   return (
     <motion.div
@@ -56,7 +58,7 @@ export default function DoctorCard({ doctor }: { doctor: Doctor }) {
 
         {/* Academic Role / Rank */}
         {doctor.role && (
-          <span className={`mb-2.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+          <span className={`mb-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
             isProfessor 
               ? 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20' 
               : 'bg-rose-500/10 text-[#9F1239] dark:text-rose-300 border border-rose-900/15'
@@ -67,7 +69,7 @@ export default function DoctorCard({ doctor }: { doctor: Doctor }) {
         )}
         
         {/* Department Badge */}
-        <span className="mb-4 rounded-xl bg-slate-100 dark:bg-rose-950/40 border border-rose-900/10 dark:border-rose-900/25 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:text-rose-200/80">
+        <span className="mb-4 rounded-xl bg-slate-100 dark:bg-rose-950/40 border border-rose-900/10 dark:border-rose-900/25 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:text-rose-200/80 line-clamp-1" title={doctor.department}>
           {doctor.department}
         </span>
       </div>
@@ -75,8 +77,12 @@ export default function DoctorCard({ doctor }: { doctor: Doctor }) {
       {/* Info Details */}
       <div className="flex-grow space-y-2 px-5 text-xs font-medium text-slate-600 dark:text-rose-200/70 border-t border-rose-900/10 dark:border-rose-900/20 pt-3">
         <div className="flex items-center gap-2">
-          <MapPin className="h-3.5 w-3.5 shrink-0 text-[#9F1239] dark:text-[#FB7185]" />
-          <span><strong className="text-slate-800 dark:text-rose-100">{t.doctors.office}:</strong> {doctor.office}</span>
+          {isPhone ? (
+            <Phone className="h-3.5 w-3.5 shrink-0 text-[#9F1239] dark:text-[#FB7185]" />
+          ) : (
+            <MapPin className="h-3.5 w-3.5 shrink-0 text-[#9F1239] dark:text-[#FB7185]" />
+          )}
+          <span><strong className="text-slate-800 dark:text-rose-100">{isPhone ? 'التواصل:' : t.doctors.office + ':'}</strong> {doctor.office}</span>
         </div>
         <div className="flex items-center gap-2">
           <Mail className="h-3.5 w-3.5 shrink-0 text-[#BE123C] dark:text-[#FDA4AF]" />
