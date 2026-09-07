@@ -104,29 +104,31 @@ export async function registerStudentInDb(student: {
  * Log in a student by student ID and password
  */
 export async function loginStudentInDb(
-  studentId: string,
+  studentIdOrNationalId: string,
   password: string
 ): Promise<{ success: boolean; error?: string; student?: StudentRecord }> {
   try {
+    const cleanId = studentIdOrNationalId.trim();
+    // Support searching by student_id or phone
     const { data: student, error } = await supabase
       .from('students')
       .select('*')
-      .eq('student_id', studentId.trim())
+      .or(`student_id.eq.${cleanId},phone.eq.${cleanId}`)
       .maybeSingle();
 
     if (error || !student) {
-      return { success: false, error: 'الرقم الجامعي غير مسجل في النظام' };
+      return { success: false, error: 'الرقم المدخل (الجامعي أو الوطني) غير مسجل في النظام' };
     }
 
     if (student.password !== password) {
       return { success: false, error: 'كلمة المرور غير صحيحة' };
     }
 
-    // Fetch enrolled courses
+    // Fetch enrolled courses using the student's actual student_id
     const { data: enrollments } = await supabase
       .from('student_enrollments')
       .select('course_slug')
-      .eq('student_id', studentId.trim());
+      .eq('student_id', student.student_id);
 
     const enrolledCourses = enrollments ? enrollments.map((e) => e.course_slug) : [];
 

@@ -4,18 +4,19 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { UserPlus, User, KeyRound, Phone, BookOpen, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
+import { UserPlus, User, KeyRound, Phone, BookOpen, AlertCircle, CheckCircle2, ArrowRight, GraduationCap, CreditCard } from 'lucide-react';
 import { useAuth } from '@/components/providers/AuthProvider';
 
 export default function RegisterPage() {
   const { register } = useAuth();
   const router = useRouter();
 
+  const [idType, setIdType] = useState<'student_id' | 'national_id'>('student_id');
   const [formData, setFormData] = useState({
     name: '',
     studentId: '',
     phone: '',
-    major: 'العلوم الطبية المخبرية',
+    major: 'طالب مستجد',
     password: '',
     confirmPassword: '',
   });
@@ -25,12 +26,14 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
 
   const majors = [
+    'طالب مستجد',
     'العلوم الطبية المخبرية',
     'التغذية السريرية و الحميات',
     'العلاج الطبيعي',
     'التصوير الطبي',
     'العلاج الوظيفي',
-    'تخصص طبي آخر / سنة أولى',
+    'تمريض',
+    'تخصص طبي آخر',
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,7 +41,11 @@ export default function RegisterPage() {
     setError('');
 
     if (!formData.name.trim() || !formData.studentId.trim() || !formData.phone.trim() || !formData.password.trim()) {
-      setError('الرجاء ملء جميع الحقول المطلوبة');
+      setError(
+        idType === 'student_id'
+          ? 'الرجاء ملء جميع الحقول بما فيها الرقم الجامعي ورقم الهاتف'
+          : 'الرجاء ملء جميع الحقول بما فيها الرقم الوطني ورقم الهاتف'
+      );
       return;
     }
 
@@ -88,7 +95,7 @@ export default function RegisterPage() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-lg bg-white/80 dark:bg-[#12070D]/85 backdrop-blur-xl border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl shadow-rose-950/20 relative z-10"
       >
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#881337] via-[#9F1239] to-[#BE123C] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-rose-900/30 text-white">
             <UserPlus className="w-7 h-7" />
           </div>
@@ -96,8 +103,42 @@ export default function RegisterPage() {
             إنشاء حساب طالب جديد
           </h1>
           <p className="text-xs sm:text-sm font-medium text-slate-600 dark:text-rose-200/70 mt-1.5">
-            سجّل برقمك الجامعي للاشتراك وتفعيل الدورات المدفوعة في منصة نيورو
+            سجّل برقمك الجامعي أو رقمك الوطني للوصول إلى دوراتك وحسابك في نيورو
           </p>
+        </div>
+
+        {/* Choice selector: Student ID vs National ID */}
+        <div className="flex rounded-2xl bg-rose-500/10 p-1 mb-5 border border-rose-900/10 dark:border-rose-900/20">
+          <button
+            type="button"
+            onClick={() => {
+              setIdType('student_id');
+              setError('');
+            }}
+            className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+              idType === 'student_id'
+                ? 'bg-white dark:bg-[#180A11] text-[#9F1239] dark:text-rose-200 shadow-sm'
+                : 'text-slate-600 dark:text-rose-300/60 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <GraduationCap className="w-4 h-4" />
+            <span>الرقم الجامعي</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setIdType('national_id');
+              setError('');
+            }}
+            className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+              idType === 'national_id'
+                ? 'bg-white dark:bg-[#180A11] text-[#9F1239] dark:text-rose-200 shadow-sm'
+                : 'text-slate-600 dark:text-rose-300/60 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <CreditCard className="w-4 h-4" />
+            <span>الرقم الوطني (مستجدين)</span>
+          </button>
         </div>
 
         {error && (
@@ -142,11 +183,11 @@ export default function RegisterPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-rose-200/80 mb-1.5">
-                الرقم الجامعي (Student ID) *
+                {idType === 'student_id' ? 'الرقم الجامعي (Student ID) *' : 'الرقم الوطني (National ID) *'}
               </label>
               <input
                 type="text"
-                placeholder="2134567"
+                placeholder={idType === 'student_id' ? 'مثال: 2437109' : 'مثال: 2004123456'}
                 value={formData.studentId}
                 onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
                 className="w-full bg-slate-50 dark:bg-[#180A11] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl py-3 px-4 text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-rose-300/40 focus:outline-none focus:ring-2 focus:ring-[#9F1239] transition-all"
@@ -156,11 +197,11 @@ export default function RegisterPage() {
 
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-rose-200/80 mb-1.5">
-                رقم الهاتف (WhatsApp) *
+                رقم الهاتف للتواصل *
               </label>
               <input
                 type="text"
-                placeholder="0791234567"
+                placeholder="مثال: 0791234567"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 className="w-full bg-slate-50 dark:bg-[#180A11] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl py-3 px-4 text-sm font-medium text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-rose-300/40 focus:outline-none focus:ring-2 focus:ring-[#9F1239] transition-all"
@@ -179,8 +220,8 @@ export default function RegisterPage() {
               className="w-full bg-slate-50 dark:bg-[#180A11] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl py-3 px-4 text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#9F1239] transition-all"
             >
               {majors.map((m) => (
-                <option key={m} value={m} className="bg-white dark:bg-[#180A11] text-slate-900 dark:text-white">
-                  {m}
+                <option key={m} value={m} className="bg-white dark:bg-[#180A11] text-slate-900 dark:text-white font-medium">
+                  {m === 'طالب مستجد' ? '⭐ طالب مستجد (سنة أولى / لم يحدد التخصص بعد)' : m}
                 </option>
               ))}
             </select>

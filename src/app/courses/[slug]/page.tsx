@@ -96,9 +96,9 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
 
   const getActivationMessage = () => {
     if (!currentUser) {
-      return `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${course.title}) مجاناً بحسابي على المنصة.\n\n[يرجى تسجيل الدخول بالرقم الجامعي أولاً ليتم تجهيز بياناتك تلقائياً]`;
+      return `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${course.title}) مجاناً بحسابي على المنصة.\n\n[يرجى تسجيل الدخول بالرقم الجامعي أو الرقم الوطني أولاً ليتم تجهيز بياناتك تلقائياً]`;
     }
-    return `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${course.title}) مجاناً بحسابي على المنصة.\n\n📋 بيانات الطالب للتفعيل:\n• الاسم الكامل: ${currentUser.name}\n• الرقم الجامعي: ${currentUser.studentId}\n• الجامعة والتخصص: ${currentUser.major}\n• رقم الهاتف: ${currentUser.phone}\n\nشاكراً ومقدراً جهودكم الكريمة في خدمة ودعم طلبة الجامعات! 🌟`;
+    return `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${course.title}) مجاناً بحسابي على المنصة.\n\n📋 بيانات الطالب للتفعيل:\n• الاسم الكامل: ${currentUser.name}\n• الرقم الجامعي / الوطني: ${currentUser.studentId}\n• الجامعة والتخصص: ${currentUser.major}\n• رقم الهاتف: ${currentUser.phone}\n\nشاكراً ومقدراً جهودكم الكريمة في خدمة ودعم طلبة الجامعات! 🌟`;
   };
 
   const copyActivationMessage = () => {
@@ -114,7 +114,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
 
   const handleInstagramRedirect = () => {
     if (!currentUser) {
-      alert('⚠️ تنبيه: يجب تسجيل الدخول برقمك الجامعي أولاً لتتمكن من إرسال طلب التفعيل باسمك ورقمك الجامعي!');
+      alert('⚠️ تنبيه: يجب تسجيل الدخول بحسابك (بالرقم الجامعي أو الرقم الوطني) أولاً لتتمكن من إرسال طلب التفعيل!');
       return;
     }
 
@@ -316,17 +316,17 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                   <div className="max-w-md mx-auto p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-right space-y-3 shadow-sm">
                     <div className="flex items-center gap-2 text-amber-700 dark:text-amber-300 font-bold text-xs sm:text-sm">
                       <AlertCircle className="w-4 h-4 shrink-0" />
-                      <span>تنبيه مهم: يجب تسجيل الدخول برقمك الجامعي أولاً</span>
+                      <span>تنبيه مهم: يجب تسجيل الدخول برقمك الجامعي أو الوطني أولاً</span>
                     </div>
                     <p className="text-xs text-slate-600 dark:text-rose-200/80 leading-relaxed">
-                      لتتمكن من إرسال طلب التفعيل باسمك ورقمك الجامعي وليقوم المشرف بتفعيل الدورة على حسابك في المنصة، يرجى تسجيل الدخول أو إنشاء حساب جديد مجاناً أولاً.
+                      لتتمكن من إرسال طلب التفعيل باسمك ورقمك وليقوم المشرف بتفعيل الدورة على حسابك في المنصة، يرجى تسجيل الدخول أو إنشاء حساب جديد مجاناً أولاً.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-2 pt-1">
                       <Link
                         href={`/login?redirect=/courses/${course.slug}`}
                         className="flex-1 py-2.5 rounded-xl bg-[#9F1239] hover:bg-[#881337] text-white text-xs font-bold text-center transition-all shadow-sm"
                       >
-                        تسجيل الدخول بالرقم الجامعي
+                        تسجيل الدخول (جامعي / وطني)
                       </Link>
                       <Link
                         href={`/register?redirect=/courses/${course.slug}`}
@@ -345,7 +345,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                         <span>رسالة التفعيل الجاهزة للإرسال:</span>
                       </span>
                       <span className="text-[11px] text-emerald-600 font-normal">
-                        جاهزة ومجهزة ببياناتك الجامعية
+                        جاهزة ومجهزة ببيانات حسابك
                       </span>
                     </div>
 

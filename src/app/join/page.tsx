@@ -2,14 +2,15 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Send, CheckCircle2, User, Hash, GraduationCap, Calendar, MessageCircle, Phone } from 'lucide-react';
+import { Sparkles, Send, CheckCircle2, User, Hash, GraduationCap, Calendar, Instagram, Phone, Copy } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
 import { saveJoinRequestToDb } from '@/lib/supabase';
 
-const WHATSAPP_NUMBER = '962772855708';
+const INSTAGRAM_URL = 'https://www.instagram.com/neuro_medical?igsi=MXU4Yng2dmdpdzdnMA==';
 
 const MAJORS = [
+  'طالب مستجد',
   'العلوم الطبية المخبرية',
   'التغذية السريرية والحميات',
   'العلاج الطبيعي',
@@ -50,8 +51,8 @@ export default function JoinPage() {
       return;
     }
 
-    if (!cleanId || !/^\d{5,10}$/.test(cleanId)) {
-      setErrorMsg('الرقم الجامعي إجباري ويجب أن يتكون من أرقام فقط (مثال: 2437109)');
+    if (!cleanId || !/^\d{5,12}$/.test(cleanId)) {
+      setErrorMsg('الرقم الجامعي أو الوطني إجباري ويجب أن يتكون من أرقام فقط (مثال: 2437109 أو 2004123456)');
       return;
     }
 
@@ -81,19 +82,23 @@ export default function JoinPage() {
       year,
     });
 
-    const message = `مرحباً فريق نيورو (NEURO)، أود الانضمام إلى الفريق والمجتمع الطلابي. تفاصيل طلبي:\n\n` +
+    const message = `مرحباً فريق نيورو (NEURO) 👋\n\n` +
+      `أود الانضمام إلى الفريق والمجتمع الطلابي. تفاصيل طلبي:\n\n` +
       `👤 الاسم الكامل: ${cleanName}\n` +
-      `🔢 الرقم الجامعي: ${cleanId}\n` +
+      `🔢 الرقم الجامعي / الوطني: ${cleanId}\n` +
       `📱 رقم الهاتف: ${cleanPhone}\n` +
       `🩺 التخصص: ${major}\n` +
-      `🎓 السنة الدراسية: ${year}`;
+      `🎓 السنة الدراسية: ${year}\n\n` +
+      `شاكراً ومقدراً لكم! 🌟`;
 
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(message).catch(() => {});
+    }
 
     setIsSuccess(true);
     setTimeout(() => {
-      window.open(whatsappUrl, '_blank');
-    }, 400);
+      window.open(INSTAGRAM_URL, '_blank');
+    }, 500);
   };
 
   return (
@@ -145,14 +150,14 @@ export default function JoinPage() {
               {/* Student ID */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 dark:text-rose-200/80 mb-1.5 font-manrope">
-                  الرقم الجامعي <span className="text-rose-600">*</span>
+                  الرقم الجامعي أو الرقم الوطني <span className="text-rose-600">*</span>
                 </label>
                 <div className="relative">
                   <Hash className="w-4 h-4 text-slate-400 dark:text-rose-300/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     required
-                    placeholder="مثال: 2437109"
+                    placeholder="مثال: 2437109 أو 2004123456 (للمستجدين)"
                     value={studentId}
                     onChange={(e) => {
                       setStudentId(e.target.value);
@@ -162,12 +167,15 @@ export default function JoinPage() {
                     dir="ltr"
                   />
                 </div>
+                <span className="text-[11px] text-slate-400 dark:text-rose-200/40 mt-1 block">
+                  إذا كنت طالباً مستجداً ولم يصدر رقمك الجامعي، يمكنك كتابة رقمك الوطني
+                </span>
               </div>
 
               {/* Phone Number */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 dark:text-rose-200/80 mb-1.5 font-manrope">
-                  رقم الهاتف (الواتساب) <span className="text-rose-600">*</span>
+                  رقم الهاتف للتواصل <span className="text-rose-600">*</span>
                 </label>
                 <div className="relative">
                   <Phone className="w-4 h-4 text-slate-400 dark:text-rose-300/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -185,7 +193,7 @@ export default function JoinPage() {
                   />
                 </div>
                 <span className="text-[11px] text-slate-400 dark:text-rose-200/40 mt-1 block">
-                  رقم للتواصل وتأكيد انضمامك للأنشطة واللجان
+                  رقم هاتف مباشر للتواصل معك وتأكيد انضمامك للأنشطة واللجان
                 </span>
               </div>
 
@@ -204,8 +212,8 @@ export default function JoinPage() {
                   >
                     <option value="">-- اختر تخصصك --</option>
                     {MAJORS.map((m) => (
-                      <option key={m} value={m} className="bg-white dark:bg-[#12070D] text-slate-900 dark:text-white">
-                        {m}
+                      <option key={m} value={m} className="bg-white dark:bg-[#12070D] text-slate-900 dark:text-white font-medium">
+                        {m === 'طالب مستجد' ? '⭐ طالب مستجد (سنة أولى / لم يحدد التخصص بعد)' : m}
                       </option>
                     ))}
                   </select>
@@ -245,13 +253,13 @@ export default function JoinPage() {
               <div className="pt-3">
                 <button
                   type="submit"
-                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-bold text-sm shadow-lg shadow-emerald-950/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2.5"
+                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#E1306C] via-[#C13584] to-[#833AB4] hover:opacity-95 text-white font-bold text-sm shadow-lg shadow-rose-950/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2.5"
                 >
-                  <MessageCircle className="w-5 h-5" />
-                  <span>إرسال طلب الانضمام عبر واتساب (0772855708)</span>
+                  <Instagram className="w-5 h-5" />
+                  <span>إرسال طلب الانضمام والتواصل عبر إنستغرام</span>
                 </button>
                 <p className="text-[11px] text-center text-slate-500 dark:text-rose-200/60 mt-2 font-medium">
-                  سيتم فتح محادثة واتساب تلقائياً مع مسؤول الفريق متضمنة بياناتك الكاملة
+                  سيتم حفظ طلبك تلقائياً ونسخ بياناتك لفتح حساب إنستغرام الرسمي (@neuro_medical)
                 </p>
               </div>
             </form>
@@ -261,34 +269,30 @@ export default function JoinPage() {
               animate={{ opacity: 1, scale: 1 }}
               className="text-center py-8"
             >
-              <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-600 dark:text-emerald-400">
+              <div className="w-16 h-16 bg-gradient-to-tr from-[#E1306C] to-[#833AB4] text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-rose-900/30">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <h2 className="text-2xl font-black font-poppins text-slate-900 dark:text-rose-100 mb-2">
-                تم تجهيز طلب الانضمام!
+                تم حفظ طلب الانضمام بنجاح!
               </h2>
               <p className="text-sm text-slate-600 dark:text-rose-200/70 mb-6 max-w-md mx-auto">
-                تم تحويلك إلى واتساب على الرقم <strong className="text-slate-900 dark:text-white font-mono">0772855708</strong> لإرسال بياناتك واعتماد انضمامك.
+                تم حفظ بياناتك بقاعدة البيانات ونسخ رسالة طلب الانضمام تلقائياً. تم توجيهك إلى حساب إنستغرام الرسمي <strong className="text-[#E1306C] font-mono">@neuro_medical</strong> لتأكيد طلبك.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <button
-                  onClick={() => {
-                    const message = `مرحباً فريق نيورو (NEURO)، أود الانضمام إلى الفريق والمجتمع الطلابي. تفاصيل طلبي:\n\n` +
-                      `👤 الاسم الكامل: ${fullName.trim()}\n` +
-                      `🔢 الرقم الجامعي: ${studentId.trim()}\n` +
-                      `🩺 التخصص: ${major}\n` +
-                      `🎓 السنة الدراسية: ${year}`;
-                    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
-                  }}
-                  className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-2"
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 rounded-2xl bg-gradient-to-r from-[#E1306C] via-[#C13584] to-[#833AB4] text-white text-xs font-bold shadow-md hover:opacity-95 transition-all flex items-center gap-2"
                 >
-                  <MessageCircle className="w-4 h-4" /> فتح واتساب مجدداً
-                </button>
+                  <Instagram className="w-4 h-4" /> فتح حساب إنستغرام (@neuro_medical)
+                </a>
                 <button
                   onClick={() => {
                     setIsSuccess(false);
                     setFullName('');
                     setStudentId('');
+                    setPhone('');
                     setMajor('');
                     setYear('');
                   }}

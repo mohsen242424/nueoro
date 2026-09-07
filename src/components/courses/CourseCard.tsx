@@ -32,19 +32,19 @@ export default function CourseCard({ course }: { course: Course }) {
     e.stopPropagation();
 
     if (!currentUser) {
-      alert('⚠️ يرجى تسجيل الدخول برقمك الجامعي أولاً لتتمكن من إرسال طلب التفعيل باسمك ورقمك الجامعي!');
+      alert('⚠️ يرجى تسجيل الدخول بحسابك (بالرقم الجامعي أو الرقم الوطني) أولاً لتتمكن من إرسال طلب التفعيل!');
       window.location.href = `/login?redirect=/courses/${course.slug}`;
       return;
     }
 
-    const textToCopy = `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${course.title}) مجاناً بحسابي على المنصة.\n\n📋 بيانات الطالب للتفعيل:\n• الاسم: ${currentUser.name}\n• الرقم الجامعي: ${currentUser.studentId}\n• التخصص: ${currentUser.major}\n• الهاتف: ${currentUser.phone}\n\nشاكراً ومقدراً جهودكم الكريمة في خدمة ودعم طلبة الجامعات! 🌟`;
+    const textToCopy = `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${course.title}) مجاناً بحسابي على المنصة.\n\n📋 بيانات الطالب للتفعيل:\n• الاسم: ${currentUser.name}\n• الرقم الجامعي / الوطني: ${currentUser.studentId}\n• التخصص: ${currentUser.major}\n• الهاتف: ${currentUser.phone}\n\nشاكراً ومقدراً جهودكم الكريمة في خدمة ودعم طلبة الجامعات! 🌟`;
 
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(textToCopy).catch(() => {});
     }
 
-    alert('✅ تم نسخ رسالة التفعيل المجهزة ببياناتك ورقمك الجامعي بنجاح! سيتم فتح محادثة إنستغرام الآن، الصق الرسالة (Paste) واضغط إرسال.');
-    window.open('https://ig.me/m/neuro_medical', '_blank');
+    alert('✅ تم نسخ رسالة التفعيل المجهزة ببياناتك بنجاح! سيتم فتح حساب إنستغرام الآن، الصق الرسالة واضغط إرسال.');
+    window.open('https://www.instagram.com/neuro_medical?igsi=MXU4Yng2dmdpdzdnMA==', '_blank');
   };
 
   return (

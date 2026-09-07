@@ -4,11 +4,11 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { User, BookOpen, Lock, Unlock, LogOut, CheckCircle2, MessageCircle, ArrowRight, Sparkles, GraduationCap } from 'lucide-react';
+import { User, BookOpen, Lock, Unlock, LogOut, CheckCircle2, Instagram, ArrowRight, Sparkles, GraduationCap } from 'lucide-react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import coursesData from '@/data/courses.json';
 
-const WHATSAPP_NUMBER = '962798107289';
+const INSTAGRAM_URL = 'https://www.instagram.com/neuro_medical?igsi=MXU4Yng2dmdpdzdnMA==';
 
 export default function ProfilePage() {
   const { currentUser, logout, isCourseUnlocked } = useAuth();
@@ -26,10 +26,12 @@ export default function ProfilePage() {
 
   const enrolledCount = currentUser.enrolledCourses?.length || 0;
 
-  const handleWhatsAppPayment = (courseTitle: string, price: string) => {
-    const text = `مرحباً فريق نيورو، لقد قمت بالتحويل المالي لتفعيل دورة: (${courseTitle} - بسعر ${price})، رقمي الجامعي هو: (${currentUser.studentId}) واسمي: (${currentUser.name}). مرفق إشعار التحويل البنكي للتفعيل.`;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank');
+  const handleInstagramActivation = (courseTitle: string, price: string) => {
+    const text = `مرحباً فريق نيورو الأكاديمي (NEURO) 👋\n\nأود طلب تفعيل دورة: (${courseTitle} - ${price}) بحسابي على المنصة.\n\n📋 بيانات الطالب للتفعيل:\n• الاسم الكامل: ${currentUser.name}\n• الرقم الجامعي / الوطني: ${currentUser.studentId}\n• الجامعة والتخصص: ${currentUser.major}\n• رقم الهاتف: ${currentUser.phone}\n\n[مرفق إشعار التحويل في حال كانت الدورة مدفوعة]\nشاكراً ومقدراً جهودكم الكريمة! 🌟`;
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+    window.open(INSTAGRAM_URL, '_blank');
   };
 
   return (
@@ -56,7 +58,7 @@ export default function ProfilePage() {
                 </span>
               </div>
               <p className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-rose-200/70 flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1">
-                <span>الرقم الجامعي: <strong className="text-slate-900 dark:text-white font-mono">{currentUser.studentId}</strong></span>
+                <span>الرقم الجامعي / الوطني: <strong className="text-slate-900 dark:text-white font-mono">{currentUser.studentId}</strong></span>
                 <span>•</span>
                 <span>التخصص: <strong className="text-slate-900 dark:text-white">{currentUser.major}</strong></span>
                 <span>•</span>
@@ -157,7 +159,7 @@ export default function ProfilePage() {
                   جميع دورات نيورو المتاحة للتفعيل
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-rose-200/60">
-                  اختر الدورة وأرسل رقمك الجامعي مع إشعار التحويل البنكي عبر الواتساب للتفعيل
+                  اختر الدورة وسيتم تجهيز ونسخ رسالة التفعيل ببياناتك لإرسالها عبر إنستغرام (@neuro_medical)
                 </p>
               </div>
             </div>
@@ -209,10 +211,10 @@ export default function ProfilePage() {
                     ) : (
                       <div className="space-y-2">
                         <button
-                          onClick={() => handleWhatsAppPayment(course.title, course.price)}
-                          className="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold text-center shadow-md shadow-emerald-950/20 transition-all flex items-center justify-center gap-2"
+                          onClick={() => handleInstagramActivation(course.title, course.price)}
+                          className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#E1306C] via-[#C13584] to-[#833AB4] hover:opacity-95 text-white text-xs font-bold text-center shadow-md shadow-rose-950/20 transition-all flex items-center justify-center gap-2"
                         >
-                          <MessageCircle className="w-4 h-4" /> طلب التفعيل عبر واتساب ({course.price})
+                          <Instagram className="w-4 h-4" /> طلب التفعيل عبر إنستغرام ({course.price})
                         </button>
                         <Link
                           href={`/courses/${course.slug}`}
