@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Send, CheckCircle2, User, Hash, GraduationCap, Calendar, MessageCircle } from 'lucide-react';
+import { Sparkles, Send, CheckCircle2, User, Hash, GraduationCap, Calendar, MessageCircle, Phone } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
 import { saveJoinRequestToDb } from '@/lib/supabase';
@@ -32,28 +32,59 @@ export default function JoinPage() {
   const { t, isRTL } = useLanguage();
   const [fullName, setFullName] = useState('');
   const [studentId, setStudentId] = useState('');
+  const [phone, setPhone] = useState('');
   const [major, setMajor] = useState('');
   const [year, setYear] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!fullName.trim() || !studentId.trim() || !major || !year) {
+    const cleanName = fullName.trim();
+    const cleanId = studentId.trim();
+    const cleanPhone = phone.trim();
+
+    if (!cleanName || cleanName.length < 3) {
+      setErrorMsg('يرجى كتابة الاسم الكامل بشكل صحيح');
       return;
     }
 
+    if (!cleanId || !/^\d{5,10}$/.test(cleanId)) {
+      setErrorMsg('الرقم الجامعي إجباري ويجب أن يتكون من أرقام فقط (مثال: 2437109)');
+      return;
+    }
+
+    if (!cleanPhone || cleanPhone.length < 9) {
+      setErrorMsg('رقم الهاتف إجباري ومطلوب للتواصل (مثال: 0791234567)');
+      return;
+    }
+
+    if (!major) {
+      setErrorMsg('يرجى اختيار التخصص الأكاديمي');
+      return;
+    }
+
+    if (!year) {
+      setErrorMsg('يرجى اختيار السنة الدراسية');
+      return;
+    }
+
+    setErrorMsg('');
+
     // Save to database in background
     saveJoinRequestToDb({
-      fullName: fullName.trim(),
-      studentId: studentId.trim(),
+      fullName: cleanName,
+      studentId: cleanId,
+      phone: cleanPhone,
       major,
       year,
     });
 
     const message = `مرحباً فريق نيورو (NEURO)، أود الانضمام إلى الفريق والمجتمع الطلابي. تفاصيل طلبي:\n\n` +
-      `👤 الاسم الكامل: ${fullName.trim()}\n` +
-      `🔢 الرقم الجامعي: ${studentId.trim()}\n` +
+      `👤 الاسم الكامل: ${cleanName}\n` +
+      `🔢 الرقم الجامعي: ${cleanId}\n` +
+      `📱 رقم الهاتف: ${cleanPhone}\n` +
       `🩺 التخصص: ${major}\n` +
       `🎓 السنة الدراسية: ${year}`;
 
@@ -121,13 +152,41 @@ export default function JoinPage() {
                   <input
                     type="text"
                     required
-                    placeholder="مثال: 2134567"
+                    placeholder="مثال: 2437109"
                     value={studentId}
-                    onChange={(e) => setStudentId(e.target.value)}
+                    onChange={(e) => {
+                      setStudentId(e.target.value);
+                      if (errorMsg) setErrorMsg('');
+                    }}
                     className="w-full px-4 py-3 pl-10 bg-white dark:bg-[#180A11] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl focus:ring-2 focus:ring-[#9F1239] outline-none transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-rose-300/40 text-sm font-medium shadow-sm font-mono"
                     dir="ltr"
                   />
                 </div>
+              </div>
+
+              {/* Phone Number */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 dark:text-rose-200/80 mb-1.5 font-manrope">
+                  رقم الهاتف (الواتساب) <span className="text-rose-600">*</span>
+                </label>
+                <div className="relative">
+                  <Phone className="w-4 h-4 text-slate-400 dark:text-rose-300/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="tel"
+                    required
+                    placeholder="مثال: 0791234567"
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                      if (errorMsg) setErrorMsg('');
+                    }}
+                    className="w-full px-4 py-3 pl-10 bg-white dark:bg-[#180A11] border border-rose-900/15 dark:border-rose-900/30 rounded-2xl focus:ring-2 focus:ring-[#9F1239] outline-none transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-rose-300/40 text-sm font-medium shadow-sm font-mono"
+                    dir="ltr"
+                  />
+                </div>
+                <span className="text-[11px] text-slate-400 dark:text-rose-200/40 mt-1 block">
+                  رقم للتواصل وتأكيد انضمامك للأنشطة واللجان
+                </span>
               </div>
 
               {/* Major Selection */}
@@ -175,6 +234,12 @@ export default function JoinPage() {
                   </select>
                 </div>
               </div>
+
+              {errorMsg && (
+                <div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-xs font-bold text-rose-600 dark:text-rose-400 text-center">
+                  {errorMsg}
+                </div>
+              )}
 
               {/* Submit Button */}
               <div className="pt-3">

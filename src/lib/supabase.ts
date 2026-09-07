@@ -25,6 +25,7 @@ export interface JoinRequestRecord {
   id?: string;
   full_name: string;
   student_id: string;
+  phone?: string;
   major: string;
   year: string;
   created_at?: string;
@@ -277,16 +278,20 @@ export async function deleteStudentFromDb(studentId: string): Promise<{ success:
 export async function saveJoinRequestToDb(request: {
   fullName: string;
   studentId: string;
+  phone: string;
   major: string;
   year: string;
 }): Promise<{ success: boolean; error?: string }> {
   try {
+    const cleanPhone = request.phone.trim();
+    const yearWithPhone = `${request.year.trim()}###${cleanPhone}`;
+
     const { error } = await supabase.from('join_requests').insert([
       {
         full_name: request.fullName.trim(),
         student_id: request.studentId.trim(),
         major: request.major,
-        year: request.year,
+        year: yearWithPhone,
       },
     ]);
 
@@ -304,22 +309,58 @@ export async function saveJoinRequestToDb(request: {
 
 /**
  * Fetch all join requests (for Admin Dashboard)
- * Excludes anonymous suggestions
+ * Excludes anonymous suggestions & extracts phone numbers
  */
 export async function fetchAllJoinRequests(): Promise<JoinRequestRecord[]> {
   try {
-    const { data, error } = await supabase
-      .from('join_requests')
-      .select('*')
-      .neq('student_id', 'SUGGESTION')
-      .order('created_at', { ascending: false });
+    const [joinRes, studentsRes] = await Promise.all([
+      supabase
+        .from('join_requests')
+        .select('*')
+        .neq('student_id', 'SUGGESTION')
+        .order('created_at', { ascending: false }),
+      supabase
+        .from('students')
+        .select('student_id, phone'),
+    ]);
 
-    if (error || !data) {
-      console.error('Fetch join requests error:', error);
+    const data = joinRes.data;
+    if (joinRes.error || !data) {
+      console.error('Fetch join requests error:', joinRes.error);
       return [];
     }
 
-    return data;
+    // Map student phones for cross-referencing past records
+    const studentPhoneMap = new Map<string, string>();
+    if (studentsRes.data) {
+      studentsRes.data.forEach((s) => {
+        if (s.student_id && s.phone) {
+          studentPhoneMap.set(s.student_id.trim(), s.phone.trim());
+        }
+      });
+    }
+
+    return data.map((req) => {
+      let extractedYear = req.year || '';
+      let extractedPhone = '';
+
+      if (extractedYear.includes('###')) {
+        const parts = extractedYear.split('###');
+        extractedYear = parts[0];
+        extractedPhone = parts[1] || '';
+      }
+
+      // If phone wasn't encoded, try cross-referencing registered students by student_id
+      if (!extractedPhone && req.student_id) {
+        extractedPhone = studentPhoneMap.get(req.student_id.trim()) || '';
+      }
+
+      return {
+        ...req,
+        year: extractedYear,
+        phone: extractedPhone,
+      };
+    });
   } catch (err) {
     console.error('Error fetching join requests:', err);
     return [];

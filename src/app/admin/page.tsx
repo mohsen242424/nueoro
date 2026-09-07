@@ -32,6 +32,7 @@ import {
   Lightbulb,
   Copy,
   MessageSquare,
+  Phone,
 } from 'lucide-react';
 import { useAuth, User } from '@/components/providers/AuthProvider';
 import {
@@ -1012,10 +1013,11 @@ export default function AdminPage() {
                     <tr>
                       <th className="py-3.5 px-4">اسم الطالب</th>
                       <th className="py-3.5 px-4">الرقم الجامعي</th>
+                      <th className="py-3.5 px-4">رقم الهاتف</th>
                       <th className="py-3.5 px-4">التخصص الأكاديمي</th>
                       <th className="py-3.5 px-4">السنة الدراسية</th>
                       <th className="py-3.5 px-4">تاريخ الإرسال</th>
-                      <th className="py-3.5 px-4 text-center">الحالة</th>
+                      <th className="py-3.5 px-4 text-center">التواصل / الحالة</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-rose-900/10 dark:divide-rose-900/20">
@@ -1027,6 +1029,24 @@ export default function AdminPage() {
                           </td>
                           <td className="py-3.5 px-4 font-mono font-bold text-[#9F1239] dark:text-[#FB7185]">
                             {req.student_id}
+                          </td>
+                          <td className="py-3.5 px-4">
+                            {req.phone ? (
+                              <div className="flex items-center gap-2">
+                                <a
+                                  href={`tel:${req.phone}`}
+                                  className="font-mono font-semibold text-slate-800 dark:text-rose-100 hover:text-rose-600 transition-colors flex items-center gap-1.5"
+                                  dir="ltr"
+                                >
+                                  <Phone className="w-3.5 h-3.5 text-rose-500" />
+                                  <span>{req.phone}</span>
+                                </a>
+                              </div>
+                            ) : (
+                              <span className="text-slate-400 dark:text-rose-300/40 text-[11px] font-sans">
+                                غير متوفر
+                              </span>
+                            )}
                           </td>
                           <td className="py-3.5 px-4 text-slate-700 dark:text-rose-200">
                             {req.major}
@@ -1040,9 +1060,21 @@ export default function AdminPage() {
                             {req.created_at ? new Date(req.created_at).toLocaleDateString('ar-JO') : 'حديثاً'}
                           </td>
                           <td className="py-3.5 px-4 text-center">
-                            <span className="text-[11px] text-emerald-600 font-bold flex items-center justify-center gap-1">
-                              <CheckCircle2 className="w-3.5 h-3.5" /> مسجل
-                            </span>
+                            {req.phone ? (
+                              <a
+                                href={`https://wa.me/${req.phone.startsWith('0') ? '962' + req.phone.substring(1) : req.phone}?text=${encodeURIComponent(`مرحباً ${req.full_name}، نتواصل معك من فريق نيورو بخصوص طلب انضمامك!`)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 text-white font-bold text-[11px] shadow-sm hover:bg-emerald-600 hover:shadow-md transition-all"
+                              >
+                                <MessageCircle className="w-3.5 h-3.5" />
+                                <span>مراسلة واتساب</span>
+                              </a>
+                            ) : (
+                              <span className="text-[11px] text-emerald-600 font-bold flex items-center justify-center gap-1">
+                                <CheckCircle2 className="w-3.5 h-3.5" /> مسجل
+                              </span>
+                            )}
                           </td>
                         </tr>
                       );
@@ -1050,7 +1082,7 @@ export default function AdminPage() {
 
                     {joinRequests.length === 0 && (
                       <tr>
-                        <td colSpan={6} className="py-12 text-center text-slate-400">
+                        <td colSpan={7} className="py-12 text-center text-slate-400">
                           لا توجد طلبات انضمام حالياً
                         </td>
                       </tr>
