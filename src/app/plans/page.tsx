@@ -61,6 +61,15 @@ const plans: Plan[] = [
     width: 1200,
     height: 750,
   },
+  {
+    id: "nursing",
+    title: "التمريض",
+    emoji: "🏥",
+    color: "from-teal-600 to-teal-800",
+    image: "/plan-nursing.png",
+    width: 1200,
+    height: 750,
+  },
 ];
 
 export default function PlansPage() {
