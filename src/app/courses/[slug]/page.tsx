@@ -123,12 +123,39 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
     window.open(INSTAGRAM_DM_URL, '_blank');
   };
 
+  const [isTheaterMode, setIsTheaterMode] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const videoPlayerRef = React.useRef<HTMLDivElement>(null);
+
+  const toggleFullscreen = () => {
+    if (!videoPlayerRef.current) return;
+    if (!document.fullscreenElement) {
+      videoPlayerRef.current.requestFullscreen?.().then(() => {
+        setIsFullscreen(true);
+      }).catch((err) => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen?.().then(() => {
+        setIsFullscreen(false);
+      }).catch(() => {});
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
   // Video embed URL (plays directly inside the site)
   const videoSrc = (activeLesson as any).embedUrl || 
-    `https://drive.google.com/file/d/${(activeLesson as any).fileId || '1a2m8BsboeMRFlYqGf6D01UxeSXK9kcG9'}/preview`;
+    `https://drive.google.com/file/d/${(activeLesson as any).fileId || '1DOI95dJaOYeTVyHL3EMB5FPV2E5HJ2I-'}/preview`;
 
   return (
-    <div className="min-h-screen bg-[#FAF7F5] dark:bg-[#080406] pt-24 pb-20 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FAF7F5] dark:bg-[#080406] pt-24 pb-20 px-3 sm:px-6 lg:px-8 transition-colors duration-300">
       
       {/* Floating Notice when message is copied */}
       <AnimatePresence>
@@ -145,7 +172,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
         )}
       </AnimatePresence>
 
-      <div className="max-w-7xl mx-auto">
+      <div className={`mx-auto transition-all duration-300 ${isTheaterMode ? 'max-w-[1600px]' : 'max-w-7xl'}`}>
         
         {/* Navigation Breadcrumb */}
         <div className="flex items-center justify-between gap-4 mb-6">
@@ -162,11 +189,11 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
             </span>
             {isUnlocked ? (
               <span className="px-3 py-1 rounded-full bg-rose-500/10 border border-rose-900/15 text-[#9F1239] dark:text-[#FDA4AF] text-xs font-bold flex items-center gap-1">
-                <Unlock className="w-3.5 h-3.5" /> مفعلة برقمك الجامعي
+                <Unlock className="w-3.5 h-3.5" /> مفعلة بحسابك
               </span>
             ) : (
               <span className="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 text-xs font-bold flex items-center gap-1">
-                <Lock className="w-3.5 h-3.5" /> تتطلب التفعيل بالرقم الجامعي
+                <Lock className="w-3.5 h-3.5" /> تتطلب التفعيل
               </span>
             )}
           </div>
@@ -200,46 +227,62 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
         </div>
 
         {/* Main Layout: Embedded Video Player + Playlist Sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className={`grid gap-8 ${isTheaterMode ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'}`}>
           
           {/* Main Video Screen Area */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className={`${isTheaterMode ? 'w-full' : 'lg:col-span-2'} space-y-4`}>
             
             {isUnlocked ? (
               <>
-                {/* Protected In-Site Video Player (Drive Shield & Anti-Leak Watermark) */}
-                <div 
-                  onContextMenu={(e) => e.preventDefault()}
-                  className="relative aspect-video w-full rounded-3xl overflow-hidden bg-black shadow-2xl border border-rose-900/30 select-none"
-                >
-                  {/* Security Shield covering top bar to completely block Drive pop-out icon */}
-                  <div 
-                    className="absolute top-0 left-0 right-0 h-14 bg-gradient-to-b from-black/95 via-black/70 to-transparent z-20 flex items-center justify-between px-4 text-white pointer-events-auto"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#E11D48] animate-pulse"></span>
-                      <span className="text-[11px] font-bold tracking-wide text-rose-200">مشغل نيورو الأكاديمي المباشر</span>
-                    </div>
-                    <div className="text-[11px] font-mono text-white/80 bg-black/60 px-3 py-1 rounded-xl border border-white/15 shadow-sm">
-                      الطالب: {currentUser?.name || 'طالب نيورو'} ({currentUser?.studentId || '2437109'})
-                    </div>
+                {/* Clean Branded Player Header with Quick Controls */}
+                <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2.5 rounded-2xl bg-slate-900 text-white border border-rose-900/30 shadow-md">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#E11D48] animate-pulse"></span>
+                    <span className="text-xs font-bold tracking-wide text-rose-100">مشغل نيورو المباشر</span>
+                    <span className="hidden sm:inline-block text-[11px] font-mono text-rose-300/80 bg-rose-950/60 px-2 py-0.5 rounded-lg border border-rose-800/30">
+                      {currentUser?.name ? `الطالب: ${currentUser.name}` : 'طالب نيورو'}
+                    </span>
                   </div>
 
-                  {/* Invisible Shield specifically over the top-right corner to block the Pop-Out / Drive link */}
-                  <div 
-                    className="absolute top-0 right-0 w-32 h-16 z-30 cursor-default bg-transparent" 
-                    title="مشغل نيورو المدمج"
-                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                  />
+                  <div className="flex items-center gap-1.5 mr-auto">
+                    <button
+                      onClick={() => setIsTheaterMode(!isTheaterMode)}
+                      title={isTheaterMode ? "الوضع الافتراضي" : "الوضع الموسع"}
+                      className="hidden md:flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-rose-100 transition-colors"
+                    >
+                      <span>{isTheaterMode ? "الوضع العادي" : "الوضع الموسع"}</span>
+                    </button>
 
+                    <button
+                      onClick={toggleFullscreen}
+                      title="ملء الشاشة"
+                      className="flex items-center gap-1 px-3 py-1 rounded-xl bg-[#9F1239] hover:bg-[#BE123C] text-xs font-bold text-white transition-all shadow-sm"
+                    >
+                      <span>{isFullscreen ? "تصغير" : "ملء الشاشة ⛶"}</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Video Player Container (Zero blockers for 100% responsive touch controls on phones) */}
+                <div 
+                  ref={videoPlayerRef}
+                  className="relative aspect-video w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-black shadow-2xl border border-rose-900/30"
+                >
                   <iframe
                     src={videoSrc}
-                    className="w-full h-full border-0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    className="w-full h-full border-0 block"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                     allowFullScreen
                     title={activeLesson.title}
                   />
+                </div>
+
+                {/* Mobile Tips Notice */}
+                <div className="flex items-center justify-between px-4 py-2 rounded-xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-900/10 text-[11px] font-medium text-slate-600 dark:text-rose-200/80">
+                  <div className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#9F1239] dark:text-[#FB7185] shrink-0" />
+                    <span>💡 <strong>نصيحة للجوال:</strong> يمكنك النقر على أيقونة الإعدادات ⚙️ داخل مشغل الفيديو لتغيير الجودة أو السرعة.</span>
+                  </div>
                 </div>
 
                 {/* Active Lesson Info & Navigation */}
