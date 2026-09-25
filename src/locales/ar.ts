@@ -13,6 +13,7 @@ export const ar = {
     about: 'عن نيورو',
     store: 'متجر نيورو',
     suggest: 'اقترح على نيورو',
+    materials: 'المواد الدراسية',
     contact: 'تواصل معنا',
   },
   hero: {

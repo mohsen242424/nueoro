@@ -14,6 +14,7 @@ export const en = {
     about: 'About',
     store: 'Neuro Store',
     suggest: 'Suggest to Neuro',
+    materials: 'Study Materials',
     contact: 'Contact',
   },
   // Hero Section
