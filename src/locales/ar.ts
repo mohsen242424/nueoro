@@ -14,6 +14,7 @@ export const ar = {
     store: 'متجر نيورو',
     suggest: 'اقترح على نيورو',
     materials: 'المواد الدراسية',
+    plans: 'الخطط الشجرية',
     contact: 'تواصل معنا',
   },
   hero: {
