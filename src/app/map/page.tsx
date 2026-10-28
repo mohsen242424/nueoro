@@ -24,7 +24,12 @@ import {
   Navigation,
   Compass,
   ArrowRight,
-  Maximize2
+  Maximize2,
+  Minimize2,
+  X,
+  Smartphone,
+  ChevronLeft,
+  Tv
 } from 'lucide-react';
 import Image from 'next/image';
 import {
@@ -44,6 +49,51 @@ export default function MapPage() {
 
   // Lab Videos State
   const [selectedLabVideo, setSelectedLabVideo] = useState<LabVideo>(LAB_VIDEOS[0]);
+  const [isLabFullscreen, setIsLabFullscreen] = useState(false);
+  const [isLabTheaterMode, setIsLabTheaterMode] = useState(false);
+  const labVideoContainerRef = React.useRef<HTMLDivElement>(null);
+
+  const currentLabIndex = LAB_VIDEOS.findIndex((v) => v.id === selectedLabVideo.id);
+
+  const goToNextLab = () => {
+    if (currentLabIndex < LAB_VIDEOS.length - 1) {
+      setSelectedLabVideo(LAB_VIDEOS[currentLabIndex + 1]);
+    } else {
+      setSelectedLabVideo(LAB_VIDEOS[0]);
+    }
+  };
+
+  const goToPrevLab = () => {
+    if (currentLabIndex > 0) {
+      setSelectedLabVideo(LAB_VIDEOS[currentLabIndex - 1]);
+    } else {
+      setSelectedLabVideo(LAB_VIDEOS[LAB_VIDEOS.length - 1]);
+    }
+  };
+
+  const toggleLabFullscreen = () => {
+    if (!isLabFullscreen) {
+      if (labVideoContainerRef.current && labVideoContainerRef.current.requestFullscreen) {
+        labVideoContainerRef.current.requestFullscreen().catch(() => {});
+      }
+      setIsLabFullscreen(true);
+    } else {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+      setIsLabFullscreen(false);
+    }
+  };
+
+  React.useEffect(() => {
+    const handleFsChange = () => {
+      if (!document.fullscreenElement && isLabFullscreen) {
+        setIsLabFullscreen(false);
+      }
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, [isLabFullscreen]);
 
   // Transport Filters State
   const [searchQuery, setSearchQuery] = useState('');
@@ -267,8 +317,84 @@ export default function MapPage() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35 }}
-          className="max-w-6xl mx-auto space-y-8"
+          className={`mx-auto transition-all duration-300 space-y-6 ${isLabTheaterMode ? 'max-w-[1500px]' : 'max-w-5xl'}`}
         >
+          {/* Fullscreen Overlay Modal (Optimized for Mobile & Desktop) */}
+          <AnimatePresence>
+            {isLabFullscreen && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col justify-between p-3 sm:p-6"
+              >
+                {/* Fullscreen Header */}
+                <div className="flex items-center justify-between gap-3 text-white pb-3 border-b border-white/10">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#E11D48] animate-pulse shrink-0"></span>
+                    <h3 className="text-xs sm:text-base font-bold text-white truncate max-w-[200px] sm:max-w-md">
+                      {selectedLabVideo.title}
+                    </h3>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="hidden md:inline-flex text-[11px] text-rose-200/80 bg-white/10 px-3 py-1 rounded-xl">
+                      📱 تدوير الهاتف أفقياً يمنحك أكبر حجم للمشاهدة
+                    </span>
+                    <button
+                      onClick={toggleLabFullscreen}
+                      className="px-3.5 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white text-xs font-bold flex items-center gap-1.5 transition-colors"
+                    >
+                      <X className="w-4 h-4" />
+                      <span>خروج من ملء الشاشة</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Fullscreen Video Body */}
+                <div className="flex-1 my-3 flex items-center justify-center">
+                  <div className="w-full h-full max-h-[85vh] aspect-video relative rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/15">
+                    <iframe
+                      src={selectedLabVideo.embedUrl}
+                      className="w-full h-full border-0 block"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                      allowFullScreen
+                      title={selectedLabVideo.title}
+                    />
+                  </div>
+                </div>
+
+                {/* Fullscreen Footer Controls */}
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/10 text-white text-xs">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={goToPrevLab}
+                      className="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 transition-colors flex items-center gap-1"
+                    >
+                      <ArrowRight className="w-3.5 h-3.5" /> الفيديو السابق
+                    </button>
+                    <button
+                      onClick={goToNextLab}
+                      className="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 transition-colors flex items-center gap-1"
+                    >
+                      الفيديو التالي <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <a
+                    href={selectedLabVideo.driveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-1.5 rounded-xl bg-[#9F1239] hover:bg-[#BE123C] text-white font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>فتح في تطبيق Drive</span>
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Section Introduction */}
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-rose-100 mb-2">
@@ -281,7 +407,7 @@ export default function MapPage() {
 
           {/* Quick Selectors for the 3 Lab Groups */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {LAB_VIDEOS.map((lab) => {
+            {LAB_VIDEOS.map((lab, index) => {
               const isSelected = selectedLabVideo.id === lab.id;
               return (
                 <button
@@ -296,7 +422,7 @@ export default function MapPage() {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold text-white bg-gradient-to-r ${lab.badgeColor}`}>
-                        فيديو إرشادي
+                        فيديو {index + 1} من 3
                       </span>
                       {isSelected && (
                         <span className="flex items-center gap-1 text-[11px] font-bold text-[#9F1239] dark:text-[#FDA4AF]">
@@ -326,32 +452,55 @@ export default function MapPage() {
           </div>
 
           {/* Active Video Player Screen */}
-          <div className="bg-white/85 dark:bg-[#12070D]/90 backdrop-blur-xl border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-4 sm:p-7 shadow-xl shadow-rose-950/5 space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-rose-900/10 dark:border-rose-900/20">
-              <div>
-                <span className="text-[11px] font-bold text-[#9F1239] dark:text-[#FDA4AF] uppercase tracking-wide">
-                  المسار الإرشادي المختار
+          <div className="bg-white/85 dark:bg-[#12070D]/90 backdrop-blur-xl border border-rose-900/15 dark:border-rose-900/30 rounded-3xl p-4 sm:p-6 shadow-xl shadow-rose-950/5 space-y-4">
+            
+            {/* Top Player Header with Quick Controls */}
+            <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2.5 rounded-2xl bg-slate-900 text-white border border-rose-900/30 shadow-md">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#E11D48] animate-pulse"></span>
+                <span className="text-xs font-bold tracking-wide text-rose-100">مشغل نيورو لمواقع المختبرات</span>
+                <span className="hidden sm:inline-block text-[11px] font-mono text-rose-300/80 bg-rose-950/60 px-2 py-0.5 rounded-lg border border-rose-800/30">
+                  فيديو {currentLabIndex + 1} من 3
                 </span>
-                <h2 className="text-lg sm:text-2xl font-black text-slate-900 dark:text-rose-100 mt-1">
-                  {selectedLabVideo.title}
-                </h2>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 mr-auto">
+                <button
+                  onClick={() => setIsLabTheaterMode(!isLabTheaterMode)}
+                  title={isLabTheaterMode ? "الوضع الافتراضي" : "الوضع الموسع"}
+                  className="hidden md:flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-rose-100 transition-colors"
+                >
+                  <Tv className="w-3.5 h-3.5" />
+                  <span>{isLabTheaterMode ? "الوضع العادي" : "الوضع الموسع"}</span>
+                </button>
+
+                <button
+                  onClick={toggleLabFullscreen}
+                  title="عرض بملء الشاشة"
+                  className="flex items-center gap-1 px-3 py-1 rounded-xl bg-[#9F1239] hover:bg-[#BE123C] text-xs font-bold text-white transition-all shadow-sm"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  <span>ملء الشاشة ⛶</span>
+                </button>
+
                 <a
                   href={selectedLabVideo.driveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-rose-950/50 hover:bg-rose-100 text-slate-700 dark:text-rose-200 text-xs font-bold flex items-center gap-1.5 transition-colors"
+                  title="فتح في Google Drive"
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-rose-100 transition-colors"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>فتح في Google Drive</span>
+                  <span className="hidden sm:inline">تطبيق Drive</span>
                 </a>
               </div>
             </div>
 
             {/* Video Player (Responsive Iframe with Zero Obstruction) */}
-            <div className="relative aspect-video w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-black shadow-2xl border border-rose-900/30">
+            <div 
+              ref={labVideoContainerRef}
+              className="relative aspect-video w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-black shadow-2xl border border-rose-900/30"
+            >
               <iframe
                 src={selectedLabVideo.embedUrl}
                 className="w-full h-full border-0 block"
@@ -361,8 +510,63 @@ export default function MapPage() {
               />
             </div>
 
+            {/* Mobile Helpful Tip Box */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-gradient-to-r from-rose-500/10 via-amber-500/10 to-rose-500/5 border border-rose-900/15">
+              <div className="flex items-center gap-2">
+                <Smartphone className="w-4 h-4 text-[#9F1239] dark:text-[#FB7185] shrink-0" />
+                <p className="text-xs text-slate-700 dark:text-rose-100 leading-relaxed font-medium">
+                  <strong>نصيحة للهاتف:</strong> اضغط <strong>ملء الشاشة ⛶</strong> لتكبير الفيديو لكامل شاشتك، أو افتحه في تطبيق Drive للمشاهدة بمشغل الهاتف الأصلي.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
+                <button
+                  onClick={toggleLabFullscreen}
+                  className="flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl bg-[#9F1239] hover:bg-[#881337] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  <span>تكبير بملء الشاشة ⛶</span>
+                </button>
+                <a
+                  href={selectedLabVideo.driveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl bg-white dark:bg-[#180A11] border border-rose-900/20 text-slate-800 dark:text-rose-200 hover:bg-rose-50 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>فتح في تطبيق الهاتف</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Next / Previous Quick Nav Row */}
+            <div className="flex items-center justify-between pt-2">
+              <button
+                onClick={goToPrevLab}
+                className="px-4 py-2 rounded-2xl bg-slate-100 dark:bg-rose-950/40 text-slate-700 dark:text-rose-200 text-xs font-bold hover:bg-rose-100 transition-colors flex items-center gap-1.5"
+              >
+                <ArrowRight className="w-4 h-4" />
+                <span>المسار السابق</span>
+              </button>
+
+              <span className="text-xs font-bold text-slate-500 dark:text-rose-300/70 font-mono">
+                {currentLabIndex + 1} / {LAB_VIDEOS.length}
+              </span>
+
+              <button
+                onClick={goToNextLab}
+                className="px-4 py-2 rounded-2xl bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#BE123C] text-white text-xs font-bold hover:opacity-95 transition-all shadow-sm flex items-center gap-1.5"
+              >
+                <span>المسار التالي</span>
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+            </div>
+
             {/* Description & Included Labs */}
             <div className="p-4 sm:p-5 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-900/15 space-y-3">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-rose-100">
+                {selectedLabVideo.title}
+              </h3>
               <p className="text-xs sm:text-sm text-slate-700 dark:text-rose-100 leading-relaxed">
                 {selectedLabVideo.description}
               </p>
